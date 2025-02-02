@@ -2,6 +2,7 @@
 #include <algorithm>
 
 using std::find;
+using std::vector;
 using std::find_if;
 
 namespace truckconnect {
@@ -67,6 +68,49 @@ namespace truckconnect {
 			_type == other._type &&
 			_index == other._index
 		);
+	}
+	
+	registration::registration(connection* connection, channeling::telemetry_id id, scs_value_type_t type, scs_u32_t index)
+		: _connection(connection), _id(id), _type(type), _index(index), _context(nullptr), _callback(nullptr) {
+	}
+
+	constexpr const size_t BYTES_SIZE = (
+		sizeof(telemetry_id) +
+		sizeof(scs_value_type_t) +
+		sizeof(scs_u32_t)
+	);
+
+	vector<uint8_t> registration::bytes() const {
+		vector<uint8_t> bytes = vector<uint8_t>(BYTES_SIZE);
+		uint8_t* ptr = bytes.data();
+
+		*reinterpret_cast<telemetry_id*>(ptr) = _id;
+		ptr += sizeof(telemetry_id);
+
+		*reinterpret_cast<scs_value_type_t*>(ptr) = _type;
+		ptr += sizeof(scs_value_type_t);
+
+		*reinterpret_cast<scs_u32_t*>(ptr) = _index;
+
+		return bytes;
+	}
+
+	registration registration::decode(const vector<uint8_t>& bytes, connection* connection, size_t offset) {
+		if (bytes.size() - offset < BYTES_SIZE) {
+			return registration();
+		}
+		const uint8_t* data = bytes.data() + offset;
+
+		telemetry_id id = *reinterpret_cast<const telemetry_id*>(data);
+		data += sizeof(id);
+
+		scs_value_type_t type = *reinterpret_cast<const scs_value_type_t*>(data);
+		data += sizeof(type);
+
+		scs_u32_t index = *reinterpret_cast<const scs_u32_t*>(data);
+		data += sizeof(index);
+
+		return registration(connection, id, type, index);
 	}
 
 	result registration::game_register(connection& connection, callback callback, void* context, telemetry_id id, scs_value_type_t type, scs_u32_t index) {
