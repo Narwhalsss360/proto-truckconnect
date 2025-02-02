@@ -29,6 +29,7 @@
     <None Include="$(MSBuildThisFileDirectory)truckconnect" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)communication.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)connection.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)registration.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)vector_collector.cpp" />

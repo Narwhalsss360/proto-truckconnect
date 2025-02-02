@@ -56,6 +56,9 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)registration.cpp">
       <Filter>Source FIles</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)communication.cpp">
+      <Filter>Source FIles</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)truckconnect">
