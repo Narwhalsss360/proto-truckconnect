@@ -13,4 +13,21 @@
   <ItemGroup>
     <ProjectCapability Include="SourceItemsFromImports" />
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)channeling.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)communication.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)pipes.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)results.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)scssdk\scssdk.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)scssdk\scssdk_value.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)truckconnect.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)vector_collector.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)truckconnect" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)vector_collector.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)winpipes.cpp" />
+  </ItemGroup>
 </Project>
