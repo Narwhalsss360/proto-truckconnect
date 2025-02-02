@@ -1,2 +1,0 @@
-#define TRUCKCONNETEXTENSION_API __declspec(dllexport)
-#define TRUCKCONNETEXTENSION_API __declspec(dllimport)
