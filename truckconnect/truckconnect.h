@@ -8,5 +8,7 @@
 #include "vector_collector.h"
 #include "pipes.h"
 #include "communication.h"
+#include "connection.h"
+#include "registration.h"
 
 #endif

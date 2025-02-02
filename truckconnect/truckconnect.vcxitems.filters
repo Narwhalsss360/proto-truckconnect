@@ -36,12 +36,24 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)vector_collector.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)connection.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)registration.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)vector_collector.cpp">
       <Filter>Source FIles</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)winpipes.cpp">
+      <Filter>Source FIles</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)connection.cpp">
+      <Filter>Source FIles</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)registration.cpp">
       <Filter>Source FIles</Filter>
     </ClCompile>
   </ItemGroup>
