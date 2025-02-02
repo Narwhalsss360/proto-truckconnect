@@ -78,11 +78,13 @@ bool client::available(const std::string& name) {
 client::client(const string& name, HANDLE pipe)
 	: connection(truckconnect::connection(pipe, name)),
 	thread(
-		connection ?
+		connection.valid() ?
 		std::thread([&]() { manage(); }) :
 		std::thread()
 	)
-	{}
+{
+	truckconnect::connection::_source_connections.push_back(&connection);
+}
 
 constexpr const size_t BROADCASTER_HEADER_SIZE = sizeof(telemetry_id) + sizeof(scs_u32_t);
 
