@@ -20,6 +20,13 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestClient", "TestClient\Te
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "truckconnectextension", "truckconnectextension\truckconnectextension.vcxproj", "{A011B596-2CF9-4840-8F24-6095836C34C7}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "utility", "utility", "{E97F5E40-C4A4-4D59-B162-AA9D37083BF3}"
+	ProjectSection(SolutionItems) = preProject
+		utility\macro-idents = utility\macro-idents
+		utility\macro-vals = utility\macro-vals
+		utility\telemetry_processor.py = utility\telemetry_processor.py
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
