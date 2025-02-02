@@ -2,6 +2,8 @@
 #define CLIENTSRC
 struct client;
 #include "client.h"
+#include "contexts.h"
+#include <string.h>
 
 using std::string;
 using std::vector;
@@ -10,8 +12,13 @@ using std::find_if;
 using truckconnect::vector_collector;
 using truckconnect::registration;
 using truckconnect::result;
+using truckconnect::channeling::telemetry_channel;
+using truckconnect::channeling::telemetry_id;
+using truckconnect::channeling::size_of;
+using truckconnect::pipes::write;
 using nstreamcom::as_collected_size;
 using nstreamcom::encode_with_size;
+using nstreamcom::nsize;
 using namespace truckconnect::communication;
 using namespace truckconnect::pipes;
 
@@ -77,8 +84,81 @@ client::client(const string& name, HANDLE pipe)
 	)
 	{}
 
+constexpr const size_t BROADCASTER_HEADER_SIZE = sizeof(telemetry_id) + sizeof(scs_u32_t);
+
+void channel_broadcaster(const scs_string_t name, const scs_u32_t index, const scs_value_t* const value, const scs_context_t raw_context) {
+	if (raw_context == nullptr) {
+		return;
+	}
+
+	const broadcaster_context& context = *reinterpret_cast<const broadcaster_context*>(raw_context);
+	const nsize size = static_cast<nsize>(
+		value->type == SCS_VALUE_TYPE_string ? strnlen_s(value->value_string.value, 512) : size_of(value->type)
+	);
+
+	static uint8_t* data_ptr;
+	static vector<uint8_t> data;
+	static vector<uint8_t> encoded;
+
+	data.resize(BROADCASTER_HEADER_SIZE + size);
+	encoded.resize(as_collected_size(static_cast<nsize>(data.size())));
+	data_ptr = data.data();
+
+	*reinterpret_cast<telemetry_id*>(data_ptr) = context.id;
+	data_ptr += sizeof(telemetry_id);
+
+	*reinterpret_cast<scs_u32_t*>(data_ptr) = index;
+	data_ptr += sizeof(scs_u32_t);
+
+	memcpy_s(data_ptr, size, &value->value_bool.value, size);
+
+	encode_with_size(
+		data.begin(),
+		data.end(),
+		static_cast<nsize>(data.size()),
+		encoded.begin(),
+		encoded.end()
+	);
+
+	for (const registration* registered : context.recipients) {
+		if (registered->index() != index) {
+			continue;
+		}
+
+		if (!write(registered->through()->handle(), encoded)) {
+			console_log(SCS_LOG_TYPE_error, "There was an error writing to client");
+		}
+	}
+}
+
 truckconnect::result client::handle_register(std::vector<uint8_t>& buffer) {
 	registration requested = registration::decode(buffer, &connection, sizeof(message_id));
+	if (requested._id > truckconnect::channeling::MAX_ID) {
+		return result::INVALID_ID;
+	}
+
+	if (connection.registered(requested)) {
+		return result::ALREADY_REGISTERED;
+	}
+
+	connection._registrations.push_back(new registration(& connection, requested._id, requested._type, requested._index));
+	registration& registered = *connection._registrations.back();
+	telemetry_channel channel = truckconnect::channeling::MAPPINGS[registered._id];
+
+	scs_result_t result = register_for_channel(
+		channel,
+		registered._index,
+		registered._type,
+		SCS_TELEMETRY_CHANNEL_FLAG_none,
+		channel_broadcaster,
+		contextualize(&registered)
+	);
+
+	if (result != SCS_RESULT_ok) {
+		connection._registrations.erase(find(connection._registrations.begin(), connection._registrations.end(), &registered));
+		return result::IO_FAILURE;
+	}
+
 	return result::SUCCESS;
 }
 

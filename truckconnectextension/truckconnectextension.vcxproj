@@ -163,12 +163,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="client.cpp" />
+    <ClCompile Include="contexts.cpp" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="listen_for_clients.cpp" />
     <ClCompile Include="truckconnetextension.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="client.h" />
+    <ClInclude Include="contexts.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="truckconnectextension.h" />
   </ItemGroup>
