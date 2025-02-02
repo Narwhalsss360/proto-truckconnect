@@ -1,9 +1,13 @@
 #include "registration.h"
+#include "communication.h"
 #include <algorithm>
 
 using std::find;
 using std::vector;
 using std::find_if;
+using nstreamcom::nsize_int;
+using nstreamcom::encode_with_size;
+using nstreamcom::as_collected_size;
 
 namespace truckconnect {
 	using channeling::telemetry_id;
@@ -134,6 +138,50 @@ namespace truckconnect {
 	}
 
 	result registration::game_register(connection& connection, callback callback, void* context, telemetry_id id, scs_value_type_t type, scs_u32_t index) {
+		if (!connection) {
+			return result::NOT_CONNECTED;
+		}
+			
+		registration registering = registration(&connection, id, type, index);
+		communication::message_id message_id = communication::message_id::REGISTER;
+		vector<uint8_t> bytes = registering.bytes();
+		bytes.insert(
+			bytes.begin(),
+			reinterpret_cast<uint8_t*>(&message_id),
+			reinterpret_cast<uint8_t*>(&message_id) + sizeof(communication::message_id)
+		);
+		
+		vector<uint8_t> encoded = vector<uint8_t>(
+			as_collected_size(static_cast<nsize_int>(bytes.size()))
+		);
+		encode_with_size(
+			bytes.begin(),
+			bytes.end(),
+			static_cast<nsize_int>(bytes.size()),
+			encoded.begin(),
+			encoded.end()
+		);
+
+		pipes::write(connection.handle(), encoded);
+
+		vector_collector collector;
+
+		if (!pipes::try_collect(connection.handle(), collector)) {
+			return results::IO_FAILURE;
+		}
+
+		results::result response = *reinterpret_cast<results::result*>(&*collector.begin());
+
+		if (response != results::SUCCESS) {
+			return response;
+		}
+
+		connection._registrations.push_back(new registration(&connection, id, type, index));
+		registration& registered = *connection._registrations.back();
+
+		registered._callback = callback;
+		registered._context = context;
+
 		return result::SUCCESS;
 	}
 
