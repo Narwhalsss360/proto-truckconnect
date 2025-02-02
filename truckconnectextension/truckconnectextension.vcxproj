@@ -162,12 +162,15 @@
     <None Include="module.def" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="client.cpp" />
     <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="listen_for_clients.cpp" />
     <ClCompile Include="truckconnetextension.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="client.h" />
     <ClInclude Include="framework.h" />
-    <ClInclude Include="truckconnetextension.h" />
+    <ClInclude Include="truckconnectextension.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
