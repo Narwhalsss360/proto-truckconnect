@@ -3,7 +3,10 @@
 #include <string>
 #include "results.h"
 #include "pipes.h"
+
 namespace truckconnect {
+	class registration;
+
 	class connection {
 	public:
 		connection();
@@ -24,11 +27,18 @@ namespace truckconnect {
 
 		bool operator()();
 
+		bool registered(const registration& registered) const;
+
+		std::string name() const;
+
+		pipes::pipe_handle handle() const;
+
 		virtual ~connection();
 
 		static result connect(connection& connection, const std::string& name);
 
 		static result disconnect(connection& connection);
+
 	private:
 		friend class registration;
 

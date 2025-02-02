@@ -53,6 +53,16 @@ namespace truckconnect {
 		return dispatch();
 	}
 
+	bool connection::registered(const registration& is_registered) const {
+		return find_if(
+			_registrations.begin(),
+			_registrations.end(),
+			[&](registration* registered) {
+				return *registered == is_registered;
+			}
+		) != _registrations.end();
+	}
+
 	connection* connection::source() {
 		return const_cast<connection*>(
 			const_cast<const connection*>(this)->source()
@@ -69,6 +79,14 @@ namespace truckconnect {
 		);
 
 		return find_it == _source_connections.end() ? nullptr : *find_it;
+	}
+
+	string connection::name() const {
+		return _name;
+	}
+
+	pipe_handle connection::handle() const {
+		return _handle;
 	}
 
 	connection::~connection() {

@@ -43,7 +43,7 @@ namespace truckconnect {
 			_connection->_registrations.begin(),
 			_connection->_registrations.end(),
 			[&](const registration* other) {
-				return equals_ignore_connetion(*other);
+				return equals_ignore_connection(*other);
 			}
 		);
 
@@ -51,7 +51,7 @@ namespace truckconnect {
 	}
 
 	bool registration::operator==(const registration& other) const {
-		return equals_ignore_connetion(other) && _connection == other._connection;
+		return equals_ignore_connection(other) && _connection == other._connection;
 	}
 
 	bool registration::operator!=(const registration& other) const {
@@ -59,10 +59,10 @@ namespace truckconnect {
 	}
 	
 	bool registration::event() const {
-		return false;
+		return channeling::EVENTS_START <= _id && _id <= channeling::EVENTS_END;
 	}
 
-	bool registration::equals_ignore_connetion(const registration& other) const {
+	bool registration::equals_ignore_connection(const registration& other) const {
 		return this == &other || (
 			_id == other._id &&
 			_type == other._type &&
@@ -93,6 +93,26 @@ namespace truckconnect {
 		*reinterpret_cast<scs_u32_t*>(ptr) = _index;
 
 		return bytes;
+	}
+
+	connection* registration::through() const {
+		return _connection;
+	}
+
+	channeling::telemetry_id registration::id() const {
+		return _id;
+	}
+
+	scs_value_type_t registration::type() const {
+		return _type;
+	}
+
+	scs_u32_t registration::index() const {
+		return _index;
+	}
+
+	void* registration::context() const {
+		return _context;
 	}
 
 	registration registration::decode(const vector<uint8_t>& bytes, connection* connection, size_t offset) {

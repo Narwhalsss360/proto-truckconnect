@@ -28,6 +28,16 @@ namespace truckconnect {
 
 		std::vector<uint8_t> bytes() const;
 
+		connection* through() const;
+
+		channeling::telemetry_id id() const;
+
+		scs_value_type_t type() const;
+
+		scs_u32_t index() const;
+
+		void* context() const;
+
 		static registration decode(const std::vector<uint8_t>& bytes, connection* connection, size_t offset = 0);
 
 		static result game_register(connection& connection, callback callback, void* context, channeling::telemetry_id id, scs_value_type_t type = SCS_VALUE_TYPE_INVALID, scs_u32_t index = SCS_U32_NIL);
@@ -43,7 +53,7 @@ namespace truckconnect {
 		friend struct ::client;
 #endif
 
-		bool equals_ignore_connetion(const registration& other) const;
+		bool equals_ignore_connection(const registration& other) const;
 
 		registration(connection* connection, channeling::telemetry_id id, scs_value_type_t type, scs_u32_t index);
 
