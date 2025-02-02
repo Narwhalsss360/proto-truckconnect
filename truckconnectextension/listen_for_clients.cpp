@@ -11,7 +11,7 @@ using truckconnect::result;
 using namespace truckconnect::pipes;
 using namespace truckconnect::communication;
 
-result process(pipe_handle negotiator, vector_collector collector) {
+result process(pipe_handle negotiator, vector_collector& collector) {
 	if (!try_collect(negotiator, collector)) {
 		return result::IO_FAILURE;
 	}
