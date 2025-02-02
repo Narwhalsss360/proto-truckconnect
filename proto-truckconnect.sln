@@ -18,6 +18,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "nstreamcom", "NStreamCom\ns
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestClient", "TestClient\TestClient.vcxproj", "{B0286CF3-AFAC-4CC8-B131-9CCD1BA685B0}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "truckconnetextension", "truckconnetextension\truckconnetextension.vcxproj", "{3FFDA045-AD74-459D-839C-7DB414A65F46}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -34,12 +36,23 @@ Global
 		{B0286CF3-AFAC-4CC8-B131-9CCD1BA685B0}.Release|x64.Build.0 = Release|x64
 		{B0286CF3-AFAC-4CC8-B131-9CCD1BA685B0}.Release|x86.ActiveCfg = Release|Win32
 		{B0286CF3-AFAC-4CC8-B131-9CCD1BA685B0}.Release|x86.Build.0 = Release|Win32
+		{3FFDA045-AD74-459D-839C-7DB414A65F46}.Debug|x64.ActiveCfg = Debug|x64
+		{3FFDA045-AD74-459D-839C-7DB414A65F46}.Debug|x64.Build.0 = Debug|x64
+		{3FFDA045-AD74-459D-839C-7DB414A65F46}.Debug|x86.ActiveCfg = Debug|Win32
+		{3FFDA045-AD74-459D-839C-7DB414A65F46}.Debug|x86.Build.0 = Debug|Win32
+		{3FFDA045-AD74-459D-839C-7DB414A65F46}.Release|x64.ActiveCfg = Release|x64
+		{3FFDA045-AD74-459D-839C-7DB414A65F46}.Release|x64.Build.0 = Release|x64
+		{3FFDA045-AD74-459D-839C-7DB414A65F46}.Release|x86.ActiveCfg = Release|Win32
+		{3FFDA045-AD74-459D-839C-7DB414A65F46}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		truckconnect\truckconnect.vcxitems*{3ef9a03c-5290-4a42-9a02-80006a8be3d4}*SharedItemsImports = 9
+		NStreamCom\nstreamcom.vcxitems*{3ffda045-ad74-459d-839c-7db414a65f46}*SharedItemsImports = 4
+		scs\scs.vcxitems*{3ffda045-ad74-459d-839c-7db414a65f46}*SharedItemsImports = 4
+		truckconnect\truckconnect.vcxitems*{3ffda045-ad74-459d-839c-7db414a65f46}*SharedItemsImports = 4
 		NStreamCom\nstreamcom.vcxitems*{b0286cf3-afac-4cc8-b131-9ccd1ba685b0}*SharedItemsImports = 4
 		truckconnect\truckconnect.vcxitems*{b0286cf3-afac-4cc8-b131-9ccd1ba685b0}*SharedItemsImports = 4
 		scs\scs.vcxitems*{c6c8a7d4-8e1a-4b32-9d0c-7f48df9da334}*SharedItemsImports = 9
