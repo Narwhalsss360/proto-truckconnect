@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="Globals">
+    <MSBuildAllProjects Condition="'$(MSBuildVersion)' == '' Or '$(MSBuildVersion)' &lt; '16.0'">$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <ItemsProjectGuid>{c6c8a7d4-8e1a-4b32-9d0c-7f48df9da334}</ItemsProjectGuid>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(MSBuildThisFileDirectory)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ProjectCapability Include="SourceItemsFromImports" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)amtrucks\scssdk_ats.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)amtrucks\scssdk_input_ats.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)amtrucks\scssdk_telemetry_ats.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)common\scssdk_telemetry_common_channels.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)common\scssdk_telemetry_common_configs.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)common\scssdk_telemetry_common_gameplay_events.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)common\scssdk_telemetry_job_common_channels.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)common\scssdk_telemetry_trailer_common_channels.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)common\scssdk_telemetry_truck_common_channels.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)eurotrucks2\scssdk_eut2.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)eurotrucks2\scssdk_input_eut2.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)eurotrucks2\scssdk_telemetry_eut2.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)scssdk.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)scssdk_input.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)scssdk_input_device.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)scssdk_input_event.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)scssdk_telemetry.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)scssdk_telemetry_channel.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)scssdk_telemetry_event.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)scssdk_value.h" />
+  </ItemGroup>
+</Project>
