@@ -32,6 +32,10 @@ namespace truckconnect {
 	private:
 		friend class registration;
 
+#ifdef CLIENTSRC
+		friend struct ::client;
+#endif
+
 		connection(pipes::pipe_handle handle, const std::string& name);
 
 		std::string _name;
