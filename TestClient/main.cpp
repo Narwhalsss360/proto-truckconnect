@@ -16,6 +16,11 @@ int main() {
 	result last;
 	connection game;
 
+	float speed = 0, rpm = 0;
+	const auto print = [&]() {
+		cout << speed << "m/s | " << rpm << "rpm\n";
+	};
+
 	last = connection::connect(game, NAME);
 
 	if (last != result::SUCCESS || !game) {
@@ -24,10 +29,11 @@ int main() {
 
 	last = registration::game_register(
 		game,
-		[](registration&, const void* data, size_t) {
-			cout << "speed: " << *reinterpret_cast<const float*>(data) << "m/s\n";
+		[&](registration&, const void* data, size_t) {
+			speed = *reinterpret_cast<const float*>(data);
+			print();
 		},
-		123,
+		truckconnect::channeling::ID_SCS_TELEMETRY_TRUCK_CHANNEL_speed,
 		SCS_VALUE_TYPE_float,
 		SCS_U32_NIL
 	);
@@ -38,10 +44,11 @@ int main() {
 
 	last = registration::game_register(
 		game,
-		[](registration&, const void* data, size_t) {
-			cout << "rpm: " << *reinterpret_cast<const float*>(data) << "\n";
+		[&](registration&, const void* data, size_t) {
+			rpm = *reinterpret_cast<const float*>(data);
+			print();
 		},
-		124,
+		truckconnect::channeling::ID_SCS_TELEMETRY_TRUCK_CHANNEL_engine_rpm,
 		SCS_VALUE_TYPE_float,
 		SCS_U32_NIL
 	);
@@ -50,9 +57,7 @@ int main() {
 		return 1;
 	}
 
-	while (game()) {
-		sleep_for(500ms);
-	}
+	while (game());
 
 	return 0;
 }
