@@ -3,7 +3,7 @@
 #include "pipes.h"
 
 namespace truckconnect {
-	namespace channeling {
+	namespace communication {
 		enum message_id : uint8_t {
 			CLOSE,
 			REGISTER,
