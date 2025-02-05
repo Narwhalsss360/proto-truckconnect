@@ -9,6 +9,7 @@ using std::string;
 using std::vector;
 using std::find;
 using std::find_if;
+using std::to_string;
 using truckconnect::vector_collector;
 using truckconnect::registration;
 using truckconnect::connection;
@@ -225,6 +226,7 @@ truckconnect::result client::handle_register(std::vector<uint8_t>& buffer) {
 		return result::IO_FAILURE;
 	}
 
+	console_log(SCS_LOG_TYPE_message, "Client " + connection._name + " registered for " + channel + " index: " + to_string(registered._index));
 	return result::SUCCESS;
 }
 
@@ -250,6 +252,8 @@ truckconnect::result client::unregister(registration* registered) {
 			console_log(SCS_LOG_TYPE_error, "There was an error unregistering from a channel");
 		}
 	}
+
+	console_log(SCS_LOG_TYPE_message, "Client " + connection._name + " unregistered for " + channel + " index: " + to_string(requested->_index));
 	connection._registrations.erase(find(connection._registrations.begin(), connection._registrations.end(), requested));
 	delete requested;
 
@@ -266,15 +270,17 @@ void client::manage() {
 		closed();
 		return;
 	}
+	console_log(SCS_LOG_TYPE_message, "Client " + connection._name + " connected.");
 
 	vector_collector collector;
 	result result;
 	uint8_t encoded_result[as_collected_size(sizeof(result))];
 
+
 	while (!global_stop) {
 		if (!try_collect(connection._handle, collector)) {
 			if (!connected(connection._handle)) {
-				console_log(SCS_LOG_TYPE_error, "Client " + connection.name() + " suddenly disconnected.");
+				console_log(SCS_LOG_TYPE_error, "Client " + connection._name + " suddenly disconnected.");
 				break;
 			}
 			continue;
@@ -288,6 +294,7 @@ void client::manage() {
 		const message_id& id = *reinterpret_cast<const message_id*>(collector.buffer().data());
 
 		if (id == CLOSE) {
+			console_log(SCS_LOG_TYPE_message, "Client " + connection._name + " disconnecting...");
 			break;
 		}
 

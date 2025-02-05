@@ -50,7 +50,7 @@ scs_result_t register_for_event(const scs_event_t event, const scs_telemetry_eve
 	scs_result_t result = static_cast<scs_result_t>(-1);
 	dispatch_end_frame([&]() {
 		result = _init_params.register_for_event(event, callback, context);
-		});
+	});
 	return result;
 }
 
@@ -58,7 +58,7 @@ scs_result_t unregister_from_event(const scs_event_t event) {
 	scs_result_t result = static_cast<scs_result_t>(-1);
 	dispatch_end_frame([&]() {
 		result = _init_params.unregister_from_event(event);
-		});
+	});
 	return result;
 }
 
@@ -73,7 +73,7 @@ scs_result_t register_for_channel(const scs_string_t name, const scs_u32_t index
 			callback,
 			context
 		);
-		});
+	});
 	return result;
 }
 
@@ -85,7 +85,7 @@ scs_result_t unregister_from_channel(const scs_string_t name, const scs_u32_t in
 			index,
 			type
 		);
-		});
+	});
 	return result;
 }
 
