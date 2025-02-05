@@ -5,3 +5,6 @@
 #endif
 
 #include "framework.h"
+#include <functional>
+
+void dispatch(std::function<void()> f);

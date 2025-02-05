@@ -16,18 +16,28 @@ scs_telemetry_init_params_v101_t _init_params;
 
 static vector<function<void()>> _dispatched;
 
+static volatile bool _dispatching = false;
+
+void dispatch(function<void()> f) {
+	while (_dispatching);
+	_dispatched.push_back(f);
+}
+
 void dispatch_end_frame(function<void()> f) {
+	while (_dispatching);
 	_dispatched.push_back(f);
 	while (_dispatched.size());
 }
 
 static SCSAPI_VOID end_frame(const scs_event_t, const void* const, const scs_context_t) {
+	_dispatching = true;
 	for (function<void()>& f : _dispatched) {
 		if (f) {
 			f();
 		}
 	}
 	_dispatched.clear();
+	_dispatching = false;
 }
 
 void console_log(scs_log_type_t type, const std::string& log) {
