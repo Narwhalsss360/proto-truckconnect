@@ -26,6 +26,8 @@ private:
 
 	truckconnect::result handle_unregister(std::vector<uint8_t>& buffer);
 
+	truckconnect::result unregister(truckconnect::registration* registered);
+
 	void manage();
 
 	client(const std::string& name, HANDLE pipe);

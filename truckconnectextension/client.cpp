@@ -18,7 +18,7 @@ using truckconnect::channeling::size_of;
 using truckconnect::pipes::write;
 using nstreamcom::as_collected_size;
 using nstreamcom::encode_with_size;
-using nstreamcom::nsize;
+using nstreamcom::nsize_int;
 using namespace truckconnect::communication;
 using namespace truckconnect::pipes;
 
@@ -94,7 +94,7 @@ void channel_broadcaster(const scs_string_t name, const scs_u32_t index, const s
 	}
 
 	const broadcaster_context& context = *reinterpret_cast<const broadcaster_context*>(raw_context);
-	const nsize size = static_cast<nsize>(
+	const nsize_int size = static_cast<nsize_int>(
 		value->type == SCS_VALUE_TYPE_string ? strnlen_s(value->value_string.value, 512) : size_of(value->type)
 	);
 
@@ -103,7 +103,7 @@ void channel_broadcaster(const scs_string_t name, const scs_u32_t index, const s
 	static vector<uint8_t> encoded;
 
 	data.resize(BROADCASTER_HEADER_SIZE + size);
-	encoded.resize(as_collected_size(static_cast<nsize>(data.size())));
+	encoded.resize(as_collected_size(static_cast<nsize_int>(data.size())));
 	data_ptr = data.data();
 
 	*reinterpret_cast<telemetry_id*>(data_ptr) = context.id;
@@ -117,7 +117,7 @@ void channel_broadcaster(const scs_string_t name, const scs_u32_t index, const s
 	encode_with_size(
 		data.begin(),
 		data.end(),
-		static_cast<nsize>(data.size()),
+		static_cast<nsize_int>(data.size()),
 		encoded.begin(),
 		encoded.end()
 	);
@@ -165,8 +165,8 @@ truckconnect::result client::handle_register(std::vector<uint8_t>& buffer) {
 	return result::SUCCESS;
 }
 
-truckconnect::result client::handle_unregister(std::vector<uint8_t>& buffer) {
-	registration* requested = registration::decode(buffer, &connection, sizeof(message_id)).source();
+truckconnect::result client::unregister(registration* registered) {
+	registration* requested = registered->source();
 	if (requested == nullptr) {
 		return result::NOT_REGISTERED;
 	}
@@ -189,8 +189,12 @@ truckconnect::result client::handle_unregister(std::vector<uint8_t>& buffer) {
 	}
 	connection._registrations.erase(find(connection._registrations.begin(), connection._registrations.end(), requested));
 	delete requested;
-	
+
 	return result::SUCCESS;
+}
+
+truckconnect::result client::handle_unregister(std::vector<uint8_t>& buffer) {
+	return unregister(registration::decode(buffer, &connection, sizeof(message_id)).source());
 }
 
 void client::manage() {
