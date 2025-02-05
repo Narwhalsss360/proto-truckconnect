@@ -144,6 +144,14 @@ namespace truckconnect {
 			return toRead > 0;
 		}
 
+		bool connected(pipe_handle pipe) {
+			bool failed = true;
+			if (available(pipe, failed)) {
+				return true;
+			}
+			return !failed;
+		}
+
 		int read_one(pipe_handle pipe) {
 			uint8_t byte;
 			if (ReadFile(pipe, &byte, 1, nullptr, nullptr) == 0) {

@@ -37,7 +37,7 @@ namespace truckconnect {
 
 		static result connect(connection& connection, const std::string& name);
 
-		static result disconnect(connection& connection);
+		result disconnect();
 
 	private:
 		friend class registration;

@@ -32,6 +32,7 @@ int main() {
 		[&](registration&, const void* data, size_t) {
 			speed = *reinterpret_cast<const float*>(data);
 			print();
+			game.disconnect();
 		},
 		truckconnect::channeling::ID_SCS_TELEMETRY_TRUCK_CHANNEL_speed,
 		SCS_VALUE_TYPE_float,
@@ -57,7 +58,7 @@ int main() {
 		return 1;
 	}
 
-	last = registration::game_unregister(
+	/*last = registration::game_unregister(
 		game,
 		truckconnect::channeling::ID_SCS_TELEMETRY_TRUCK_CHANNEL_engine_rpm,
 		SCS_VALUE_TYPE_float,
@@ -66,7 +67,7 @@ int main() {
 
 	if (last != result::SUCCESS) {
 		return 1;
-	}
+	}*/
 
 	while (game());
 

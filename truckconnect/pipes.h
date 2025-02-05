@@ -51,6 +51,8 @@ namespace truckconnect {
 
 		bool available(pipe_handle pipe, bool& failure);
 
+		bool connected(pipe_handle pipe);
+
 		int read_one(pipe_handle pipe);
 
 		std::future<uint8_t> read_one(pipe_handle pipe, bool& cancelled);

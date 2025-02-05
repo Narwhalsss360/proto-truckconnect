@@ -62,7 +62,9 @@ client& client::create(const string& name, HANDLE pipe) {
 void client::all_closed() {
 	for (client* client : _clients) {
 		client->closed();
+		delete client;
 	}
+	_clients.clear();
 }
 
 bool client::available(const std::string& name) {
@@ -253,6 +255,15 @@ void client::manage() {
 	encode_with_size(CLOSE_MESSAGE, encoded_close_message);
 
 	write(connection._handle, encoded_close_message);
-	//close(connection._handle); unregister all
-	closed();
+	while (connection._registrations.size()) {
+		unregister(connection._registrations[0]);
+	}
+
+	close(connection._handle);
+	connection._handle = pipe_handle();
+
+	dispatch([&]() {
+		closed();
+		delete this;
+	});
 }

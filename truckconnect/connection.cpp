@@ -51,6 +51,15 @@ namespace truckconnect {
 		constexpr const size_t header_size = sizeof(channeling::telemetry_id) + sizeof(scs_u32_t);
 		vector_collector collector;
 
+		if (!valid()) {
+			return false;
+		}
+
+		if (!pipes::connected(_handle) && false) {
+			disconnect();
+			return false;
+		}
+
 		if (!pipes::try_collect(_handle, collector)) {
 			return true;
 		}
@@ -68,6 +77,7 @@ namespace truckconnect {
 		data += sizeof(index);
 
 		if (id == communication::CLOSE) {
+			disconnect();
 			return false;
 		}
 
@@ -122,7 +132,7 @@ namespace truckconnect {
 	connection::~connection() {
 		auto find_it = find(_source_connections.begin(), _source_connections.end(), this);
 		if (find_it != _source_connections.end()) {
-			disconnect(*this);
+			disconnect();
 			_source_connections.erase(find_it);
 		}
 
@@ -199,8 +209,27 @@ namespace truckconnect {
 		return result::SUCCESS;
 	}
 
-	result connection::disconnect(connection& connection) {
-		return result::SUCCESS;
+	result connection::disconnect() {
+		if (!valid()) {
+			return result::NOT_CONNECTED;
+		}
+
+		constexpr const uint8_t CLOSE_MESSAGE[] = { communication::CLOSE };
+		uint8_t encoded_close_message[as_collected_size(sizeof(CLOSE_MESSAGE))];
+		encode_with_size(CLOSE_MESSAGE, encoded_close_message);
+
+		result result = result::SUCCESS;
+		if (!pipes::write(_handle, encoded_close_message)) {
+			result = result::IO_FAILURE;
+		}
+		for (registration* registered : _registrations) {
+			delete registered;
+		}
+		_registrations.clear();
+		pipes::close(_handle);
+		_handle = pipe_handle();
+
+		return result;
 	}
 
 	bool connection::exists(const connection* connection) {
