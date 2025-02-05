@@ -10,6 +10,8 @@ namespace truckconnect {
 	public:
 		vector_collector(size_t initial_size = 1);
 
+		vector_collector(vector_collector&) = delete;
+
 		std::vector<uint8_t>::iterator begin();
 
 		std::vector<uint8_t>::iterator end();
