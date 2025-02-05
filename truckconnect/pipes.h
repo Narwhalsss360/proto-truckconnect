@@ -41,7 +41,7 @@ namespace truckconnect {
 		bool write(pipe_handle pipe, const uint8_t* data, size_t size);
 
 		template <size_t size>
-		bool write(pipe_handle pipe, uint8_t(&data)[size]) {
+		bool write(pipe_handle pipe, const uint8_t(&data)[size]) {
 			return write(pipe, data, size);
 		}
 

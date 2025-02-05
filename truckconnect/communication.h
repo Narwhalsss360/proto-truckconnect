@@ -5,9 +5,9 @@
 namespace truckconnect {
 	namespace communication {
 		enum message_id : uint8_t {
-			CLOSE,
 			REGISTER,
-			UNREGISTER
+			UNREGISTER,
+			CLOSE = static_cast<uint8_t>(-1)
 		};
 
 		bool ack(pipes::pipe_handle pipe);

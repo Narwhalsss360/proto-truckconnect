@@ -213,6 +213,18 @@ void client::manage() {
 		}
 	}
 
+	constexpr const uint8_t CLOSE_MESSAGE[sizeof(telemetry_id) + sizeof(scs_u32_t)] = {
+		CLOSE,
+		0,
+		0,
+		0,
+		0
+	};
+
+	uint8_t encoded_close_message[as_collected_size(sizeof(CLOSE_MESSAGE))];
+	encode_with_size(CLOSE_MESSAGE, encoded_close_message);
+
+	write(connection._handle, encoded_close_message);
 	//close(connection._handle); unregister all
 	closed();
 }
