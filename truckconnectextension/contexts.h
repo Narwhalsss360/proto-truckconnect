@@ -11,4 +11,4 @@ struct broadcaster_context {
 
 broadcaster_context* contextualize(truckconnect::registration* registration);
 
-void decontextualize(truckconnect::registration* registration);
+bool decontextualize(truckconnect::registration* registration);

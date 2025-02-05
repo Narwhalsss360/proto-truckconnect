@@ -146,15 +146,16 @@ truckconnect::result client::handle_register(std::vector<uint8_t>& buffer) {
 	connection._registrations.push_back(new registration(& connection, requested._id, requested._type, requested._index));
 	registration& registered = *connection._registrations.back();
 	telemetry_channel channel = truckconnect::channeling::MAPPINGS[registered._id];
-
-	scs_result_t result = register_for_channel(
-		channel,
-		registered._index,
-		registered._type,
-		SCS_TELEMETRY_CHANNEL_FLAG_none,
-		channel_broadcaster,
-		contextualize(&registered)
-	);
+	scs_result_t result = registered.event() ?
+		SCS_RESULT_generic_error :
+		register_for_channel(
+			channel,
+			registered._index,
+			registered._type,
+			SCS_TELEMETRY_CHANNEL_FLAG_none,
+			channel_broadcaster,
+			contextualize(&registered)
+		);
 
 	if (result != SCS_RESULT_ok) {
 		connection._registrations.erase(find(connection._registrations.begin(), connection._registrations.end(), &registered));
@@ -165,7 +166,30 @@ truckconnect::result client::handle_register(std::vector<uint8_t>& buffer) {
 }
 
 truckconnect::result client::handle_unregister(std::vector<uint8_t>& buffer) {
-	registration requested = registration::decode(buffer, &connection, sizeof(message_id));
+	registration* requested = registration::decode(buffer, &connection, sizeof(message_id)).source();
+	if (requested == nullptr) {
+		return result::NOT_REGISTERED;
+	}
+
+	telemetry_channel channel = truckconnect::channeling::MAPPINGS[requested->_id];
+
+	bool last_of_id = decontextualize(requested);
+	if (last_of_id) {
+		scs_result_t result = requested->event() ?
+			SCS_RESULT_generic_error :
+			unregister_from_channel(
+				channel,
+				requested->index(),
+				requested->type()
+			);
+
+		if (result != SCS_RESULT_ok) {
+			console_log(SCS_LOG_TYPE_error, "There was an error unregistering from a channel");
+		}
+	}
+	connection._registrations.erase(find(connection._registrations.begin(), connection._registrations.end(), requested));
+	delete requested;
+	
 	return result::SUCCESS;
 }
 

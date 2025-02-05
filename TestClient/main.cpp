@@ -57,6 +57,17 @@ int main() {
 		return 1;
 	}
 
+	last = registration::game_unregister(
+		game,
+		truckconnect::channeling::ID_SCS_TELEMETRY_TRUCK_CHANNEL_engine_rpm,
+		SCS_VALUE_TYPE_float,
+		SCS_U32_NIL
+	);
+
+	if (last != result::SUCCESS) {
+		return 1;
+	}
+
 	while (game());
 
 	return 0;

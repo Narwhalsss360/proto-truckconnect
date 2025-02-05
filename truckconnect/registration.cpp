@@ -190,6 +190,52 @@ namespace truckconnect {
 	}
 
 	result registration::game_unregister(connection& connection, telemetry_id id, scs_value_type_t type, scs_u32_t index) {
+		if (!connection) {
+			return result::NOT_CONNECTED;
+		}
+
+		registration* unregistering = registration(&connection, id, type, index).source();
+
+		if (unregistering == nullptr) {
+			return result::NOT_REGISTERED;
+		}
+
+		communication::message_id message_id = communication::message_id::UNREGISTER;
+		vector<uint8_t> bytes = unregistering->bytes();
+		bytes.insert(
+			bytes.begin(),
+			reinterpret_cast<uint8_t*>(&message_id),
+			reinterpret_cast<uint8_t*>(&message_id) + sizeof(communication::message_id)
+		);
+
+		vector<uint8_t> encoded = vector<uint8_t>(
+			as_collected_size(static_cast<nsize_int>(bytes.size()))
+		);
+		encode_with_size(
+			bytes.begin(),
+			bytes.end(),
+			static_cast<nsize_int>(bytes.size()),
+			encoded.begin(),
+			encoded.end()
+		);
+
+		pipes::write(connection.handle(), encoded);
+		
+		vector_collector collector;
+
+		if (!pipes::try_collect(connection.handle(), collector)) {
+			return results::IO_FAILURE;
+		}
+
+		results::result response = *reinterpret_cast<results::result*>(&*collector.begin());
+
+		if (response != results::SUCCESS) {
+			return response;
+		}
+
+		connection._registrations.erase(find(connection._registrations.begin(), connection._registrations.end(), unregistering));
+		delete unregistering;
+
 		return result::SUCCESS;
 	}
 }
