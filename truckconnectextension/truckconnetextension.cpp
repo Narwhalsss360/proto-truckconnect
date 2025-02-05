@@ -110,5 +110,5 @@ SCSAPI_RESULT scs_telemetry_init(const scs_u32_t version, const scs_telemetry_in
 SCSAPI_VOID scs_telemetry_shutdown() {
 	global_stop = true;
 	listener.join();
-	//client::all_closed();
+	client::all_closed();
 }

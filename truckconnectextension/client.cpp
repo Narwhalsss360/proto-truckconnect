@@ -119,8 +119,7 @@ client& client::create(const string& name, HANDLE pipe) {
 
 void client::all_closed() {
 	for (client* client : _clients) {
-		client->closed();
-		delete client;
+		close(client->connection._handle);
 	}
 	_clients.clear();
 }
