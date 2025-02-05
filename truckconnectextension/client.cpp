@@ -11,6 +11,7 @@ using std::find;
 using std::find_if;
 using truckconnect::vector_collector;
 using truckconnect::registration;
+using truckconnect::connection;
 using truckconnect::result;
 using truckconnect::channeling::telemetry_channel;
 using truckconnect::channeling::telemetry_id;
@@ -23,6 +24,62 @@ using namespace truckconnect::communication;
 using namespace truckconnect::pipes;
 
 vector<client*> client::_clients;
+
+static vector<connection*> _locked_connections;
+volatile bool _mod_lock = false;
+
+void lock_connection(connection* connection) {
+	auto find_it = find(
+		_locked_connections.begin(),
+		_locked_connections.end(),
+		connection
+	);
+
+	if (find_it != _locked_connections.end()) {
+		return;
+	}
+
+	while (_mod_lock);
+	_mod_lock = true;
+	_locked_connections.push_back(connection);
+	_mod_lock = false;
+}
+
+bool locked(connection* connection) {
+	while (_mod_lock);
+	return find(
+		_locked_connections.begin(),
+		_locked_connections.end(),
+		connection
+	) != _locked_connections.end();
+}
+
+void wait_for_unlocked_connection(connection* connection) {
+	while (true) {
+		if (_mod_lock) {
+			continue;
+		}
+		if (!locked(connection)) {
+			return;
+		}
+	}
+}
+
+void unlock_connection(connection* connection) {
+	auto find_it = find(
+		_locked_connections.begin(),
+		_locked_connections.end(),
+		connection
+	);
+
+	if (find_it == _locked_connections.end()) {
+		return;
+	}
+	while (_mod_lock);
+	_mod_lock = true;
+	_locked_connections.erase(find_it);
+	_mod_lock = false;
+}
 
 client::operator bool() const {
 	auto find_it = find(
@@ -129,6 +186,10 @@ void channel_broadcaster(const scs_string_t name, const scs_u32_t index, const s
 			continue;
 		}
 
+		if (locked(registered->through())) {
+			continue;
+		}
+
 		if (!write(registered->through()->handle(), encoded)) {
 			console_log(SCS_LOG_TYPE_error, "There was an error writing to client");
 		}
@@ -218,6 +279,7 @@ void client::manage() {
 		if (collector.size() == 0) {
 			continue;
 		}
+		lock_connection(&connection);
 
 		const message_id& id = *reinterpret_cast<const message_id*>(collector.buffer().data());
 
@@ -241,6 +303,7 @@ void client::manage() {
 		if (!write(connection._handle, encoded_result)) {
 			console_log(SCS_LOG_TYPE_error, "There was an error sending result to client.");
 		}
+		unlock_connection(&connection);
 	}
 
 	constexpr const uint8_t CLOSE_MESSAGE[sizeof(telemetry_id) + sizeof(scs_u32_t)] = {
