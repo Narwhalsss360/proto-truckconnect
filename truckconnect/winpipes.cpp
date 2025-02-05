@@ -194,12 +194,12 @@ namespace truckconnect {
 			bool failed = false;
 			while (good_state() && !stop) {
 				if (!available(pipe, failed)) {
+					if (failed) {
+						return false;
+					}
 					continue;
 				}
 
-				if (failed) {
-					return false;
-				}
 
 				collector.collect_ensured_size(static_cast<uint8_t>(read_one(pipe)));
 
