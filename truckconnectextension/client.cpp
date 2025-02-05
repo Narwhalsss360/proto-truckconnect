@@ -273,6 +273,10 @@ void client::manage() {
 
 	while (!global_stop) {
 		if (!try_collect(connection._handle, collector)) {
+			if (!connected(connection._handle)) {
+				console_log(SCS_LOG_TYPE_error, "Client " + connection.name() + " suddenly disconnected.");
+				break;
+			}
 			continue;
 		}
 
