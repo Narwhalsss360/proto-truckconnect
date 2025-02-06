@@ -46,14 +46,14 @@ namespace TruckConnect {
 		callback(gcnew Registration(&registration), bytes);
 	}
 
-	Result Connection::Register(RegistrationCallback^ callback, telemetry_id id, scs_value_type_t type, scs_u32_t index) {
+	Result Connection::Register(RegistrationCallback^ callback, Channel channel, SCSValueType type, scs_u32_t index) {
 		return static_cast<Result>(
 			registration::game_register(
 				*_connection,
 				router,
 				to_any(callback),
-				id,
-				type,
+				static_cast<telemetry_id>(channel),
+				static_cast<scs_value_type_t>(type),
 				index
 			)
 		);

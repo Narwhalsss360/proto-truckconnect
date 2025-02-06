@@ -1,7 +1,7 @@
 #pragma once
 
 namespace TruckConnect {
-	public enum class Result: System::UInt32{
+	public enum class Result : System::UInt32 {
 		SUCCESS,
 		IO_FAILURE,
 		INVALID_HANDLE,

@@ -16,8 +16,8 @@ result = connection.Register(
         speed = BitConverter.ToSingle(bytes);
         print();
     },
-    38,
-    5
+    Channel.SCS_TELEMETRY_TRUCK_CHANNEL_speed,
+    SCSValueType.TYPE_float
 );
 
 if (result != Result.SUCCESS)
@@ -31,8 +31,8 @@ result = connection.Register(
         rpm = BitConverter.ToSingle(bytes);
         print();
     },
-    39,
-    5
+    Channel.SCS_TELEMETRY_TRUCK_CHANNEL_engine_rpm,
+    SCSValueType.TYPE_float
 );
 
 if (result != Result.SUCCESS)
@@ -52,8 +52,8 @@ result = connection.Register(
             connection.Disconnect();
         }
     },
-    1,
-    3
+    Channel.SCS_TELEMETRY_CHANNEL_game_time,
+    SCSValueType.TYPE_u32
 );
 
 if (result != Result.SUCCESS)

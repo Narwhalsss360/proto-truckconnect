@@ -1,4 +1,4 @@
-def generate_cpp(macros: dict[str, str]):
+def generate_cpp(macros: dict[str, str]) -> str:
     out: str = ''
 
     for idx, (macro, value) in enumerate(macros.items()):
@@ -16,6 +16,17 @@ def generate_cpp(macros: dict[str, str]):
     return out
 
 
+def generate_csharp(macros: dict[str, str]) -> str:
+    out: str = 'public enum class Channel : truckconnect::channeling::telemetry_id {\n'
+    for idx, key in enumerate(macros.keys()):
+        out += f'\t{key}'
+        if idx != len(macros) - 1:
+            out += ','
+        out += '\n'
+    out += '};'
+    return out
+
+
 def main() -> None:
     pairs: list[list[str], list[str]] = [[], []]
     with open('macro-idents', 'r') as f:
@@ -28,6 +39,9 @@ def main() -> None:
 
     with open('constexprs.h', 'w') as f:
         f.write(generate_cpp(macros))
+
+    with open('channels.h', 'w') as f:
+        f.write(generate_csharp(macros))
 
 
 if __name__ == '__main__':

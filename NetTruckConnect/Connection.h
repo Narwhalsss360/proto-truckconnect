@@ -1,5 +1,6 @@
 #pragma once
 #include "Results.h"
+#include "Channeling.h"
 #include <truckconnect.h>
 
 namespace TruckConnect {
@@ -15,14 +16,14 @@ namespace TruckConnect {
 
 		System::Boolean Valid();
 
-		Result Register(RegistrationCallback^ callback, truckconnect::channeling::telemetry_id id, scs_value_type_t type, scs_u32_t index);
+		Result Register(RegistrationCallback^ callback, Channel channel, SCSValueType type, scs_u32_t index);
 
-		Result Register(RegistrationCallback^ callback, truckconnect::channeling::telemetry_id id, scs_value_type_t type) {
-			return Register(callback, id, type, SCS_U32_NIL);
+		Result Register(RegistrationCallback^ callback, Channel channel, SCSValueType type) {
+			return Register(callback, channel, type, SCS_U32_NIL);
 		}
 
-		Result Register(RegistrationCallback^ callback, truckconnect::channeling::telemetry_id id) {
-			return Register(callback, id, SCS_VALUE_TYPE_INVALID, SCS_U32_NIL);
+		Result Register(RegistrationCallback^ callback, Channel channel) {
+			return Register(callback, channel, SCSValueType::TYPE_INVALID, SCS_U32_NIL);
 		}
 
 		Result Unregister(truckconnect::channeling::telemetry_id id, scs_value_type_t type, scs_u32_t index);
