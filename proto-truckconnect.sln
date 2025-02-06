@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.12.35527.113 d17.12
+VisualStudioVersion = 17.12.35527.113
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "truckconnect", "truckconnect\truckconnect.vcxitems", "{3EF9A03C-5290-4A42-9A02-80006A8BE3D4}"
 EndProject
@@ -27,36 +27,76 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "utility", "utility", "{E97F
 		utility\telemetry_processor.py = utility\telemetry_processor.py
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NetTruckConnect", "NetTruckConnect\NetTruckConnect.vcxproj", "{6236A826-7D3A-42E0-8515-71CCEE3CE3D7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetClient", "NetClient\NetClient.csproj", "{B67D9B44-DC61-40A5-AB12-F8D43EC8CC1F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
 		Debug|x64 = Debug|x64
 		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
 		Release|x64 = Release|x64
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B0286CF3-AFAC-4CC8-B131-9CCD1BA685B0}.Debug|Any CPU.ActiveCfg = Debug|x64
+		{B0286CF3-AFAC-4CC8-B131-9CCD1BA685B0}.Debug|Any CPU.Build.0 = Debug|x64
 		{B0286CF3-AFAC-4CC8-B131-9CCD1BA685B0}.Debug|x64.ActiveCfg = Debug|x64
 		{B0286CF3-AFAC-4CC8-B131-9CCD1BA685B0}.Debug|x64.Build.0 = Debug|x64
 		{B0286CF3-AFAC-4CC8-B131-9CCD1BA685B0}.Debug|x86.ActiveCfg = Debug|Win32
 		{B0286CF3-AFAC-4CC8-B131-9CCD1BA685B0}.Debug|x86.Build.0 = Debug|Win32
+		{B0286CF3-AFAC-4CC8-B131-9CCD1BA685B0}.Release|Any CPU.ActiveCfg = Release|x64
+		{B0286CF3-AFAC-4CC8-B131-9CCD1BA685B0}.Release|Any CPU.Build.0 = Release|x64
 		{B0286CF3-AFAC-4CC8-B131-9CCD1BA685B0}.Release|x64.ActiveCfg = Release|x64
 		{B0286CF3-AFAC-4CC8-B131-9CCD1BA685B0}.Release|x64.Build.0 = Release|x64
 		{B0286CF3-AFAC-4CC8-B131-9CCD1BA685B0}.Release|x86.ActiveCfg = Release|Win32
 		{B0286CF3-AFAC-4CC8-B131-9CCD1BA685B0}.Release|x86.Build.0 = Release|Win32
+		{A011B596-2CF9-4840-8F24-6095836C34C7}.Debug|Any CPU.ActiveCfg = Debug|x64
+		{A011B596-2CF9-4840-8F24-6095836C34C7}.Debug|Any CPU.Build.0 = Debug|x64
 		{A011B596-2CF9-4840-8F24-6095836C34C7}.Debug|x64.ActiveCfg = Debug|x64
 		{A011B596-2CF9-4840-8F24-6095836C34C7}.Debug|x64.Build.0 = Debug|x64
 		{A011B596-2CF9-4840-8F24-6095836C34C7}.Debug|x86.ActiveCfg = Debug|Win32
 		{A011B596-2CF9-4840-8F24-6095836C34C7}.Debug|x86.Build.0 = Debug|Win32
+		{A011B596-2CF9-4840-8F24-6095836C34C7}.Release|Any CPU.ActiveCfg = Release|x64
+		{A011B596-2CF9-4840-8F24-6095836C34C7}.Release|Any CPU.Build.0 = Release|x64
 		{A011B596-2CF9-4840-8F24-6095836C34C7}.Release|x64.ActiveCfg = Release|x64
 		{A011B596-2CF9-4840-8F24-6095836C34C7}.Release|x64.Build.0 = Release|x64
 		{A011B596-2CF9-4840-8F24-6095836C34C7}.Release|x86.ActiveCfg = Release|Win32
 		{A011B596-2CF9-4840-8F24-6095836C34C7}.Release|x86.Build.0 = Release|Win32
+		{6236A826-7D3A-42E0-8515-71CCEE3CE3D7}.Debug|Any CPU.ActiveCfg = Debug|x64
+		{6236A826-7D3A-42E0-8515-71CCEE3CE3D7}.Debug|Any CPU.Build.0 = Debug|x64
+		{6236A826-7D3A-42E0-8515-71CCEE3CE3D7}.Debug|x64.ActiveCfg = Debug|x64
+		{6236A826-7D3A-42E0-8515-71CCEE3CE3D7}.Debug|x64.Build.0 = Debug|x64
+		{6236A826-7D3A-42E0-8515-71CCEE3CE3D7}.Debug|x86.ActiveCfg = Debug|Win32
+		{6236A826-7D3A-42E0-8515-71CCEE3CE3D7}.Debug|x86.Build.0 = Debug|Win32
+		{6236A826-7D3A-42E0-8515-71CCEE3CE3D7}.Release|Any CPU.ActiveCfg = Release|x64
+		{6236A826-7D3A-42E0-8515-71CCEE3CE3D7}.Release|Any CPU.Build.0 = Release|x64
+		{6236A826-7D3A-42E0-8515-71CCEE3CE3D7}.Release|x64.ActiveCfg = Release|x64
+		{6236A826-7D3A-42E0-8515-71CCEE3CE3D7}.Release|x64.Build.0 = Release|x64
+		{6236A826-7D3A-42E0-8515-71CCEE3CE3D7}.Release|x86.ActiveCfg = Release|Win32
+		{6236A826-7D3A-42E0-8515-71CCEE3CE3D7}.Release|x86.Build.0 = Release|Win32
+		{B67D9B44-DC61-40A5-AB12-F8D43EC8CC1F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B67D9B44-DC61-40A5-AB12-F8D43EC8CC1F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B67D9B44-DC61-40A5-AB12-F8D43EC8CC1F}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{B67D9B44-DC61-40A5-AB12-F8D43EC8CC1F}.Debug|x64.Build.0 = Debug|Any CPU
+		{B67D9B44-DC61-40A5-AB12-F8D43EC8CC1F}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{B67D9B44-DC61-40A5-AB12-F8D43EC8CC1F}.Debug|x86.Build.0 = Debug|Any CPU
+		{B67D9B44-DC61-40A5-AB12-F8D43EC8CC1F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B67D9B44-DC61-40A5-AB12-F8D43EC8CC1F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B67D9B44-DC61-40A5-AB12-F8D43EC8CC1F}.Release|x64.ActiveCfg = Release|Any CPU
+		{B67D9B44-DC61-40A5-AB12-F8D43EC8CC1F}.Release|x64.Build.0 = Release|Any CPU
+		{B67D9B44-DC61-40A5-AB12-F8D43EC8CC1F}.Release|x86.ActiveCfg = Release|Any CPU
+		{B67D9B44-DC61-40A5-AB12-F8D43EC8CC1F}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		truckconnect\truckconnect.vcxitems*{3ef9a03c-5290-4a42-9a02-80006a8be3d4}*SharedItemsImports = 9
+		NStreamCom\nstreamcom.vcxitems*{6236a826-7d3a-42e0-8515-71ccee3ce3d7}*SharedItemsImports = 4
+		truckconnect\truckconnect.vcxitems*{6236a826-7d3a-42e0-8515-71ccee3ce3d7}*SharedItemsImports = 4
 		NStreamCom\nstreamcom.vcxitems*{a011b596-2cf9-4840-8f24-6095836c34c7}*SharedItemsImports = 4
 		scs\scs.vcxitems*{a011b596-2cf9-4840-8f24-6095836c34c7}*SharedItemsImports = 4
 		truckconnect\truckconnect.vcxitems*{a011b596-2cf9-4840-8f24-6095836c34c7}*SharedItemsImports = 4
