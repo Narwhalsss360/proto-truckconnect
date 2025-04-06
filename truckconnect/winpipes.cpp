@@ -1,6 +1,7 @@
 #ifdef _MSC_VER
 #include "pipes.h"
 #include <Windows.h>
+#include <chrono>
 
 using std::string;
 using std::vector;

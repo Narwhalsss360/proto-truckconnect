@@ -1,6 +1,7 @@
 #include <truckconnect>
 #include <iostream>
 #include <thread>
+#include <chrono>
 
 using std::cout;
 using namespace std::chrono_literals;
