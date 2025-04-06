@@ -24,5 +24,13 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)common\scssdk_telemetry_truck_common_channels.h">
       <Filter>common</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)scssdk.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)scssdk_input.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)scssdk_input_device.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)scssdk_input_event.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)scssdk_telemetry.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)scssdk_telemetry_channel.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)scssdk_telemetry_event.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)scssdk_value.h" />
   </ItemGroup>
 </Project>

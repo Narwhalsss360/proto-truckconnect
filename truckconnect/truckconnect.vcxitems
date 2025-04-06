@@ -16,5 +16,6 @@
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)pipes.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)truckconnect.h" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)winpipes.cpp" />
   </ItemGroup>
 </Project>
