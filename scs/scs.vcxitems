@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="Globals">
+    <MSBuildAllProjects Condition="'$(MSBuildVersion)' == '' Or '$(MSBuildVersion)' &lt; '16.0'">$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <ItemsProjectGuid>{e589fdb5-c59a-4b4d-9669-69e0eed6209b}</ItemsProjectGuid>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(MSBuildThisFileDirectory)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ProjectCapability Include="SourceItemsFromImports" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)common\scssdk_telemetry_common_channels.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)common\scssdk_telemetry_common_configs.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)common\scssdk_telemetry_common_gameplay_events.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)common\scssdk_telemetry_job_common_channels.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)common\scssdk_telemetry_trailer_common_channels.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)common\scssdk_telemetry_truck_common_channels.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)scssdk.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)scssdk_input.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)scssdk_input_device.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)scssdk_input_event.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)scssdk_telemetry.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)scssdk_telemetry_channel.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)scssdk_telemetry_event.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)scssdk_value.h" />
+  </ItemGroup>
+</Project>
