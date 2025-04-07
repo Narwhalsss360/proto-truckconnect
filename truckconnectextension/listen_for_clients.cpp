@@ -1,4 +1,5 @@
 #include "framework.h"
+#include "client_manager.h"
 #include <chrono>
 #include <thread>
 
@@ -104,7 +105,7 @@ void listen_for_clients(bool& stop) {
 		pipe_handle client_pipe = handshake(negotiator_pipe);
 
 		if (valid_handle(client_pipe)) {
-			//Handoff to client manager
+			handoff_client_to_manager(client_pipe);
 		}
 
 		disconnect(negotiator_pipe);

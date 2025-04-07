@@ -1,8 +1,9 @@
 #include "framework.h"
+#include <thread>
 #include <scssdk_telemetry.h>
 #include "truckconnectextension.h"
 #include "listen_for_clients.h"
-#include <thread>
+#include "client_manager.h"
 
 using std::string;
 using std::thread;
@@ -22,6 +23,7 @@ SCSAPI_RESULT scs_telemetry_init(const scs_u32_t version, const scs_telemetry_in
 
 SCSAPI_VOID scs_telemetry_shutdown() {
 	stop_listener = true;
+	game_closed();
 	if (listener.joinable()) {
 		listener.join();
 	}
