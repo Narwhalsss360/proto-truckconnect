@@ -14,6 +14,7 @@
     <ProjectCapability Include="SourceItemsFromImports" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)channels.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)pipes.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)truckconnect.h" />
     <ClCompile Include="$(MSBuildThisFileDirectory)winpipes.cpp" />
