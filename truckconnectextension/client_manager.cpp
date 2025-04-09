@@ -1,15 +1,21 @@
 #include "client_manager.h"
+#include <truckconnect.h>
 #include <thread>
 #include <vector>
 #include <chrono>
 
 using namespace truckconnect::pipes;
+using namespace truckconnect::requests;
 using namespace std::this_thread;
 using namespace std::literals::chrono_literals;
+using truckconnect::channels::telemetry_id;
+using truckconnect::channels::MAX_ID;
 using std::thread;
 using std::vector;
 using std::find;
 using std::find_if;
+
+constexpr const telemetry_id INVALID_ID = MAX_ID + 1;
 
 struct managed;
 void manage(managed* managed);
@@ -18,15 +24,32 @@ struct managed {
 	const string name;
 	pipe_handle client_pipe;
 	thread thread;
+	telemetry_id requested_channel;
+	bool waiting_for_acknowledge;
 
 	managed(const string& name, pipe_handle client_pipe)
-		: name(name), client_pipe(client_pipe) {}
+		: name(name), client_pipe(client_pipe), requested_channel(INVALID_ID), waiting_for_acknowledge(false) {}
 };
 
 bool stop_management = false;
 
-void handle_request(managed* managed, uint8_t type, vector<uint8_t>& data) {
-	//Implement
+void handle_request(managed* managed, RequestType type, vector<uint8_t>& data) {
+	switch (type)
+	{
+	case truckconnect::requests::ACKNOWLEDGE:
+		managed->waiting_for_acknowledge = false;
+		break;
+	case truckconnect::requests::CHANNEL_REQUEST:
+		/*
+			Implement:
+			* If channel is not already registered, register with context
+			* If channel is already registered, just add to context
+		*/
+		break;
+	default:
+		//FATAL: Unkown request type
+		break;
+	}
 }
 
 vector<managed*> managers;
@@ -64,7 +87,7 @@ void manage(managed* managed) {
 
 		data.push_back(read);
 		if (message_size == data.size()) {
-			handle_request(managed, static_cast<uint8_t>(message_type), data);
+			handle_request(managed, static_cast<RequestType>(message_type), data);
 			data.clear();
 			message_type = message_size = -1;
 			break;
