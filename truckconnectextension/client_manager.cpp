@@ -1,6 +1,7 @@
 #include "client_manager.h"
 #include <truckconnect.h>
 #include "context_manager.h"
+#include "broadcasters.h"
 #include <thread>
 #include <vector>
 #include <chrono>
@@ -76,7 +77,7 @@ void handle_request(managed* managed, RequestType type, vector<uint8_t>& data) {
 			SCS_U32_NIL,
 			ID_TO_SCS_VALUE_TYPE[managed->requested_channel_id], //Implement get_type_of_id function
 			SCS_TELEMETRY_CHANNEL_FLAG_no_value,
-			nullptr, //Implement broadcast callback
+			channel_broadcaster,
 			context
 		);
 

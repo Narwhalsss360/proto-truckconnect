@@ -159,6 +159,7 @@
     <None Include="module.def" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="broadcasters.h" />
     <ClInclude Include="client_manager.h" />
     <ClInclude Include="context_manager.h" />
     <ClInclude Include="framework.h" />
@@ -166,6 +167,7 @@
     <ClInclude Include="truckconnectextension.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="broadcasters.cpp" />
     <ClCompile Include="client_manager.cpp" />
     <ClCompile Include="context_manager.cpp" />
     <ClCompile Include="dllmain.cpp" />

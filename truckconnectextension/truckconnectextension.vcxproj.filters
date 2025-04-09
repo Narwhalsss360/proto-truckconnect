@@ -36,6 +36,9 @@
     <ClInclude Include="context_manager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="broadcasters.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="truckconnectextension.cpp">
@@ -51,6 +54,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="context_manager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="broadcasters.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
