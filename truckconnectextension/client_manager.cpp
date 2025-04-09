@@ -123,6 +123,7 @@ void manage(managed* managed) {
 
 	//Check if it's safe to delete `thread` object from within the thread's function:
 	managers.erase(find(managers.begin(), managers.end(), managed));
+	delete managed;
 }
 
 bool is_managed(const string& name) {
