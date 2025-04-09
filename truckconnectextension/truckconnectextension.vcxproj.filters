@@ -27,12 +27,30 @@
     <ClInclude Include="truckconnectextension.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="client_manager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="listen_for_clients.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="context_manager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="truckconnectextension.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="dllmain.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="client_manager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="listen_for_clients.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="context_manager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

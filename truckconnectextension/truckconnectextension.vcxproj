@@ -160,12 +160,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="client_manager.h" />
+    <ClInclude Include="context_manager.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="listen_for_clients.h" />
     <ClInclude Include="truckconnectextension.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="client_manager.cpp" />
+    <ClCompile Include="context_manager.cpp" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="listen_for_clients.cpp" />
     <ClCompile Include="truckconnectextension.cpp" />

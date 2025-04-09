@@ -40,6 +40,18 @@ void handle_request(managed* managed, RequestType type, vector<uint8_t>& data) {
 		managed->waiting_for_acknowledge = false;
 		break;
 	case truckconnect::requests::CHANNEL_REQUEST:
+		if (data.size() < 1) {
+			//FATAL: telemtry_id required
+			return;
+		}
+
+		if (managed->requested_channel != INVALID_ID) {
+			//FATAL: request already pending
+			return;
+		}
+
+
+
 		/*
 			Implement:
 			* If channel is not already registered, register with context
