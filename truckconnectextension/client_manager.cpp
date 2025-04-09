@@ -113,12 +113,13 @@ void manage(managed* managed) {
 		}
 
 		data.push_back(read);
-		if (message_size == data.size()) {
-			handle_request(managed, static_cast<RequestType>(message_type), data);
-			data.clear();
-			message_type = message_size = -1;
-			break;
+		if (message_size != data.size()) {
+			continue;
 		}
+
+		handle_request(managed, static_cast<RequestType>(message_type), data);
+		data.clear();
+		message_type = message_size = -1;
 	}
 
 	//Check if it's safe to delete `thread` object from within the thread's function:
