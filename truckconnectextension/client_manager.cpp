@@ -1,5 +1,6 @@
 #include "client_manager.h"
 #include <truckconnect.h>
+#include "context_manager.h"
 #include <thread>
 #include <vector>
 #include <chrono>
@@ -10,6 +11,7 @@ using namespace std::this_thread;
 using namespace std::literals::chrono_literals;
 using truckconnect::channels::telemetry_id;
 using truckconnect::channels::MAX_ID;
+using truckconnect::channels::MAPPINGS;
 using std::thread;
 using std::vector;
 using std::find;
@@ -50,13 +52,26 @@ void handle_request(managed* managed, RequestType type, vector<uint8_t>& data) {
 			return;
 		}
 
+		managed->requested_channel = data[0];
 
+		context_data* context = contextualize(managed->requested_channel, managed);
 
-		/*
-			Implement:
-			* If channel is not already registered, register with context
-			* If channel is already registered, just add to context
-		*/
+		if (context == nullptr) {
+			//FATAL: Too many contexts
+			return;
+		}
+
+		if (!has_other_context(managed->requested_channel)) {
+			register_for_channel(
+				MAPPINGS[managed->requested_channel],
+				SCS_U32_NIL,
+				SCS_VALUE_TYPE_INVALID, //Implement get_type_of_id function
+				SCS_TELEMETRY_CHANNEL_FLAG_no_value,
+				nullptr, //Implement broadcast callback
+				context
+			);
+		}
+
 		break;
 	default:
 		//FATAL: Unkown request type
