@@ -42,6 +42,11 @@ void handle_request(managed* managed, RequestType type, vector<uint8_t>& data) {
 		managed->waiting_for_acknowledge = false;
 		break;
 	case truckconnect::requests::CHANNEL_REQUEST:
+		if (managed->waiting_for_acknowledge) {
+			//FATAL: If waiting for acknowledge, it must be the next message
+			return;
+		}
+
 		if (data.size() < 1) {
 			//FATAL: telemtry_id required
 			return;
