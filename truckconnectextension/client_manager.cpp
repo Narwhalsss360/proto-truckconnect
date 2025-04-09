@@ -37,15 +37,12 @@ struct managed {
 bool stop_management = false;
 
 void handle_request(managed* managed, RequestType type, vector<uint8_t>& data) {
-	context_data* context = nullptr;
-	constexpr const size_t s = truckconnect::channels::size_of(truckconnect::channels::channel_local_scale::id);
-
 	switch (type)
 	{
 	case truckconnect::requests::ACKNOWLEDGE:
 		managed->waiting_for_acknowledge = false;
 		break;
-	case truckconnect::requests::CHANNEL_REQUEST:
+	case truckconnect::requests::CHANNEL_REQUEST: {
 		if (managed->waiting_for_acknowledge) {
 			//FATAL: If waiting for acknowledge, it must be the next message
 			return;
@@ -63,25 +60,34 @@ void handle_request(managed* managed, RequestType type, vector<uint8_t>& data) {
 
 		managed->requested_channel_id = *reinterpret_cast<telemetry_id*>(&data[0]);
 
-		context = contextualize(managed->requested_channel_id, managed);
+		context_data* context = contextualize(managed->requested_channel_id, managed);
 
 		if (context == nullptr) {
 			//FATAL: Too many contexts
 			return;
 		}
 
-		if (!has_other_context(managed->requested_channel_id)) {
-			register_for_channel(
-				ID_TO_EXPANSION[managed->requested_channel_id],
-				SCS_U32_NIL,
-				ID_TO_SCS_VALUE_TYPE[managed->requested_channel_id], //Implement get_type_of_id function
-				SCS_TELEMETRY_CHANNEL_FLAG_no_value,
-				nullptr, //Implement broadcast callback
-				context
-			);
+		if (has_other_context(managed->requested_channel_id)) {
+			break;
 		}
 
+		scs_result_t result = register_for_channel(
+			ID_TO_EXPANSION[managed->requested_channel_id],
+			SCS_U32_NIL,
+			ID_TO_SCS_VALUE_TYPE[managed->requested_channel_id], //Implement get_type_of_id function
+			SCS_TELEMETRY_CHANNEL_FLAG_no_value,
+			nullptr, //Implement broadcast callback
+			context
+		);
+
+		if (result == SCS_RESULT_ok) {
+			break;
+		}
+
+		//FATAL: registration failed
+		decontextualize(managed->requested_channel_id, managed);
 		break;
+	}
 	default:
 		//FATAL: Unkown request type
 		break;
