@@ -47,7 +47,7 @@ pipe_handle handshake(pipe_handle negotiator_pipe, string& requested_name) {
 		return client_pipe;
 	}
 
-	sleep_for(1ms); //Allow time for client to 
+	sleep_for(1ms); //Allow time for client to begin connecting to it's server.
 
 	constexpr const int MAX_TRIES = 3;
 	
@@ -64,7 +64,7 @@ pipe_handle handshake(pipe_handle negotiator_pipe, string& requested_name) {
 		return pipe_handle();
 	}
 
-	uint8_t call = 1;
+	uint8_t call = 1; //call... \/
 	write(client_pipe, &call, 1);
 
 	for (tries = 0; tries < MAX_TRIES; tries++) {
@@ -83,6 +83,7 @@ pipe_handle handshake(pipe_handle negotiator_pipe, string& requested_name) {
 		return pipe_handle();
 	}
 
+	//...and response
 	read_one(client_pipe);
 
 	return client_pipe;
