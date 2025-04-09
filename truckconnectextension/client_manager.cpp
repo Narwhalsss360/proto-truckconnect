@@ -36,6 +36,8 @@ struct managed {
 bool stop_management = false;
 
 void handle_request(managed* managed, RequestType type, vector<uint8_t>& data) {
+	context_data* context = nullptr;
+
 	switch (type)
 	{
 	case truckconnect::requests::ACKNOWLEDGE:
@@ -59,7 +61,7 @@ void handle_request(managed* managed, RequestType type, vector<uint8_t>& data) {
 
 		managed->requested_channel = *reinterpret_cast<telemetry_id*>(&data[0]);
 
-		context_data* context = contextualize(managed->requested_channel, managed);
+		context = contextualize(managed->requested_channel, managed);
 
 		if (context == nullptr) {
 			//FATAL: Too many contexts

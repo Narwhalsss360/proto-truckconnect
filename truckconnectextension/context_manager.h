@@ -3,6 +3,8 @@
 #include <stdint.h>
 #include <array>
 
+using truckconnect::channels::telemetry_id;
+
 constexpr const size_t MAX_CONTEXTS_PER_CHANNEL = 8;
 
 using context_size_t = uint8_t;

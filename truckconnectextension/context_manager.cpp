@@ -12,7 +12,7 @@ bool has_other_context(telemetry_id id) {
 
 context_data* contextualize(telemetry_id id, void* pointer) {
 	if (id > MAX_ID) {
-		return;
+		return nullptr;
 	}
 
 	context_data& data = context_matrix[id];
