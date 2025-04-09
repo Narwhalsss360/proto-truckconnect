@@ -47,7 +47,7 @@ void handle_request(managed* managed, RequestType type, vector<uint8_t>& data) {
 			return;
 		}
 
-		if (data.size() < 1) {
+		if (data.size() < sizeof(telemetry_id)) {
 			//FATAL: telemtry_id required
 			return;
 		}
@@ -57,7 +57,7 @@ void handle_request(managed* managed, RequestType type, vector<uint8_t>& data) {
 			return;
 		}
 
-		managed->requested_channel = data[0];
+		managed->requested_channel = *reinterpret_cast<telemetry_id*>(&data[0]);
 
 		context_data* context = contextualize(managed->requested_channel, managed);
 
