@@ -92,7 +92,7 @@ void manage(managed* managed) {
 				//Handle sudden client disonnection.
 				break;
 			}
-			sleep_for(2ms);
+			sleep_for(message_type == -1 ? 6ms : 1ms);
 			continue;
 		}
 
