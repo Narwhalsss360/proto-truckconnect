@@ -9,13 +9,18 @@ using namespace std::literals::chrono_literals;
 using std::thread;
 using std::vector;
 using std::find;
+using std::find_if;
 
 struct managed;
 void manage(managed* managed);
 
 struct managed {
+	const string name;
 	pipe_handle client_pipe;
 	thread thread;
+
+	managed(const string& name, pipe_handle client_pipe)
+		: name(name), client_pipe(client_pipe) {}
 };
 
 bool stop_management = false;
@@ -70,9 +75,12 @@ void manage(managed* managed) {
 	managers.erase(find(managers.begin(), managers.end(), managed));
 }
 
-void handoff_client_to_manager(pipe_handle client_pipe) {
-	managed* new_managed = new managed;
-	new_managed->client_pipe = client_pipe;
+bool is_managed(const string& name) {
+	return find_if(managers.begin(), managers.end(), [&name](managed* managed) { return managed->name == name; }) != managers.end();
+}
+
+void handoff_client_to_manager(const string& name, pipe_handle client_pipe) {
+	managed* new_managed = new managed(name, client_pipe);
 	new_managed->thread = std::thread(manage, new_managed);
 	managers.push_back(new_managed);
 }

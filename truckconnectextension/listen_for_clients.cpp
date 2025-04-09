@@ -12,9 +12,7 @@ using namespace truckconnect::pipes;
 
 const string& NEGOTIATOR_PIPE_PATH = to_pipe_path(NEGOTIATOR_PIPE_NAME);
 
-pipe_handle handshake(pipe_handle negotiator_pipe) {
-	string requested_name;
-
+pipe_handle handshake(pipe_handle negotiator_pipe, string& requested_name) {
 	bool failure;
 	while (true) {
 		if (!available(negotiator_pipe, failure)) {
@@ -38,7 +36,9 @@ pipe_handle handshake(pipe_handle negotiator_pipe) {
 		requested_name += static_cast<char>(read);
 	}
 
-	//TODO: ensure requested name is unique
+	if (is_managed(requested_name)) {
+		return pipe_handle();
+	}
 
 	pipe_handle client_pipe = create(to_pipe_path(requested_name));
 
@@ -96,16 +96,17 @@ void listen_for_clients(bool& stop) {
 		return;
 	}
 
+	string requested_name;
 	while (!stop) {
 		if (!try_connect_to_client(negotiator_pipe)) {
 			sleep_for(30ms);
 			continue;
 		}
 
-		pipe_handle client_pipe = handshake(negotiator_pipe);
+		pipe_handle client_pipe = handshake(negotiator_pipe, requested_name);
 
 		if (valid_handle(client_pipe)) {
-			handoff_client_to_manager(client_pipe);
+			handoff_client_to_manager(requested_name, client_pipe);
 		}
 
 		disconnect(negotiator_pipe);
