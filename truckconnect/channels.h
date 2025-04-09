@@ -9,495 +9,1044 @@ namespace truckconnect {
 
 		using telemetry_channel = const char* const;
 
+		struct scs_invalid_t;
+
 		constexpr size_t size_of(const scs_value_type_t& type) {
-			switch (type)
-			{
-			case SCS_VALUE_TYPE_INVALID:
-				return 0;
-			case SCS_VALUE_TYPE_bool:
-				return sizeof(scs_value_bool_t);
-			case SCS_VALUE_TYPE_s32:
-				return sizeof(scs_value_s32_t);
-			case SCS_VALUE_TYPE_u32:
-				return sizeof(scs_u32_t);
-			case SCS_VALUE_TYPE_u64:
-				return sizeof(scs_u64_t);
-			case SCS_VALUE_TYPE_float:
-				return sizeof(scs_float_t);
-			case SCS_VALUE_TYPE_double:
-				return sizeof(scs_double_t);
-			case SCS_VALUE_TYPE_fvector:
-				return sizeof(scs_value_fvector_t);
-			case SCS_VALUE_TYPE_dvector:
-				return sizeof(scs_value_dvector_t);
-			case SCS_VALUE_TYPE_euler:
-				return sizeof(scs_value_euler_t);
-			case SCS_VALUE_TYPE_fplacement:
-				return sizeof(scs_value_fplacement_t);
-			case SCS_VALUE_TYPE_dplacement:
-				return sizeof(scs_value_dplacement_t);
-			case SCS_VALUE_TYPE_string:
-				return 0;
-			case SCS_VALUE_TYPE_s64:
-				return sizeof(scs_value_s64_t);
-			default:
-				return 0;
-			}
+			return
+				type == SCS_VALUE_TYPE_INVALID ? 0 :
+				type == SCS_VALUE_TYPE_bool ? sizeof(scs_value_bool_t) :
+				type == SCS_VALUE_TYPE_s32 ? sizeof(scs_value_s32_t) :
+				type == SCS_VALUE_TYPE_u32 ? sizeof(scs_u32_t) :
+				type == SCS_VALUE_TYPE_u64 ? sizeof(scs_u64_t) :
+				type == SCS_VALUE_TYPE_float ? sizeof(scs_float_t) :
+				type == SCS_VALUE_TYPE_double ? sizeof(scs_double_t) :
+				type == SCS_VALUE_TYPE_fvector ? sizeof(scs_value_fvector_t) :
+				type == SCS_VALUE_TYPE_dvector ? sizeof(scs_value_dvector_t) :
+				type == SCS_VALUE_TYPE_euler ? sizeof(scs_value_euler_t) :
+				type == SCS_VALUE_TYPE_fplacement ? sizeof(scs_value_fplacement_t) :
+				type == SCS_VALUE_TYPE_dplacement ? sizeof(scs_value_dplacement_t) :
+				type == SCS_VALUE_TYPE_string ? 0 :
+				type == SCS_VALUE_TYPE_s64 ? sizeof(scs_value_s64_t) : 0;
 		}
 
-		constexpr const telemetry_channel SCS_TELEMETRY_CHANNEL_local_scale = "local.scale";
-
-		constexpr const telemetry_id ID_SCS_TELEMETRY_CHANNEL_local_scale = 0;
-
-		constexpr const telemetry_channel SCS_TELEMETRY_CHANNEL_game_time = "game.time";
-
-		constexpr const telemetry_id ID_SCS_TELEMETRY_CHANNEL_game_time = 1;
-
-		constexpr const telemetry_channel SCS_TELEMETRY_CHANNEL_multiplayer_time_offset = "multiplayer.time.offset";
-
-		constexpr const telemetry_id ID_SCS_TELEMETRY_CHANNEL_multiplayer_time_offset = 2;
-
-		constexpr const telemetry_channel SCS_TELEMETRY_CHANNEL_next_rest_stop = "rest.stop";
-
-		constexpr const telemetry_id ID_SCS_TELEMETRY_CHANNEL_next_rest_stop = 3;
-
-		constexpr const telemetry_channel SCS_TELEMETRY_GAMEPLAY_EVENT_job_cancelled = "job.cancelled";
-
-		constexpr const telemetry_id ID_SCS_TELEMETRY_GAMEPLAY_EVENT_job_cancelled = 4;
-
-		constexpr const telemetry_channel SCS_TELEMETRY_GAMEPLAY_EVENT_job_delivered = "job.delivered";
-
-		constexpr const telemetry_id ID_SCS_TELEMETRY_GAMEPLAY_EVENT_job_delivered = 5;
-
-		constexpr const telemetry_channel SCS_TELEMETRY_GAMEPLAY_EVENT_player_fined = "player.fined";
-
-		constexpr const telemetry_id ID_SCS_TELEMETRY_GAMEPLAY_EVENT_player_fined = 6;
-
-		constexpr const telemetry_channel SCS_TELEMETRY_GAMEPLAY_EVENT_player_tollgate_paid = "player.tollgate.paid";
-
-		constexpr const telemetry_id ID_SCS_TELEMETRY_GAMEPLAY_EVENT_player_tollgate_paid = 7;
-
-		constexpr const telemetry_channel SCS_TELEMETRY_GAMEPLAY_EVENT_player_use_ferry = "player.use.ferry";
-
-		constexpr const telemetry_id ID_SCS_TELEMETRY_GAMEPLAY_EVENT_player_use_ferry = 8;
-
-		constexpr const telemetry_channel SCS_TELEMETRY_GAMEPLAY_EVENT_player_use_train = "player.use.train";
-
-		constexpr const telemetry_id ID_SCS_TELEMETRY_GAMEPLAY_EVENT_player_use_train = 9;
-
-		constexpr const telemetry_channel SCS_TELEMETRY_JOB_CHANNEL_cargo_damage = "job.cargo.damage";
-
-		constexpr const telemetry_id ID_SCS_TELEMETRY_JOB_CHANNEL_cargo_damage = 10;
-
-		constexpr const telemetry_channel SCS_TELEMETRY_TRAILER_CHANNEL_connected = "trailer.connected";
-
-		constexpr const telemetry_id ID_SCS_TELEMETRY_TRAILER_CHANNEL_connected = 11;
-
-		constexpr const telemetry_channel SCS_TELEMETRY_TRAILER_CHANNEL_cargo_damage = "trailer.cargo.damage";
-
-		constexpr const telemetry_id ID_SCS_TELEMETRY_TRAILER_CHANNEL_cargo_damage = 12;
-
-		constexpr const telemetry_channel SCS_TELEMETRY_TRAILER_CHANNEL_world_placement = "trailer.world.placement";
-
-		constexpr const telemetry_id ID_SCS_TELEMETRY_TRAILER_CHANNEL_world_placement = 13;
-
-		constexpr const telemetry_channel SCS_TELEMETRY_TRAILER_CHANNEL_local_linear_velocity = "trailer.velocity.linear";
-
-		constexpr const telemetry_id ID_SCS_TELEMETRY_TRAILER_CHANNEL_local_linear_velocity = 14;
-
-		constexpr const telemetry_channel SCS_TELEMETRY_TRAILER_CHANNEL_local_angular_velocity = "trailer.velocity.angular";
-
-		constexpr const telemetry_id ID_SCS_TELEMETRY_TRAILER_CHANNEL_local_angular_velocity = 15;
-
-		constexpr const telemetry_channel SCS_TELEMETRY_TRAILER_CHANNEL_local_linear_acceleration = "trailer.acceleration.linear";
-
-		constexpr const telemetry_id ID_SCS_TELEMETRY_TRAILER_CHANNEL_local_linear_acceleration = 16;
-
-		constexpr const telemetry_channel SCS_TELEMETRY_TRAILER_CHANNEL_local_angular_acceleration = "trailer.acceleration.angular";
-
-		constexpr const telemetry_id ID_SCS_TELEMETRY_TRAILER_CHANNEL_local_angular_acceleration = 17;
-
-		constexpr const telemetry_channel SCS_TELEMETRY_TRAILER_CHANNEL_wear_body = "trailer.wear.body";
-
-		constexpr const telemetry_id ID_SCS_TELEMETRY_TRAILER_CHANNEL_wear_body = 18;
-
-		constexpr const telemetry_channel SCS_TELEMETRY_TRAILER_CHANNEL_wear_chassis = "trailer.wear.chassis";
-
-		constexpr const telemetry_id ID_SCS_TELEMETRY_TRAILER_CHANNEL_wear_chassis = 19;
-
-		constexpr const telemetry_channel SCS_TELEMETRY_TRAILER_CHANNEL_wear_wheels = "trailer.wear.wheels";
-
-		constexpr const telemetry_id ID_SCS_TELEMETRY_TRAILER_CHANNEL_wear_wheels = 20;
-
-		constexpr const telemetry_channel SCS_TELEMETRY_TRAILER_CHANNEL_wheel_susp_deflection = "trailer.wheel.suspension.deflection";
-
-		constexpr const telemetry_id ID_SCS_TELEMETRY_TRAILER_CHANNEL_wheel_susp_deflection = 21;
-
-		constexpr const telemetry_channel SCS_TELEMETRY_TRAILER_CHANNEL_wheel_on_ground = "trailer.wheel.on_ground";
-
-		constexpr const telemetry_id ID_SCS_TELEMETRY_TRAILER_CHANNEL_wheel_on_ground = 22;
-
-		constexpr const telemetry_channel SCS_TELEMETRY_TRAILER_CHANNEL_wheel_substance = "trailer.wheel.substance";
-
-		constexpr const telemetry_id ID_SCS_TELEMETRY_TRAILER_CHANNEL_wheel_substance = 23;
-
-		constexpr const telemetry_channel SCS_TELEMETRY_TRAILER_CHANNEL_wheel_velocity = "trailer.wheel.angular_velocity";
-
-		constexpr const telemetry_id ID_SCS_TELEMETRY_TRAILER_CHANNEL_wheel_velocity = 24;
-
-		constexpr const telemetry_channel SCS_TELEMETRY_TRAILER_CHANNEL_wheel_steering = "trailer.wheel.steering";
-
-		constexpr const telemetry_id ID_SCS_TELEMETRY_TRAILER_CHANNEL_wheel_steering = 25;
-
-		constexpr const telemetry_channel SCS_TELEMETRY_TRAILER_CHANNEL_wheel_rotation = "trailer.wheel.rotation";
-
-		constexpr const telemetry_id ID_SCS_TELEMETRY_TRAILER_CHANNEL_wheel_rotation = 26;
-
-		constexpr const telemetry_channel SCS_TELEMETRY_TRAILER_CHANNEL_wheel_lift = "trailer.wheel.lift";
-
-		constexpr const telemetry_id ID_SCS_TELEMETRY_TRAILER_CHANNEL_wheel_lift = 27;
-
-		constexpr const telemetry_channel SCS_TELEMETRY_TRAILER_CHANNEL_wheel_lift_offset = "trailer.wheel.lift.offset";
-
-		constexpr const telemetry_id ID_SCS_TELEMETRY_TRAILER_CHANNEL_wheel_lift_offset = 28;
-
-		constexpr const telemetry_channel SCS_TELEMETRY_TRUCK_CHANNEL_world_placement = "truck.world.placement";
-
-		constexpr const telemetry_id ID_SCS_TELEMETRY_TRUCK_CHANNEL_world_placement = 29;
-
-		constexpr const telemetry_channel SCS_TELEMETRY_TRUCK_CHANNEL_local_linear_velocity = "truck.local.velocity.linear";
-
-		constexpr const telemetry_id ID_SCS_TELEMETRY_TRUCK_CHANNEL_local_linear_velocity = 30;
-
-		constexpr const telemetry_channel SCS_TELEMETRY_TRUCK_CHANNEL_local_angular_velocity = "truck.local.velocity.angular";
-
-		constexpr const telemetry_id ID_SCS_TELEMETRY_TRUCK_CHANNEL_local_angular_velocity = 31;
-
-		constexpr const telemetry_channel SCS_TELEMETRY_TRUCK_CHANNEL_local_linear_acceleration = "truck.local.acceleration.linear";
-
-		constexpr const telemetry_id ID_SCS_TELEMETRY_TRUCK_CHANNEL_local_linear_acceleration = 32;
-
-		constexpr const telemetry_channel SCS_TELEMETRY_TRUCK_CHANNEL_local_angular_acceleration = "truck.local.acceleration.angular";
-
-		constexpr const telemetry_id ID_SCS_TELEMETRY_TRUCK_CHANNEL_local_angular_acceleration = 33;
-
-		constexpr const telemetry_channel SCS_TELEMETRY_TRUCK_CHANNEL_cabin_offset = "truck.cabin.offset";
-
-		constexpr const telemetry_id ID_SCS_TELEMETRY_TRUCK_CHANNEL_cabin_offset = 34;
-
-		constexpr const telemetry_channel SCS_TELEMETRY_TRUCK_CHANNEL_cabin_angular_velocity = "truck.cabin.velocity.angular";
-
-		constexpr const telemetry_id ID_SCS_TELEMETRY_TRUCK_CHANNEL_cabin_angular_velocity = 35;
-
-		constexpr const telemetry_channel SCS_TELEMETRY_TRUCK_CHANNEL_cabin_angular_acceleration = "truck.cabin.acceleration.angular";
-
-		constexpr const telemetry_id ID_SCS_TELEMETRY_TRUCK_CHANNEL_cabin_angular_acceleration = 36;
-
-		constexpr const telemetry_channel SCS_TELEMETRY_TRUCK_CHANNEL_head_offset = "truck.head.offset";
-
-		constexpr const telemetry_id ID_SCS_TELEMETRY_TRUCK_CHANNEL_head_offset = 37;
-
-		constexpr const telemetry_channel SCS_TELEMETRY_TRUCK_CHANNEL_speed = "truck.speed";
-
-		constexpr const telemetry_id ID_SCS_TELEMETRY_TRUCK_CHANNEL_speed = 38;
-
-		constexpr const telemetry_channel SCS_TELEMETRY_TRUCK_CHANNEL_engine_rpm = "truck.engine.rpm";
-
-		constexpr const telemetry_id ID_SCS_TELEMETRY_TRUCK_CHANNEL_engine_rpm = 39;
-
-		constexpr const telemetry_channel SCS_TELEMETRY_TRUCK_CHANNEL_engine_gear = "truck.engine.gear";
-
-		constexpr const telemetry_id ID_SCS_TELEMETRY_TRUCK_CHANNEL_engine_gear = 40;
-
-		constexpr const telemetry_channel SCS_TELEMETRY_TRUCK_CHANNEL_displayed_gear = "truck.displayed.gear";
-
-		constexpr const telemetry_id ID_SCS_TELEMETRY_TRUCK_CHANNEL_displayed_gear = 41;
-
-		constexpr const telemetry_channel SCS_TELEMETRY_TRUCK_CHANNEL_input_steering = "truck.input.steering";
-
-		constexpr const telemetry_id ID_SCS_TELEMETRY_TRUCK_CHANNEL_input_steering = 42;
-
-		constexpr const telemetry_channel SCS_TELEMETRY_TRUCK_CHANNEL_input_throttle = "truck.input.throttle";
-
-		constexpr const telemetry_id ID_SCS_TELEMETRY_TRUCK_CHANNEL_input_throttle = 43;
-
-		constexpr const telemetry_channel SCS_TELEMETRY_TRUCK_CHANNEL_input_brake = "truck.input.brake";
-
-		constexpr const telemetry_id ID_SCS_TELEMETRY_TRUCK_CHANNEL_input_brake = 44;
-
-		constexpr const telemetry_channel SCS_TELEMETRY_TRUCK_CHANNEL_input_clutch = "truck.input.clutch";
-
-		constexpr const telemetry_id ID_SCS_TELEMETRY_TRUCK_CHANNEL_input_clutch = 45;
-
-		constexpr const telemetry_channel SCS_TELEMETRY_TRUCK_CHANNEL_effective_steering = "truck.effective.steering";
-
-		constexpr const telemetry_id ID_SCS_TELEMETRY_TRUCK_CHANNEL_effective_steering = 46;
-
-		constexpr const telemetry_channel SCS_TELEMETRY_TRUCK_CHANNEL_effective_throttle = "truck.effective.throttle";
-
-		constexpr const telemetry_id ID_SCS_TELEMETRY_TRUCK_CHANNEL_effective_throttle = 47;
-
-		constexpr const telemetry_channel SCS_TELEMETRY_TRUCK_CHANNEL_effective_brake = "truck.effective.brake";
-
-		constexpr const telemetry_id ID_SCS_TELEMETRY_TRUCK_CHANNEL_effective_brake = 48;
-
-		constexpr const telemetry_channel SCS_TELEMETRY_TRUCK_CHANNEL_effective_clutch = "truck.effective.clutch";
-
-		constexpr const telemetry_id ID_SCS_TELEMETRY_TRUCK_CHANNEL_effective_clutch = 49;
-
-		constexpr const telemetry_channel SCS_TELEMETRY_TRUCK_CHANNEL_cruise_control = "truck.cruise_control";
-
-		constexpr const telemetry_id ID_SCS_TELEMETRY_TRUCK_CHANNEL_cruise_control = 50;
-
-		constexpr const telemetry_channel SCS_TELEMETRY_TRUCK_CHANNEL_hshifter_slot = "truck.hshifter.slot";
-
-		constexpr const telemetry_id ID_SCS_TELEMETRY_TRUCK_CHANNEL_hshifter_slot = 51;
-
-		constexpr const telemetry_channel SCS_TELEMETRY_TRUCK_CHANNEL_hshifter_selector = "truck.hshifter.select";
-
-		constexpr const telemetry_id ID_SCS_TELEMETRY_TRUCK_CHANNEL_hshifter_selector = 52;
-
-		constexpr const telemetry_channel SCS_TELEMETRY_TRUCK_CHANNEL_parking_brake = "truck.brake.parking";
-
-		constexpr const telemetry_id ID_SCS_TELEMETRY_TRUCK_CHANNEL_parking_brake = 53;
-
-		constexpr const telemetry_channel SCS_TELEMETRY_TRUCK_CHANNEL_motor_brake = "truck.brake.motor";
-
-		constexpr const telemetry_id ID_SCS_TELEMETRY_TRUCK_CHANNEL_motor_brake = 54;
-
-		constexpr const telemetry_channel SCS_TELEMETRY_TRUCK_CHANNEL_retarder_level = "truck.brake.retarder";
-
-		constexpr const telemetry_id ID_SCS_TELEMETRY_TRUCK_CHANNEL_retarder_level = 55;
-
-		constexpr const telemetry_channel SCS_TELEMETRY_TRUCK_CHANNEL_brake_air_pressure = "truck.brake.air.pressure";
-
-		constexpr const telemetry_id ID_SCS_TELEMETRY_TRUCK_CHANNEL_brake_air_pressure = 56;
-
-		constexpr const telemetry_channel SCS_TELEMETRY_TRUCK_CHANNEL_brake_air_pressure_warning = "truck.brake.air.pressure.warning";
-
-		constexpr const telemetry_id ID_SCS_TELEMETRY_TRUCK_CHANNEL_brake_air_pressure_warning = 57;
-
-		constexpr const telemetry_channel SCS_TELEMETRY_TRUCK_CHANNEL_brake_air_pressure_emergency = "truck.brake.air.pressure.emergency";
-
-		constexpr const telemetry_id ID_SCS_TELEMETRY_TRUCK_CHANNEL_brake_air_pressure_emergency = 58;
-
-		constexpr const telemetry_channel SCS_TELEMETRY_TRUCK_CHANNEL_brake_temperature = "truck.brake.temperature";
-
-		constexpr const telemetry_id ID_SCS_TELEMETRY_TRUCK_CHANNEL_brake_temperature = 59;
-
-		constexpr const telemetry_channel SCS_TELEMETRY_TRUCK_CHANNEL_fuel = "truck.fuel.amount";
-
-		constexpr const telemetry_id ID_SCS_TELEMETRY_TRUCK_CHANNEL_fuel = 60;
-
-		constexpr const telemetry_channel SCS_TELEMETRY_TRUCK_CHANNEL_fuel_warning = "truck.fuel.warning";
-
-		constexpr const telemetry_id ID_SCS_TELEMETRY_TRUCK_CHANNEL_fuel_warning = 61;
-
-		constexpr const telemetry_channel SCS_TELEMETRY_TRUCK_CHANNEL_fuel_average_consumption = "truck.fuel.consumption.average";
-
-		constexpr const telemetry_id ID_SCS_TELEMETRY_TRUCK_CHANNEL_fuel_average_consumption = 62;
-
-		constexpr const telemetry_channel SCS_TELEMETRY_TRUCK_CHANNEL_fuel_range = "truck.fuel.range";
-
-		constexpr const telemetry_id ID_SCS_TELEMETRY_TRUCK_CHANNEL_fuel_range = 63;
-
-		constexpr const telemetry_channel SCS_TELEMETRY_TRUCK_CHANNEL_adblue = "truck.adblue";
-
-		constexpr const telemetry_id ID_SCS_TELEMETRY_TRUCK_CHANNEL_adblue = 64;
-
-		constexpr const telemetry_channel SCS_TELEMETRY_TRUCK_CHANNEL_adblue_warning = "truck.adblue.warning";
-
-		constexpr const telemetry_id ID_SCS_TELEMETRY_TRUCK_CHANNEL_adblue_warning = 65;
-
-		constexpr const telemetry_channel SCS_TELEMETRY_TRUCK_CHANNEL_adblue_average_consumption = "truck.adblue.consumption.average";
-
-		constexpr const telemetry_id ID_SCS_TELEMETRY_TRUCK_CHANNEL_adblue_average_consumption = 66;
-
-		constexpr const telemetry_channel SCS_TELEMETRY_TRUCK_CHANNEL_oil_pressure = "truck.oil.pressure";
-
-		constexpr const telemetry_id ID_SCS_TELEMETRY_TRUCK_CHANNEL_oil_pressure = 67;
-
-		constexpr const telemetry_channel SCS_TELEMETRY_TRUCK_CHANNEL_oil_pressure_warning = "truck.oil.pressure.warning";
-
-		constexpr const telemetry_id ID_SCS_TELEMETRY_TRUCK_CHANNEL_oil_pressure_warning = 68;
-
-		constexpr const telemetry_channel SCS_TELEMETRY_TRUCK_CHANNEL_oil_temperature = "truck.oil.temperature";
-
-		constexpr const telemetry_id ID_SCS_TELEMETRY_TRUCK_CHANNEL_oil_temperature = 69;
-
-		constexpr const telemetry_channel SCS_TELEMETRY_TRUCK_CHANNEL_water_temperature = "truck.water.temperature";
-
-		constexpr const telemetry_id ID_SCS_TELEMETRY_TRUCK_CHANNEL_water_temperature = 70;
-
-		constexpr const telemetry_channel SCS_TELEMETRY_TRUCK_CHANNEL_water_temperature_warning = "truck.water.temperature.warning";
-
-		constexpr const telemetry_id ID_SCS_TELEMETRY_TRUCK_CHANNEL_water_temperature_warning = 71;
-
-		constexpr const telemetry_channel SCS_TELEMETRY_TRUCK_CHANNEL_battery_voltage = "truck.battery.voltage";
-
-		constexpr const telemetry_id ID_SCS_TELEMETRY_TRUCK_CHANNEL_battery_voltage = 72;
-
-		constexpr const telemetry_channel SCS_TELEMETRY_TRUCK_CHANNEL_battery_voltage_warning = "truck.battery.voltage.warning";
-
-		constexpr const telemetry_id ID_SCS_TELEMETRY_TRUCK_CHANNEL_battery_voltage_warning = 73;
-
-		constexpr const telemetry_channel SCS_TELEMETRY_TRUCK_CHANNEL_electric_enabled = "truck.electric.enabled";
-
-		constexpr const telemetry_id ID_SCS_TELEMETRY_TRUCK_CHANNEL_electric_enabled = 74;
-
-		constexpr const telemetry_channel SCS_TELEMETRY_TRUCK_CHANNEL_engine_enabled = "truck.engine.enabled";
-
-		constexpr const telemetry_id ID_SCS_TELEMETRY_TRUCK_CHANNEL_engine_enabled = 75;
-
-		constexpr const telemetry_channel SCS_TELEMETRY_TRUCK_CHANNEL_lblinker = "truck.lblinker";
-
-		constexpr const telemetry_id ID_SCS_TELEMETRY_TRUCK_CHANNEL_lblinker = 76;
-
-		constexpr const telemetry_channel SCS_TELEMETRY_TRUCK_CHANNEL_rblinker = "truck.rblinker";
-
-		constexpr const telemetry_id ID_SCS_TELEMETRY_TRUCK_CHANNEL_rblinker = 77;
-
-		constexpr const telemetry_channel SCS_TELEMETRY_TRUCK_CHANNEL_hazard_warning = "truck.hazard.warning";
-
-		constexpr const telemetry_id ID_SCS_TELEMETRY_TRUCK_CHANNEL_hazard_warning = 78;
-
-		constexpr const telemetry_channel SCS_TELEMETRY_TRUCK_CHANNEL_light_lblinker = "truck.light.lblinker";
-
-		constexpr const telemetry_id ID_SCS_TELEMETRY_TRUCK_CHANNEL_light_lblinker = 79;
-
-		constexpr const telemetry_channel SCS_TELEMETRY_TRUCK_CHANNEL_light_rblinker = "truck.light.rblinker";
-
-		constexpr const telemetry_id ID_SCS_TELEMETRY_TRUCK_CHANNEL_light_rblinker = 80;
-
-		constexpr const telemetry_channel SCS_TELEMETRY_TRUCK_CHANNEL_light_parking = "truck.light.parking";
-
-		constexpr const telemetry_id ID_SCS_TELEMETRY_TRUCK_CHANNEL_light_parking = 81;
-
-		constexpr const telemetry_channel SCS_TELEMETRY_TRUCK_CHANNEL_light_low_beam = "truck.light.beam.low";
-
-		constexpr const telemetry_id ID_SCS_TELEMETRY_TRUCK_CHANNEL_light_low_beam = 82;
-
-		constexpr const telemetry_channel SCS_TELEMETRY_TRUCK_CHANNEL_light_high_beam = "truck.light.beam.high";
-
-		constexpr const telemetry_id ID_SCS_TELEMETRY_TRUCK_CHANNEL_light_high_beam = 83;
-
-		constexpr const telemetry_channel SCS_TELEMETRY_TRUCK_CHANNEL_light_aux_front = "truck.light.aux.front";
-
-		constexpr const telemetry_id ID_SCS_TELEMETRY_TRUCK_CHANNEL_light_aux_front = 84;
-
-		constexpr const telemetry_channel SCS_TELEMETRY_TRUCK_CHANNEL_light_aux_roof = "truck.light.aux.roof";
-
-		constexpr const telemetry_id ID_SCS_TELEMETRY_TRUCK_CHANNEL_light_aux_roof = 85;
-
-		constexpr const telemetry_channel SCS_TELEMETRY_TRUCK_CHANNEL_light_beacon = "truck.light.beacon";
-
-		constexpr const telemetry_id ID_SCS_TELEMETRY_TRUCK_CHANNEL_light_beacon = 86;
-
-		constexpr const telemetry_channel SCS_TELEMETRY_TRUCK_CHANNEL_light_brake = "truck.light.brake";
-
-		constexpr const telemetry_id ID_SCS_TELEMETRY_TRUCK_CHANNEL_light_brake = 87;
-
-		constexpr const telemetry_channel SCS_TELEMETRY_TRUCK_CHANNEL_light_reverse = "truck.light.reverse";
-
-		constexpr const telemetry_id ID_SCS_TELEMETRY_TRUCK_CHANNEL_light_reverse = 88;
-
-		constexpr const telemetry_channel SCS_TELEMETRY_TRUCK_CHANNEL_wipers = "truck.wipers";
-
-		constexpr const telemetry_id ID_SCS_TELEMETRY_TRUCK_CHANNEL_wipers = 89;
-
-		constexpr const telemetry_channel SCS_TELEMETRY_TRUCK_CHANNEL_dashboard_backlight = "truck.dashboard.backlight";
-
-		constexpr const telemetry_id ID_SCS_TELEMETRY_TRUCK_CHANNEL_dashboard_backlight = 90;
-
-		constexpr const telemetry_channel SCS_TELEMETRY_TRUCK_CHANNEL_differential_lock = "truck.differential_lock";
-
-		constexpr const telemetry_id ID_SCS_TELEMETRY_TRUCK_CHANNEL_differential_lock = 91;
-
-		constexpr const telemetry_channel SCS_TELEMETRY_TRUCK_CHANNEL_lift_axle = "truck.lift_axle";
-
-		constexpr const telemetry_id ID_SCS_TELEMETRY_TRUCK_CHANNEL_lift_axle = 92;
-
-		constexpr const telemetry_channel SCS_TELEMETRY_TRUCK_CHANNEL_lift_axle_indicator = "truck.lift_axle.indicator";
-
-		constexpr const telemetry_id ID_SCS_TELEMETRY_TRUCK_CHANNEL_lift_axle_indicator = 93;
-
-		constexpr const telemetry_channel SCS_TELEMETRY_TRUCK_CHANNEL_trailer_lift_axle = "truck.trailer.lift_axle";
-
-		constexpr const telemetry_id ID_SCS_TELEMETRY_TRUCK_CHANNEL_trailer_lift_axle = 94;
-
-		constexpr const telemetry_channel SCS_TELEMETRY_TRUCK_CHANNEL_trailer_lift_axle_indicator = "truck.trailer.lift_axle.indicator";
-
-		constexpr const telemetry_id ID_SCS_TELEMETRY_TRUCK_CHANNEL_trailer_lift_axle_indicator = 95;
-
-		constexpr const telemetry_channel SCS_TELEMETRY_TRUCK_CHANNEL_wear_engine = "truck.wear.engine";
-
-		constexpr const telemetry_id ID_SCS_TELEMETRY_TRUCK_CHANNEL_wear_engine = 96;
-
-		constexpr const telemetry_channel SCS_TELEMETRY_TRUCK_CHANNEL_wear_transmission = "truck.wear.transmission";
-
-		constexpr const telemetry_id ID_SCS_TELEMETRY_TRUCK_CHANNEL_wear_transmission = 97;
-
-		constexpr const telemetry_channel SCS_TELEMETRY_TRUCK_CHANNEL_wear_cabin = "truck.wear.cabin";
-
-		constexpr const telemetry_id ID_SCS_TELEMETRY_TRUCK_CHANNEL_wear_cabin = 98;
-
-		constexpr const telemetry_channel SCS_TELEMETRY_TRUCK_CHANNEL_wear_chassis = "truck.wear.chassis";
-
-		constexpr const telemetry_id ID_SCS_TELEMETRY_TRUCK_CHANNEL_wear_chassis = 99;
-
-		constexpr const telemetry_channel SCS_TELEMETRY_TRUCK_CHANNEL_wear_wheels = "truck.wear.wheels";
-
-		constexpr const telemetry_id ID_SCS_TELEMETRY_TRUCK_CHANNEL_wear_wheels = 100;
-
-		constexpr const telemetry_channel SCS_TELEMETRY_TRUCK_CHANNEL_odometer = "truck.odometer";
-
-		constexpr const telemetry_id ID_SCS_TELEMETRY_TRUCK_CHANNEL_odometer = 101;
-
-		constexpr const telemetry_channel SCS_TELEMETRY_TRUCK_CHANNEL_navigation_distance = "truck.navigation.distance";
-
-		constexpr const telemetry_id ID_SCS_TELEMETRY_TRUCK_CHANNEL_navigation_distance = 102;
-
-		constexpr const telemetry_channel SCS_TELEMETRY_TRUCK_CHANNEL_navigation_time = "truck.navigation.time";
-
-		constexpr const telemetry_id ID_SCS_TELEMETRY_TRUCK_CHANNEL_navigation_time = 103;
-
-		constexpr const telemetry_channel SCS_TELEMETRY_TRUCK_CHANNEL_navigation_speed_limit = "truck.navigation.speed.limit";
-
-		constexpr const telemetry_id ID_SCS_TELEMETRY_TRUCK_CHANNEL_navigation_speed_limit = 104;
-
-		constexpr const telemetry_channel SCS_TELEMETRY_TRUCK_CHANNEL_wheel_susp_deflection = "truck.wheel.suspension.deflection";
-
-		constexpr const telemetry_id ID_SCS_TELEMETRY_TRUCK_CHANNEL_wheel_susp_deflection = 105;
-
-		constexpr const telemetry_channel SCS_TELEMETRY_TRUCK_CHANNEL_wheel_on_ground = "truck.wheel.on_ground";
-
-		constexpr const telemetry_id ID_SCS_TELEMETRY_TRUCK_CHANNEL_wheel_on_ground = 106;
-
-		constexpr const telemetry_channel SCS_TELEMETRY_TRUCK_CHANNEL_wheel_substance = "truck.wheel.substance";
-
-		constexpr const telemetry_id ID_SCS_TELEMETRY_TRUCK_CHANNEL_wheel_substance = 107;
-
-		constexpr const telemetry_channel SCS_TELEMETRY_TRUCK_CHANNEL_wheel_velocity = "truck.wheel.angular_velocity";
-
-		constexpr const telemetry_id ID_SCS_TELEMETRY_TRUCK_CHANNEL_wheel_velocity = 108;
-
-		constexpr const telemetry_channel SCS_TELEMETRY_TRUCK_CHANNEL_wheel_steering = "truck.wheel.steering";
-
-		constexpr const telemetry_id ID_SCS_TELEMETRY_TRUCK_CHANNEL_wheel_steering = 109;
-
-		constexpr const telemetry_channel SCS_TELEMETRY_TRUCK_CHANNEL_wheel_rotation = "truck.wheel.rotation";
-
-		constexpr const telemetry_id ID_SCS_TELEMETRY_TRUCK_CHANNEL_wheel_rotation = 110;
-
-		constexpr const telemetry_channel SCS_TELEMETRY_TRUCK_CHANNEL_wheel_lift = "truck.wheel.lift";
-
-		constexpr const telemetry_id ID_SCS_TELEMETRY_TRUCK_CHANNEL_wheel_lift = 111;
-
-		constexpr const telemetry_channel SCS_TELEMETRY_TRUCK_CHANNEL_wheel_lift_offset = "truck.wheel.lift.offset";
-
-		constexpr const telemetry_id ID_SCS_TELEMETRY_TRUCK_CHANNEL_wheel_lift_offset = 112;
-
-		constexpr const telemetry_channel MAPPINGS[] = {
+		struct channel_local_scale {
+			static constexpr const telemetry_id id = 0;
+			static constexpr const scs_value_type_t scs_value_type = 5;
+			using type = scs_value_float_t;
+			static constexpr telemetry_channel expansion = "local.scale";
+			static constexpr const bool event = false;
+			static constexpr const bool indexed = false;
+		};
+
+		struct channel_game_time {
+			static constexpr const telemetry_id id = 1;
+			static constexpr const scs_value_type_t scs_value_type = 3;
+			using type = scs_value_u32_t;
+			static constexpr telemetry_channel expansion = "game.time";
+			static constexpr const bool event = false;
+			static constexpr const bool indexed = false;
+		};
+
+		struct channel_multiplayer_time_offset {
+			static constexpr const telemetry_id id = 2;
+			static constexpr const scs_value_type_t scs_value_type = 2;
+			using type = scs_value_s32_t;
+			static constexpr telemetry_channel expansion = "multiplayer.time.offset";
+			static constexpr const bool event = false;
+			static constexpr const bool indexed = false;
+		};
+
+		struct channel_next_rest_stop {
+			static constexpr const telemetry_id id = 3;
+			static constexpr const scs_value_type_t scs_value_type = 2;
+			using type = scs_value_s32_t;
+			static constexpr telemetry_channel expansion = "rest.stop";
+			static constexpr const bool event = false;
+			static constexpr const bool indexed = false;
+		};
+
+		struct gameplay_event_job_cancelled {
+			static constexpr const telemetry_id id = 4;
+			static constexpr const scs_value_type_t scs_value_type = 0;
+			using type = scs_invalid_t;
+			static constexpr telemetry_channel expansion = "job.cancelled";
+			static constexpr const bool event = true;
+			static constexpr const bool indexed = false;
+		};
+
+		struct gameplay_event_job_delivered {
+			static constexpr const telemetry_id id = 5;
+			static constexpr const scs_value_type_t scs_value_type = 0;
+			using type = scs_invalid_t;
+			static constexpr telemetry_channel expansion = "job.delivered";
+			static constexpr const bool event = true;
+			static constexpr const bool indexed = false;
+		};
+
+		struct gameplay_event_player_fined {
+			static constexpr const telemetry_id id = 6;
+			static constexpr const scs_value_type_t scs_value_type = 0;
+			using type = scs_invalid_t;
+			static constexpr telemetry_channel expansion = "player.fined";
+			static constexpr const bool event = true;
+			static constexpr const bool indexed = false;
+		};
+
+		struct gameplay_event_player_tollgate_paid {
+			static constexpr const telemetry_id id = 7;
+			static constexpr const scs_value_type_t scs_value_type = 0;
+			using type = scs_invalid_t;
+			static constexpr telemetry_channel expansion = "player.tollgate.paid";
+			static constexpr const bool event = true;
+			static constexpr const bool indexed = false;
+		};
+
+		struct gameplay_event_player_use_ferry {
+			static constexpr const telemetry_id id = 8;
+			static constexpr const scs_value_type_t scs_value_type = 0;
+			using type = scs_invalid_t;
+			static constexpr telemetry_channel expansion = "player.use.ferry";
+			static constexpr const bool event = true;
+			static constexpr const bool indexed = false;
+		};
+
+		struct gameplay_event_player_use_train {
+			static constexpr const telemetry_id id = 9;
+			static constexpr const scs_value_type_t scs_value_type = 0;
+			using type = scs_invalid_t;
+			static constexpr telemetry_channel expansion = "player.use.train";
+			static constexpr const bool event = true;
+			static constexpr const bool indexed = false;
+		};
+
+		struct job_channel_cargo_damage {
+			static constexpr const telemetry_id id = 10;
+			static constexpr const scs_value_type_t scs_value_type = 5;
+			using type = scs_value_float_t;
+			static constexpr telemetry_channel expansion = "job.cargo.damage";
+			static constexpr const bool event = false;
+			static constexpr const bool indexed = false;
+		};
+
+		struct trailer_channel_connected {
+			static constexpr const telemetry_id id = 11;
+			static constexpr const scs_value_type_t scs_value_type = 1;
+			using type = scs_value_bool_t;
+			static constexpr telemetry_channel expansion = "trailer.connected";
+			static constexpr const bool event = false;
+			static constexpr const bool indexed = false;
+		};
+
+		struct trailer_channel_cargo_damage {
+			static constexpr const telemetry_id id = 12;
+			static constexpr const scs_value_type_t scs_value_type = 5;
+			using type = scs_value_float_t;
+			static constexpr telemetry_channel expansion = "trailer.cargo.damage";
+			static constexpr const bool event = false;
+			static constexpr const bool indexed = false;
+		};
+
+		struct trailer_channel_world_placement {
+			static constexpr const telemetry_id id = 13;
+			static constexpr const scs_value_type_t scs_value_type = 11;
+			using type = scs_value_dplacement_t;
+			static constexpr telemetry_channel expansion = "trailer.world.placement";
+			static constexpr const bool event = false;
+			static constexpr const bool indexed = false;
+		};
+
+		struct trailer_channel_local_linear_velocity {
+			static constexpr const telemetry_id id = 14;
+			static constexpr const scs_value_type_t scs_value_type = 7;
+			using type = scs_value_fvector_t;
+			static constexpr telemetry_channel expansion = "trailer.velocity.linear";
+			static constexpr const bool event = false;
+			static constexpr const bool indexed = false;
+		};
+
+		struct trailer_channel_local_angular_velocity {
+			static constexpr const telemetry_id id = 15;
+			static constexpr const scs_value_type_t scs_value_type = 7;
+			using type = scs_value_fvector_t;
+			static constexpr telemetry_channel expansion = "trailer.velocity.angular";
+			static constexpr const bool event = false;
+			static constexpr const bool indexed = false;
+		};
+
+		struct trailer_channel_local_linear_acceleration {
+			static constexpr const telemetry_id id = 16;
+			static constexpr const scs_value_type_t scs_value_type = 7;
+			using type = scs_value_fvector_t;
+			static constexpr telemetry_channel expansion = "trailer.acceleration.linear";
+			static constexpr const bool event = false;
+			static constexpr const bool indexed = false;
+		};
+
+		struct trailer_channel_local_angular_acceleration {
+			static constexpr const telemetry_id id = 17;
+			static constexpr const scs_value_type_t scs_value_type = 7;
+			using type = scs_value_fvector_t;
+			static constexpr telemetry_channel expansion = "trailer.acceleration.angular";
+			static constexpr const bool event = false;
+			static constexpr const bool indexed = false;
+		};
+
+		struct trailer_channel_wear_body {
+			static constexpr const telemetry_id id = 18;
+			static constexpr const scs_value_type_t scs_value_type = 5;
+			using type = scs_value_float_t;
+			static constexpr telemetry_channel expansion = "trailer.wear.body";
+			static constexpr const bool event = false;
+			static constexpr const bool indexed = false;
+		};
+
+		struct trailer_channel_wear_chassis {
+			static constexpr const telemetry_id id = 19;
+			static constexpr const scs_value_type_t scs_value_type = 5;
+			using type = scs_value_float_t;
+			static constexpr telemetry_channel expansion = "trailer.wear.chassis";
+			static constexpr const bool event = false;
+			static constexpr const bool indexed = false;
+		};
+
+		struct trailer_channel_wear_wheels {
+			static constexpr const telemetry_id id = 20;
+			static constexpr const scs_value_type_t scs_value_type = 5;
+			using type = scs_value_float_t;
+			static constexpr telemetry_channel expansion = "trailer.wear.wheels";
+			static constexpr const bool event = false;
+			static constexpr const bool indexed = false;
+		};
+
+		struct trailer_channel_wheel_susp_deflection {
+			static constexpr const telemetry_id id = 21;
+			static constexpr const scs_value_type_t scs_value_type = 5;
+			using type = scs_value_float_t;
+			static constexpr telemetry_channel expansion = "trailer.wheel.suspension.deflection";
+			static constexpr const bool event = false;
+			static constexpr const bool indexed = false;
+		};
+
+		struct trailer_channel_wheel_on_ground {
+			static constexpr const telemetry_id id = 22;
+			static constexpr const scs_value_type_t scs_value_type = 1;
+			using type = scs_value_bool_t;
+			static constexpr telemetry_channel expansion = "trailer.wheel.on_ground";
+			static constexpr const bool event = false;
+			static constexpr const bool indexed = false;
+		};
+
+		struct trailer_channel_wheel_substance {
+			static constexpr const telemetry_id id = 23;
+			static constexpr const scs_value_type_t scs_value_type = 3;
+			using type = scs_value_u32_t;
+			static constexpr telemetry_channel expansion = "trailer.wheel.substance";
+			static constexpr const bool event = false;
+			static constexpr const bool indexed = false;
+		};
+
+		struct trailer_channel_wheel_velocity {
+			static constexpr const telemetry_id id = 24;
+			static constexpr const scs_value_type_t scs_value_type = 5;
+			using type = scs_value_float_t;
+			static constexpr telemetry_channel expansion = "trailer.wheel.angular_velocity";
+			static constexpr const bool event = false;
+			static constexpr const bool indexed = false;
+		};
+
+		struct trailer_channel_wheel_steering {
+			static constexpr const telemetry_id id = 25;
+			static constexpr const scs_value_type_t scs_value_type = 5;
+			using type = scs_value_float_t;
+			static constexpr telemetry_channel expansion = "trailer.wheel.steering";
+			static constexpr const bool event = false;
+			static constexpr const bool indexed = false;
+		};
+
+		struct trailer_channel_wheel_rotation {
+			static constexpr const telemetry_id id = 26;
+			static constexpr const scs_value_type_t scs_value_type = 5;
+			using type = scs_value_float_t;
+			static constexpr telemetry_channel expansion = "trailer.wheel.rotation";
+			static constexpr const bool event = false;
+			static constexpr const bool indexed = false;
+		};
+
+		struct trailer_channel_wheel_lift {
+			static constexpr const telemetry_id id = 27;
+			static constexpr const scs_value_type_t scs_value_type = 5;
+			using type = scs_value_float_t;
+			static constexpr telemetry_channel expansion = "trailer.wheel.lift";
+			static constexpr const bool event = false;
+			static constexpr const bool indexed = false;
+		};
+
+		struct trailer_channel_wheel_lift_offset {
+			static constexpr const telemetry_id id = 28;
+			static constexpr const scs_value_type_t scs_value_type = 5;
+			using type = scs_value_float_t;
+			static constexpr telemetry_channel expansion = "trailer.wheel.lift.offset";
+			static constexpr const bool event = false;
+			static constexpr const bool indexed = false;
+		};
+
+		struct truck_channel_world_placement {
+			static constexpr const telemetry_id id = 29;
+			static constexpr const scs_value_type_t scs_value_type = 11;
+			using type = scs_value_dplacement_t;
+			static constexpr telemetry_channel expansion = "truck.world.placement";
+			static constexpr const bool event = false;
+			static constexpr const bool indexed = false;
+		};
+
+		struct truck_channel_local_linear_velocity {
+			static constexpr const telemetry_id id = 30;
+			static constexpr const scs_value_type_t scs_value_type = 7;
+			using type = scs_value_fvector_t;
+			static constexpr telemetry_channel expansion = "truck.local.velocity.linear";
+			static constexpr const bool event = false;
+			static constexpr const bool indexed = false;
+		};
+
+		struct truck_channel_local_angular_velocity {
+			static constexpr const telemetry_id id = 31;
+			static constexpr const scs_value_type_t scs_value_type = 7;
+			using type = scs_value_fvector_t;
+			static constexpr telemetry_channel expansion = "truck.local.velocity.angular";
+			static constexpr const bool event = false;
+			static constexpr const bool indexed = false;
+		};
+
+		struct truck_channel_local_linear_acceleration {
+			static constexpr const telemetry_id id = 32;
+			static constexpr const scs_value_type_t scs_value_type = 7;
+			using type = scs_value_fvector_t;
+			static constexpr telemetry_channel expansion = "truck.local.acceleration.linear";
+			static constexpr const bool event = false;
+			static constexpr const bool indexed = false;
+		};
+
+		struct truck_channel_local_angular_acceleration {
+			static constexpr const telemetry_id id = 33;
+			static constexpr const scs_value_type_t scs_value_type = 7;
+			using type = scs_value_fvector_t;
+			static constexpr telemetry_channel expansion = "truck.local.acceleration.angular";
+			static constexpr const bool event = false;
+			static constexpr const bool indexed = false;
+		};
+
+		struct truck_channel_cabin_offset {
+			static constexpr const telemetry_id id = 34;
+			static constexpr const scs_value_type_t scs_value_type = 10;
+			using type = scs_value_fplacement_t;
+			static constexpr telemetry_channel expansion = "truck.cabin.offset";
+			static constexpr const bool event = false;
+			static constexpr const bool indexed = false;
+		};
+
+		struct truck_channel_cabin_angular_velocity {
+			static constexpr const telemetry_id id = 35;
+			static constexpr const scs_value_type_t scs_value_type = 7;
+			using type = scs_value_fvector_t;
+			static constexpr telemetry_channel expansion = "truck.cabin.velocity.angular";
+			static constexpr const bool event = false;
+			static constexpr const bool indexed = false;
+		};
+
+		struct truck_channel_cabin_angular_acceleration {
+			static constexpr const telemetry_id id = 36;
+			static constexpr const scs_value_type_t scs_value_type = 7;
+			using type = scs_value_fvector_t;
+			static constexpr telemetry_channel expansion = "truck.cabin.acceleration.angular";
+			static constexpr const bool event = false;
+			static constexpr const bool indexed = false;
+		};
+
+		struct truck_channel_head_offset {
+			static constexpr const telemetry_id id = 37;
+			static constexpr const scs_value_type_t scs_value_type = 10;
+			using type = scs_value_fplacement_t;
+			static constexpr telemetry_channel expansion = "truck.head.offset";
+			static constexpr const bool event = false;
+			static constexpr const bool indexed = false;
+		};
+
+		struct truck_channel_speed {
+			static constexpr const telemetry_id id = 38;
+			static constexpr const scs_value_type_t scs_value_type = 5;
+			using type = scs_value_float_t;
+			static constexpr telemetry_channel expansion = "truck.speed";
+			static constexpr const bool event = false;
+			static constexpr const bool indexed = false;
+		};
+
+		struct truck_channel_engine_rpm {
+			static constexpr const telemetry_id id = 39;
+			static constexpr const scs_value_type_t scs_value_type = 5;
+			using type = scs_value_float_t;
+			static constexpr telemetry_channel expansion = "truck.engine.rpm";
+			static constexpr const bool event = false;
+			static constexpr const bool indexed = false;
+		};
+
+		struct truck_channel_engine_gear {
+			static constexpr const telemetry_id id = 40;
+			static constexpr const scs_value_type_t scs_value_type = 2;
+			using type = scs_value_s32_t;
+			static constexpr telemetry_channel expansion = "truck.engine.gear";
+			static constexpr const bool event = false;
+			static constexpr const bool indexed = false;
+		};
+
+		struct truck_channel_displayed_gear {
+			static constexpr const telemetry_id id = 41;
+			static constexpr const scs_value_type_t scs_value_type = 2;
+			using type = scs_value_s32_t;
+			static constexpr telemetry_channel expansion = "truck.displayed.gear";
+			static constexpr const bool event = false;
+			static constexpr const bool indexed = false;
+		};
+
+		struct truck_channel_input_steering {
+			static constexpr const telemetry_id id = 42;
+			static constexpr const scs_value_type_t scs_value_type = 5;
+			using type = scs_value_float_t;
+			static constexpr telemetry_channel expansion = "truck.input.steering";
+			static constexpr const bool event = false;
+			static constexpr const bool indexed = false;
+		};
+
+		struct truck_channel_input_throttle {
+			static constexpr const telemetry_id id = 43;
+			static constexpr const scs_value_type_t scs_value_type = 5;
+			using type = scs_value_float_t;
+			static constexpr telemetry_channel expansion = "truck.input.throttle";
+			static constexpr const bool event = false;
+			static constexpr const bool indexed = false;
+		};
+
+		struct truck_channel_input_brake {
+			static constexpr const telemetry_id id = 44;
+			static constexpr const scs_value_type_t scs_value_type = 5;
+			using type = scs_value_float_t;
+			static constexpr telemetry_channel expansion = "truck.input.brake";
+			static constexpr const bool event = false;
+			static constexpr const bool indexed = false;
+		};
+
+		struct truck_channel_input_clutch {
+			static constexpr const telemetry_id id = 45;
+			static constexpr const scs_value_type_t scs_value_type = 5;
+			using type = scs_value_float_t;
+			static constexpr telemetry_channel expansion = "truck.input.clutch";
+			static constexpr const bool event = false;
+			static constexpr const bool indexed = false;
+		};
+
+		struct truck_channel_effective_steering {
+			static constexpr const telemetry_id id = 46;
+			static constexpr const scs_value_type_t scs_value_type = 5;
+			using type = scs_value_float_t;
+			static constexpr telemetry_channel expansion = "truck.effective.steering";
+			static constexpr const bool event = false;
+			static constexpr const bool indexed = false;
+		};
+
+		struct truck_channel_effective_throttle {
+			static constexpr const telemetry_id id = 47;
+			static constexpr const scs_value_type_t scs_value_type = 5;
+			using type = scs_value_float_t;
+			static constexpr telemetry_channel expansion = "truck.effective.throttle";
+			static constexpr const bool event = false;
+			static constexpr const bool indexed = false;
+		};
+
+		struct truck_channel_effective_brake {
+			static constexpr const telemetry_id id = 48;
+			static constexpr const scs_value_type_t scs_value_type = 5;
+			using type = scs_value_float_t;
+			static constexpr telemetry_channel expansion = "truck.effective.brake";
+			static constexpr const bool event = false;
+			static constexpr const bool indexed = false;
+		};
+
+		struct truck_channel_effective_clutch {
+			static constexpr const telemetry_id id = 49;
+			static constexpr const scs_value_type_t scs_value_type = 5;
+			using type = scs_value_float_t;
+			static constexpr telemetry_channel expansion = "truck.effective.clutch";
+			static constexpr const bool event = false;
+			static constexpr const bool indexed = false;
+		};
+
+		struct truck_channel_cruise_control {
+			static constexpr const telemetry_id id = 50;
+			static constexpr const scs_value_type_t scs_value_type = 5;
+			using type = scs_value_float_t;
+			static constexpr telemetry_channel expansion = "truck.cruise_control";
+			static constexpr const bool event = false;
+			static constexpr const bool indexed = false;
+		};
+
+		struct truck_channel_hshifter_slot {
+			static constexpr const telemetry_id id = 51;
+			static constexpr const scs_value_type_t scs_value_type = 3;
+			using type = scs_value_u32_t;
+			static constexpr telemetry_channel expansion = "truck.hshifter.slot";
+			static constexpr const bool event = false;
+			static constexpr const bool indexed = false;
+		};
+
+		struct truck_channel_hshifter_selector {
+			static constexpr const telemetry_id id = 52;
+			static constexpr const scs_value_type_t scs_value_type = 1;
+			using type = scs_value_bool_t;
+			static constexpr telemetry_channel expansion = "truck.hshifter.select";
+			static constexpr const bool event = false;
+			static constexpr const bool indexed = true;
+		};
+
+		struct truck_channel_parking_brake {
+			static constexpr const telemetry_id id = 53;
+			static constexpr const scs_value_type_t scs_value_type = 1;
+			using type = scs_value_bool_t;
+			static constexpr telemetry_channel expansion = "truck.brake.parking";
+			static constexpr const bool event = false;
+			static constexpr const bool indexed = false;
+		};
+
+		struct truck_channel_motor_brake {
+			static constexpr const telemetry_id id = 54;
+			static constexpr const scs_value_type_t scs_value_type = 1;
+			using type = scs_value_bool_t;
+			static constexpr telemetry_channel expansion = "truck.brake.motor";
+			static constexpr const bool event = false;
+			static constexpr const bool indexed = false;
+		};
+
+		struct truck_channel_retarder_level {
+			static constexpr const telemetry_id id = 55;
+			static constexpr const scs_value_type_t scs_value_type = 3;
+			using type = scs_value_u32_t;
+			static constexpr telemetry_channel expansion = "truck.brake.retarder";
+			static constexpr const bool event = false;
+			static constexpr const bool indexed = false;
+		};
+
+		struct truck_channel_brake_air_pressure {
+			static constexpr const telemetry_id id = 56;
+			static constexpr const scs_value_type_t scs_value_type = 5;
+			using type = scs_value_float_t;
+			static constexpr telemetry_channel expansion = "truck.brake.air.pressure";
+			static constexpr const bool event = false;
+			static constexpr const bool indexed = false;
+		};
+
+		struct truck_channel_brake_air_pressure_warning {
+			static constexpr const telemetry_id id = 57;
+			static constexpr const scs_value_type_t scs_value_type = 1;
+			using type = scs_value_bool_t;
+			static constexpr telemetry_channel expansion = "truck.brake.air.pressure.warning";
+			static constexpr const bool event = false;
+			static constexpr const bool indexed = false;
+		};
+
+		struct truck_channel_brake_air_pressure_emergency {
+			static constexpr const telemetry_id id = 58;
+			static constexpr const scs_value_type_t scs_value_type = 1;
+			using type = scs_value_bool_t;
+			static constexpr telemetry_channel expansion = "truck.brake.air.pressure.emergency";
+			static constexpr const bool event = false;
+			static constexpr const bool indexed = false;
+		};
+
+		struct truck_channel_brake_temperature {
+			static constexpr const telemetry_id id = 59;
+			static constexpr const scs_value_type_t scs_value_type = 5;
+			using type = scs_value_float_t;
+			static constexpr telemetry_channel expansion = "truck.brake.temperature";
+			static constexpr const bool event = false;
+			static constexpr const bool indexed = false;
+		};
+
+		struct truck_channel_fuel {
+			static constexpr const telemetry_id id = 60;
+			static constexpr const scs_value_type_t scs_value_type = 5;
+			using type = scs_value_float_t;
+			static constexpr telemetry_channel expansion = "truck.fuel.amount";
+			static constexpr const bool event = false;
+			static constexpr const bool indexed = false;
+		};
+
+		struct truck_channel_fuel_warning {
+			static constexpr const telemetry_id id = 61;
+			static constexpr const scs_value_type_t scs_value_type = 1;
+			using type = scs_value_bool_t;
+			static constexpr telemetry_channel expansion = "truck.fuel.warning";
+			static constexpr const bool event = false;
+			static constexpr const bool indexed = false;
+		};
+
+		struct truck_channel_fuel_average_consumption {
+			static constexpr const telemetry_id id = 62;
+			static constexpr const scs_value_type_t scs_value_type = 5;
+			using type = scs_value_float_t;
+			static constexpr telemetry_channel expansion = "truck.fuel.consumption.average";
+			static constexpr const bool event = false;
+			static constexpr const bool indexed = false;
+		};
+
+		struct truck_channel_fuel_range {
+			static constexpr const telemetry_id id = 63;
+			static constexpr const scs_value_type_t scs_value_type = 5;
+			using type = scs_value_float_t;
+			static constexpr telemetry_channel expansion = "truck.fuel.range";
+			static constexpr const bool event = false;
+			static constexpr const bool indexed = false;
+		};
+
+		struct truck_channel_adblue {
+			static constexpr const telemetry_id id = 64;
+			static constexpr const scs_value_type_t scs_value_type = 5;
+			using type = scs_value_float_t;
+			static constexpr telemetry_channel expansion = "truck.adblue";
+			static constexpr const bool event = false;
+			static constexpr const bool indexed = false;
+		};
+
+		struct truck_channel_adblue_warning {
+			static constexpr const telemetry_id id = 65;
+			static constexpr const scs_value_type_t scs_value_type = 1;
+			using type = scs_value_bool_t;
+			static constexpr telemetry_channel expansion = "truck.adblue.warning";
+			static constexpr const bool event = false;
+			static constexpr const bool indexed = false;
+		};
+
+		struct truck_channel_adblue_average_consumption {
+			static constexpr const telemetry_id id = 66;
+			static constexpr const scs_value_type_t scs_value_type = 5;
+			using type = scs_value_float_t;
+			static constexpr telemetry_channel expansion = "truck.adblue.consumption.average";
+			static constexpr const bool event = false;
+			static constexpr const bool indexed = false;
+		};
+
+		struct truck_channel_oil_pressure {
+			static constexpr const telemetry_id id = 67;
+			static constexpr const scs_value_type_t scs_value_type = 5;
+			using type = scs_value_float_t;
+			static constexpr telemetry_channel expansion = "truck.oil.pressure";
+			static constexpr const bool event = false;
+			static constexpr const bool indexed = false;
+		};
+
+		struct truck_channel_oil_pressure_warning {
+			static constexpr const telemetry_id id = 68;
+			static constexpr const scs_value_type_t scs_value_type = 1;
+			using type = scs_value_bool_t;
+			static constexpr telemetry_channel expansion = "truck.oil.pressure.warning";
+			static constexpr const bool event = false;
+			static constexpr const bool indexed = false;
+		};
+
+		struct truck_channel_oil_temperature {
+			static constexpr const telemetry_id id = 69;
+			static constexpr const scs_value_type_t scs_value_type = 5;
+			using type = scs_value_float_t;
+			static constexpr telemetry_channel expansion = "truck.oil.temperature";
+			static constexpr const bool event = false;
+			static constexpr const bool indexed = false;
+		};
+
+		struct truck_channel_water_temperature {
+			static constexpr const telemetry_id id = 70;
+			static constexpr const scs_value_type_t scs_value_type = 5;
+			using type = scs_value_float_t;
+			static constexpr telemetry_channel expansion = "truck.water.temperature";
+			static constexpr const bool event = false;
+			static constexpr const bool indexed = false;
+		};
+
+		struct truck_channel_water_temperature_warning {
+			static constexpr const telemetry_id id = 71;
+			static constexpr const scs_value_type_t scs_value_type = 1;
+			using type = scs_value_bool_t;
+			static constexpr telemetry_channel expansion = "truck.water.temperature.warning";
+			static constexpr const bool event = false;
+			static constexpr const bool indexed = false;
+		};
+
+		struct truck_channel_battery_voltage {
+			static constexpr const telemetry_id id = 72;
+			static constexpr const scs_value_type_t scs_value_type = 5;
+			using type = scs_value_float_t;
+			static constexpr telemetry_channel expansion = "truck.battery.voltage";
+			static constexpr const bool event = false;
+			static constexpr const bool indexed = false;
+		};
+
+		struct truck_channel_battery_voltage_warning {
+			static constexpr const telemetry_id id = 73;
+			static constexpr const scs_value_type_t scs_value_type = 1;
+			using type = scs_value_bool_t;
+			static constexpr telemetry_channel expansion = "truck.battery.voltage.warning";
+			static constexpr const bool event = false;
+			static constexpr const bool indexed = false;
+		};
+
+		struct truck_channel_electric_enabled {
+			static constexpr const telemetry_id id = 74;
+			static constexpr const scs_value_type_t scs_value_type = 1;
+			using type = scs_value_bool_t;
+			static constexpr telemetry_channel expansion = "truck.electric.enabled";
+			static constexpr const bool event = false;
+			static constexpr const bool indexed = false;
+		};
+
+		struct truck_channel_engine_enabled {
+			static constexpr const telemetry_id id = 75;
+			static constexpr const scs_value_type_t scs_value_type = 1;
+			using type = scs_value_bool_t;
+			static constexpr telemetry_channel expansion = "truck.engine.enabled";
+			static constexpr const bool event = false;
+			static constexpr const bool indexed = false;
+		};
+
+		struct truck_channel_lblinker {
+			static constexpr const telemetry_id id = 76;
+			static constexpr const scs_value_type_t scs_value_type = 1;
+			using type = scs_value_bool_t;
+			static constexpr telemetry_channel expansion = "truck.lblinker";
+			static constexpr const bool event = false;
+			static constexpr const bool indexed = false;
+		};
+
+		struct truck_channel_rblinker {
+			static constexpr const telemetry_id id = 77;
+			static constexpr const scs_value_type_t scs_value_type = 1;
+			using type = scs_value_bool_t;
+			static constexpr telemetry_channel expansion = "truck.rblinker";
+			static constexpr const bool event = false;
+			static constexpr const bool indexed = false;
+		};
+
+		struct truck_channel_hazard_warning {
+			static constexpr const telemetry_id id = 78;
+			static constexpr const scs_value_type_t scs_value_type = 1;
+			using type = scs_value_bool_t;
+			static constexpr telemetry_channel expansion = "truck.hazard.warning";
+			static constexpr const bool event = false;
+			static constexpr const bool indexed = false;
+		};
+
+		struct truck_channel_light_lblinker {
+			static constexpr const telemetry_id id = 79;
+			static constexpr const scs_value_type_t scs_value_type = 1;
+			using type = scs_value_bool_t;
+			static constexpr telemetry_channel expansion = "truck.light.lblinker";
+			static constexpr const bool event = false;
+			static constexpr const bool indexed = false;
+		};
+
+		struct truck_channel_light_rblinker {
+			static constexpr const telemetry_id id = 80;
+			static constexpr const scs_value_type_t scs_value_type = 1;
+			using type = scs_value_bool_t;
+			static constexpr telemetry_channel expansion = "truck.light.rblinker";
+			static constexpr const bool event = false;
+			static constexpr const bool indexed = false;
+		};
+
+		struct truck_channel_light_parking {
+			static constexpr const telemetry_id id = 81;
+			static constexpr const scs_value_type_t scs_value_type = 1;
+			using type = scs_value_bool_t;
+			static constexpr telemetry_channel expansion = "truck.light.parking";
+			static constexpr const bool event = false;
+			static constexpr const bool indexed = false;
+		};
+
+		struct truck_channel_light_low_beam {
+			static constexpr const telemetry_id id = 82;
+			static constexpr const scs_value_type_t scs_value_type = 1;
+			using type = scs_value_bool_t;
+			static constexpr telemetry_channel expansion = "truck.light.beam.low";
+			static constexpr const bool event = false;
+			static constexpr const bool indexed = false;
+		};
+
+		struct truck_channel_light_high_beam {
+			static constexpr const telemetry_id id = 83;
+			static constexpr const scs_value_type_t scs_value_type = 1;
+			using type = scs_value_bool_t;
+			static constexpr telemetry_channel expansion = "truck.light.beam.high";
+			static constexpr const bool event = false;
+			static constexpr const bool indexed = false;
+		};
+
+		struct truck_channel_light_aux_front {
+			static constexpr const telemetry_id id = 84;
+			static constexpr const scs_value_type_t scs_value_type = 3;
+			using type = scs_value_u32_t;
+			static constexpr telemetry_channel expansion = "truck.light.aux.front";
+			static constexpr const bool event = false;
+			static constexpr const bool indexed = false;
+		};
+
+		struct truck_channel_light_aux_roof {
+			static constexpr const telemetry_id id = 85;
+			static constexpr const scs_value_type_t scs_value_type = 3;
+			using type = scs_value_u32_t;
+			static constexpr telemetry_channel expansion = "truck.light.aux.roof";
+			static constexpr const bool event = false;
+			static constexpr const bool indexed = false;
+		};
+
+		struct truck_channel_light_beacon {
+			static constexpr const telemetry_id id = 86;
+			static constexpr const scs_value_type_t scs_value_type = 1;
+			using type = scs_value_bool_t;
+			static constexpr telemetry_channel expansion = "truck.light.beacon";
+			static constexpr const bool event = false;
+			static constexpr const bool indexed = false;
+		};
+
+		struct truck_channel_light_brake {
+			static constexpr const telemetry_id id = 87;
+			static constexpr const scs_value_type_t scs_value_type = 1;
+			using type = scs_value_bool_t;
+			static constexpr telemetry_channel expansion = "truck.light.brake";
+			static constexpr const bool event = false;
+			static constexpr const bool indexed = false;
+		};
+
+		struct truck_channel_light_reverse {
+			static constexpr const telemetry_id id = 88;
+			static constexpr const scs_value_type_t scs_value_type = 1;
+			using type = scs_value_bool_t;
+			static constexpr telemetry_channel expansion = "truck.light.reverse";
+			static constexpr const bool event = false;
+			static constexpr const bool indexed = false;
+		};
+
+		struct truck_channel_wipers {
+			static constexpr const telemetry_id id = 89;
+			static constexpr const scs_value_type_t scs_value_type = 1;
+			using type = scs_value_bool_t;
+			static constexpr telemetry_channel expansion = "truck.wipers";
+			static constexpr const bool event = false;
+			static constexpr const bool indexed = false;
+		};
+
+		struct truck_channel_dashboard_backlight {
+			static constexpr const telemetry_id id = 90;
+			static constexpr const scs_value_type_t scs_value_type = 5;
+			using type = scs_value_float_t;
+			static constexpr telemetry_channel expansion = "truck.dashboard.backlight";
+			static constexpr const bool event = false;
+			static constexpr const bool indexed = false;
+		};
+
+		struct truck_channel_differential_lock {
+			static constexpr const telemetry_id id = 91;
+			static constexpr const scs_value_type_t scs_value_type = 1;
+			using type = scs_value_bool_t;
+			static constexpr telemetry_channel expansion = "truck.differential_lock";
+			static constexpr const bool event = false;
+			static constexpr const bool indexed = false;
+		};
+
+		struct truck_channel_lift_axle {
+			static constexpr const telemetry_id id = 92;
+			static constexpr const scs_value_type_t scs_value_type = 1;
+			using type = scs_value_bool_t;
+			static constexpr telemetry_channel expansion = "truck.lift_axle";
+			static constexpr const bool event = false;
+			static constexpr const bool indexed = false;
+		};
+
+		struct truck_channel_lift_axle_indicator {
+			static constexpr const telemetry_id id = 93;
+			static constexpr const scs_value_type_t scs_value_type = 1;
+			using type = scs_value_bool_t;
+			static constexpr telemetry_channel expansion = "truck.lift_axle.indicator";
+			static constexpr const bool event = false;
+			static constexpr const bool indexed = false;
+		};
+
+		struct truck_channel_trailer_lift_axle {
+			static constexpr const telemetry_id id = 94;
+			static constexpr const scs_value_type_t scs_value_type = 1;
+			using type = scs_value_bool_t;
+			static constexpr telemetry_channel expansion = "truck.trailer.lift_axle";
+			static constexpr const bool event = false;
+			static constexpr const bool indexed = false;
+		};
+
+		struct truck_channel_trailer_lift_axle_indicator {
+			static constexpr const telemetry_id id = 95;
+			static constexpr const scs_value_type_t scs_value_type = 1;
+			using type = scs_value_bool_t;
+			static constexpr telemetry_channel expansion = "truck.trailer.lift_axle.indicator";
+			static constexpr const bool event = false;
+			static constexpr const bool indexed = false;
+		};
+
+		struct truck_channel_wear_engine {
+			static constexpr const telemetry_id id = 96;
+			static constexpr const scs_value_type_t scs_value_type = 5;
+			using type = scs_value_float_t;
+			static constexpr telemetry_channel expansion = "truck.wear.engine";
+			static constexpr const bool event = false;
+			static constexpr const bool indexed = false;
+		};
+
+		struct truck_channel_wear_transmission {
+			static constexpr const telemetry_id id = 97;
+			static constexpr const scs_value_type_t scs_value_type = 5;
+			using type = scs_value_float_t;
+			static constexpr telemetry_channel expansion = "truck.wear.transmission";
+			static constexpr const bool event = false;
+			static constexpr const bool indexed = false;
+		};
+
+		struct truck_channel_wear_cabin {
+			static constexpr const telemetry_id id = 98;
+			static constexpr const scs_value_type_t scs_value_type = 5;
+			using type = scs_value_float_t;
+			static constexpr telemetry_channel expansion = "truck.wear.cabin";
+			static constexpr const bool event = false;
+			static constexpr const bool indexed = false;
+		};
+
+		struct truck_channel_wear_chassis {
+			static constexpr const telemetry_id id = 99;
+			static constexpr const scs_value_type_t scs_value_type = 5;
+			using type = scs_value_float_t;
+			static constexpr telemetry_channel expansion = "truck.wear.chassis";
+			static constexpr const bool event = false;
+			static constexpr const bool indexed = false;
+		};
+
+		struct truck_channel_wear_wheels {
+			static constexpr const telemetry_id id = 100;
+			static constexpr const scs_value_type_t scs_value_type = 5;
+			using type = scs_value_float_t;
+			static constexpr telemetry_channel expansion = "truck.wear.wheels";
+			static constexpr const bool event = false;
+			static constexpr const bool indexed = false;
+		};
+
+		struct truck_channel_odometer {
+			static constexpr const telemetry_id id = 101;
+			static constexpr const scs_value_type_t scs_value_type = 5;
+			using type = scs_value_float_t;
+			static constexpr telemetry_channel expansion = "truck.odometer";
+			static constexpr const bool event = false;
+			static constexpr const bool indexed = false;
+		};
+
+		struct truck_channel_navigation_distance {
+			static constexpr const telemetry_id id = 102;
+			static constexpr const scs_value_type_t scs_value_type = 5;
+			using type = scs_value_float_t;
+			static constexpr telemetry_channel expansion = "truck.navigation.distance";
+			static constexpr const bool event = false;
+			static constexpr const bool indexed = false;
+		};
+
+		struct truck_channel_navigation_time {
+			static constexpr const telemetry_id id = 103;
+			static constexpr const scs_value_type_t scs_value_type = 5;
+			using type = scs_value_float_t;
+			static constexpr telemetry_channel expansion = "truck.navigation.time";
+			static constexpr const bool event = false;
+			static constexpr const bool indexed = false;
+		};
+
+		struct truck_channel_navigation_speed_limit {
+			static constexpr const telemetry_id id = 104;
+			static constexpr const scs_value_type_t scs_value_type = 5;
+			using type = scs_value_float_t;
+			static constexpr telemetry_channel expansion = "truck.navigation.speed.limit";
+			static constexpr const bool event = false;
+			static constexpr const bool indexed = false;
+		};
+
+		struct truck_channel_wheel_susp_deflection {
+			static constexpr const telemetry_id id = 105;
+			static constexpr const scs_value_type_t scs_value_type = 5;
+			using type = scs_value_float_t;
+			static constexpr telemetry_channel expansion = "truck.wheel.suspension.deflection";
+			static constexpr const bool event = false;
+			static constexpr const bool indexed = true;
+		};
+
+		struct truck_channel_wheel_on_ground {
+			static constexpr const telemetry_id id = 106;
+			static constexpr const scs_value_type_t scs_value_type = 1;
+			using type = scs_value_bool_t;
+			static constexpr telemetry_channel expansion = "truck.wheel.on_ground";
+			static constexpr const bool event = false;
+			static constexpr const bool indexed = true;
+		};
+
+		struct truck_channel_wheel_substance {
+			static constexpr const telemetry_id id = 107;
+			static constexpr const scs_value_type_t scs_value_type = 3;
+			using type = scs_value_u32_t;
+			static constexpr telemetry_channel expansion = "truck.wheel.substance";
+			static constexpr const bool event = false;
+			static constexpr const bool indexed = true;
+		};
+
+		struct truck_channel_wheel_velocity {
+			static constexpr const telemetry_id id = 108;
+			static constexpr const scs_value_type_t scs_value_type = 5;
+			using type = scs_value_float_t;
+			static constexpr telemetry_channel expansion = "truck.wheel.angular_velocity";
+			static constexpr const bool event = false;
+			static constexpr const bool indexed = true;
+		};
+
+		struct truck_channel_wheel_steering {
+			static constexpr const telemetry_id id = 109;
+			static constexpr const scs_value_type_t scs_value_type = 5;
+			using type = scs_value_float_t;
+			static constexpr telemetry_channel expansion = "truck.wheel.steering";
+			static constexpr const bool event = false;
+			static constexpr const bool indexed = true;
+		};
+
+		struct truck_channel_wheel_rotation {
+			static constexpr const telemetry_id id = 110;
+			static constexpr const scs_value_type_t scs_value_type = 5;
+			using type = scs_value_float_t;
+			static constexpr telemetry_channel expansion = "truck.wheel.rotation";
+			static constexpr const bool event = false;
+			static constexpr const bool indexed = true;
+		};
+
+		struct truck_channel_wheel_lift {
+			static constexpr const telemetry_id id = 111;
+			static constexpr const scs_value_type_t scs_value_type = 5;
+			using type = scs_value_float_t;
+			static constexpr telemetry_channel expansion = "truck.wheel.lift";
+			static constexpr const bool event = false;
+			static constexpr const bool indexed = true;
+		};
+
+		struct truck_channel_wheel_lift_offset {
+			static constexpr const telemetry_id id = 112;
+			static constexpr const scs_value_type_t scs_value_type = 5;
+			using type = scs_value_float_t;
+			static constexpr telemetry_channel expansion = "truck.wheel.lift.offset";
+			static constexpr const bool event = false;
+			static constexpr const bool indexed = true;
+		};
+
+		constexpr const telemetry_channel ID_TO_EXPANSION[] = {
 			"local.scale",
 			"game.time",
 			"multiplayer.time.offset",
@@ -613,10 +1162,144 @@ namespace truckconnect {
 			"truck.wheel.lift.offset"
 		};
 
-		constexpr const telemetry_id EVENTS_START = ID_SCS_TELEMETRY_GAMEPLAY_EVENT_job_cancelled;
+		constexpr const telemetry_id ID_TO_SCS_VALUE_TYPE[] = {
+			5,
+			3,
+			2,
+			2,
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			5,
+			1,
+			5,
+			11,
+			7,
+			7,
+			7,
+			7,
+			5,
+			5,
+			5,
+			5,
+			1,
+			3,
+			5,
+			5,
+			5,
+			5,
+			5,
+			11,
+			7,
+			7,
+			7,
+			7,
+			10,
+			7,
+			7,
+			10,
+			5,
+			5,
+			2,
+			2,
+			5,
+			5,
+			5,
+			5,
+			5,
+			5,
+			5,
+			5,
+			5,
+			3,
+			1,
+			1,
+			1,
+			3,
+			5,
+			1,
+			1,
+			5,
+			5,
+			1,
+			5,
+			5,
+			5,
+			1,
+			5,
+			5,
+			1,
+			5,
+			5,
+			1,
+			5,
+			1,
+			1,
+			1,
+			1,
+			1,
+			1,
+			1,
+			1,
+			1,
+			1,
+			1,
+			3,
+			3,
+			1,
+			1,
+			1,
+			1,
+			5,
+			1,
+			1,
+			1,
+			1,
+			1,
+			5,
+			5,
+			5,
+			5,
+			5,
+			5,
+			5,
+			5,
+			5,
+			5,
+			1,
+			3,
+			5,
+			5,
+			5,
+			5,
+			5
+		};
 
-		constexpr const telemetry_id EVENTS_END = ID_SCS_TELEMETRY_GAMEPLAY_EVENT_player_use_train;
+		constexpr const telemetry_id INDEXED_IDS[] = {
+			52,
+			105,
+			106,
+			107,
+			108,
+			109,
+			110,
+			111,
+			112
+		};
 
-		constexpr const telemetry_id MAX_ID = sizeof(MAPPINGS) / sizeof(MAPPINGS[0]) - 1;
+		constexpr const telemetry_id EVENT_IDS[] = {
+			4,
+			5,
+			6,
+			7,
+			8,
+			9
+		};
+
+		constexpr const telemetry_id MAX_ID = (sizeof(ID_TO_EXPANSION) / sizeof(ID_TO_EXPANSION[0])) - 1;
 	}
 }
+
