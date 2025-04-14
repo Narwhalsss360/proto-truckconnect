@@ -61,6 +61,7 @@ void handle_request(managed* managed, RequestType type, vector<uint8_t>& data) {
 
 		managed->requested_channel_id = *reinterpret_cast<telemetry_id*>(&data[0]);
 
+		bool first = !has_other_context(managed->requested_channel_id);
 		context_data* context = contextualize(managed->requested_channel_id, managed);
 
 		if (context == nullptr) {
@@ -68,15 +69,15 @@ void handle_request(managed* managed, RequestType type, vector<uint8_t>& data) {
 			return;
 		}
 
-		if (has_other_context(managed->requested_channel_id)) {
-			break;
+		if (!first) {
+			return;
 		}
 
 		scs_result_t result = register_for_channel(
 			ID_TO_EXPANSION[managed->requested_channel_id],
 			SCS_U32_NIL,
 			ID_TO_SCS_VALUE_TYPE[managed->requested_channel_id], //Implement get_type_of_id function
-			SCS_TELEMETRY_CHANNEL_FLAG_no_value,
+			SCS_TELEMETRY_CHANNEL_FLAG_no_value | SCS_TELEMETRY_CHANNEL_FLAG_each_frame,
 			channel_broadcaster,
 			context
 		);
@@ -150,6 +151,7 @@ bool is_managed(const string& name) {
 void handoff_client_to_manager(const string& name, pipe_handle client_pipe) {
 	managed* new_managed = new managed(name, client_pipe);
 	new_managed->thread = std::thread(manage, new_managed);
+	SetThreadDescription(new_managed->thread.native_handle(), L"client-manager");
 	managers.push_back(new_managed);
 }
 
