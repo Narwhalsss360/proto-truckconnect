@@ -60,7 +60,10 @@ namespace truckconnect {
 		}
 
 		bool try_connect_to_client(pipe_handle pipe) {
-			return ConnectNamedPipe(pipe, nullptr) == 1;
+			if (ConnectNamedPipe(pipe, nullptr) == 1) {
+				return true;
+			}
+			return GetLastError() == ERROR_PIPE_CONNECTED;
 		}
 
 		bool wait_for_server_creation(const string& path, uint32_t milliseconds) {
