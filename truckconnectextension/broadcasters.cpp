@@ -22,6 +22,6 @@ void channel_broadcaster(const scs_string_t name, const scs_u32_t index, const s
 		if (!write(*reinterpret_cast<const pipe_handle*>(&context->contexts[0]), nullptr, 0)) {
 			//FATAL: Error writing to client
 		}
-		decontextualize(context->id, context->contexts[0]);
+		decontextualize(context->id(), context->contexts[0]);
 	}
 }

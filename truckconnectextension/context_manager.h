@@ -10,8 +10,10 @@ constexpr const size_t MAX_CONTEXTS_PER_CHANNEL = 8;
 using context_size_t = uint8_t;
 
 struct context_data {
-	telemetry_id id;
 	context_size_t size;
+
+	telemetry_id id() const;
+
 	std::array<void*, MAX_CONTEXTS_PER_CHANNEL> contexts = { nullptr };
 };
 

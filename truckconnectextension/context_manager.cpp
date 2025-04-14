@@ -6,6 +6,10 @@ using truckconnect::channels::telemetry_id;
 
 array<context_data, MAX_ID + 1> context_matrix;
 
+telemetry_id context_data::id() const {
+	return static_cast<telemetry_id>(this - &context_matrix[0]);
+}
+
 bool has_other_context(telemetry_id id) {
 	return context_matrix[id].size;
 }
@@ -21,8 +25,8 @@ context_data* contextualize(telemetry_id id, void* pointer) {
 		return nullptr;
 	}
 
-	data.size++;
 	data.contexts[data.size] = pointer;
+	data.size++;
 
 	return &data;
 }
