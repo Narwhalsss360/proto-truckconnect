@@ -46,4 +46,5 @@ void decontextualize(telemetry_id id, void* pointer) {
 			break;
 		}
 	}
+	data.size--;
 }

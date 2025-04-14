@@ -71,7 +71,7 @@ namespace truckconnect {
 		}
 
 		bool write(pipe_handle pipe, void* data, size_t size) {
-			return WriteFile(pipe, data, static_cast<DWORD>(size), nullptr, nullptr) == 0;
+			return WriteFile(pipe, data, static_cast<DWORD>(size), nullptr, nullptr) == 1;
 		}
 
 		bool available(pipe_handle pipe, bool& failure) {

@@ -19,21 +19,13 @@ using std::vector;
 using std::find;
 using std::find_if;
 
-constexpr const telemetry_id INVALID_ID = MAX_ID + 1;
 
 struct managed;
 void manage(managed* managed);
 
-struct managed {
-	const string name;
-	pipe_handle client_pipe;
-	thread thread;
-	telemetry_id requested_channel_id;
-	bool waiting_for_acknowledge;
-
-	managed(const string& name, pipe_handle client_pipe)
-		: name(name), client_pipe(client_pipe), requested_channel_id(INVALID_ID), waiting_for_acknowledge(false) {}
-};
+managed::managed(const string& name, pipe_handle client_pipe)
+	: name(name), client_pipe(client_pipe), requested_channel_id(INVALID_ID), waiting_for_acknowledge(false) {
+}
 
 bool stop_management = false;
 
@@ -83,7 +75,7 @@ void handle_request(managed* managed, RequestType type, vector<uint8_t>& data) {
 		);
 
 		if (result == SCS_RESULT_ok) {
-			break;
+			return;
 		}
 
 		//FATAL: registration failed

@@ -101,9 +101,13 @@ thread listener;
 
 SCSAPI_RESULT scs_telemetry_init(const scs_u32_t version, const scs_telemetry_init_params_t* const params) {
 	init_params = *reinterpret_cast<const scs_telemetry_init_params_v101_t* const>(params);
+
 	listener = thread(listen_for_clients, ref(stop_listener));
+
 	SetThreadDescription(listener.native_handle(), L"truckconnect listener");
+
 	init_params.register_for_event(SCS_TELEMETRY_EVENT_frame_end, end_frame, nullptr);
+
 	return SCS_RESULT_ok;
 }
 
