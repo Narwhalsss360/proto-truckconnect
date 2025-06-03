@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="scssdk">
+      <UniqueIdentifier>{d7ccaca0-0fba-40b6-b4ab-5a5393db6b98}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="scssdk\common">
+      <UniqueIdentifier>{c629a06d-60b0-45fe-94e0-6b500816c50f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="scssdk\eurotrucks2">
+      <UniqueIdentifier>{aec0b811-be18-482a-8e5c-141a85432b96}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="scssdk\amtrucks">
+      <UniqueIdentifier>{64f0bb90-b1c6-45ec-b27f-0a74f0de8907}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)truckconnect.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)scssdk\scssdk.h">
+      <Filter>scssdk</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)scssdk\scssdk_input.h">
+      <Filter>scssdk</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)scssdk\scssdk_input_device.h">
+      <Filter>scssdk</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)scssdk\scssdk_input_event.h">
+      <Filter>scssdk</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)scssdk\scssdk_telemetry.h">
+      <Filter>scssdk</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)scssdk\scssdk_telemetry_channel.h">
+      <Filter>scssdk</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)scssdk\scssdk_telemetry_event.h">
+      <Filter>scssdk</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)scssdk\scssdk_value.h">
+      <Filter>scssdk</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)scssdk\eurotrucks2\scssdk_eut2.h">
+      <Filter>scssdk\eurotrucks2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)scssdk\eurotrucks2\scssdk_input_eut2.h">
+      <Filter>scssdk\eurotrucks2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)scssdk\eurotrucks2\scssdk_telemetry_eut2.h">
+      <Filter>scssdk\eurotrucks2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)scssdk\amtrucks\scssdk_ats.h">
+      <Filter>scssdk\amtrucks</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)scssdk\amtrucks\scssdk_input_ats.h">
+      <Filter>scssdk\amtrucks</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)scssdk\amtrucks\scssdk_telemetry_ats.h">
+      <Filter>scssdk\amtrucks</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)scssdk\common\scssdk_telemetry_common_channels.h">
+      <Filter>scssdk\common</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)scssdk\common\scssdk_telemetry_common_configs.h">
+      <Filter>scssdk\common</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)scssdk\common\scssdk_telemetry_common_gameplay_events.h">
+      <Filter>scssdk\common</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)scssdk\common\scssdk_telemetry_job_common_channels.h">
+      <Filter>scssdk\common</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)scssdk\common\scssdk_telemetry_trailer_common_channels.h">
+      <Filter>scssdk\common</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)scssdk\common\scssdk_telemetry_truck_common_channels.h">
+      <Filter>scssdk\common</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)channels.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)game_data.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)communication.h" />
+  </ItemGroup>
+</Project>
