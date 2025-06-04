@@ -1,5 +1,6 @@
 #include <truckconnect.h>
 #include "truckconnectextension.h"
+#include "registrations.h"
 #include <string>
 #include <thread>
 #include <vector>
@@ -65,7 +66,10 @@ using std::to_string;
 using std::thread;
 using std::vector;
 using namespace truckconnect::communication;
+using truckconnect::game_data_store;
 using nstreamcom::collector_states;
+using nstreamcom::as_collected_size;
+using nstreamcom::encode_with_size;
 
 struct client {
     SOCKET socket;
@@ -201,10 +205,25 @@ void process_client(client& client) {
 
     request request = static_cast<::request>(client.collector_buffer[0]);
 
+    static uint8_t data_buffer[sizeof(game_data_store) + 1];
+    static uint8_t encoded_buffer[as_collected_size(sizeof(data_buffer))];
+
     switch (request) {
         case requests::none:
             break;
         case requests::game_data:
+            data_buffer[0] = request;
+            *reinterpret_cast<game_data_store*>(data_buffer + 1) = current_game_data();
+            encode_with_size(data_buffer, encoded_buffer);
+            if (send(client.socket, reinterpret_cast<char*>(encoded_buffer), sizeof(encoded_buffer), 0) == SOCKET_ERROR) {
+                if (platform_sockets_last_error() != socket_errors::S_EWOULDBLOCK) {
+                    console_log(SCS_LOG_TYPE_error, IDENT_SECONDARY_BADGE(process_client) + " socket error (" + to_string(platform_sockets_last_error()) + ") on sending data to client " + to_string(client.addr));
+                    if (closesocket(client.socket) == SOCKET_ERROR) {
+                        console_log(SCS_LOG_TYPE_error, IDENT_SECONDARY_BADGE(process_client) + " socket error (" + to_string(platform_sockets_last_error()) + ") on closing socket client " + to_string(client.addr));
+                    }
+                    client.socket = INVALID_SOCKET;
+                }
+            }
             break;
         default:
             console_log(SCS_LOG_TYPE_error, IDENT_SECONDARY_BADGE(process_client) + "Unknown request (" + to_string((int)request) + ") from client " + to_string(client.addr));

@@ -1,3 +1,4 @@
+#pragma once
 #include "scssdk/scssdk_value.h"
 #include <stdint.h>
 #include <vector>

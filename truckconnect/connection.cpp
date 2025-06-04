@@ -65,7 +65,7 @@ namespace truckconnect {
             result = generic_socket_error;
         } else {
             result = success;
-            connection.socket == INVALID_SOCKET;
+            connection.socket = INVALID_SOCKET;
         }
 
         return result;
