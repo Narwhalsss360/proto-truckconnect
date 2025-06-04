@@ -65,11 +65,14 @@ using std::to_string;
 using std::thread;
 using std::vector;
 using namespace truckconnect::communication;
+using nstreamcom::collector_states;
 
 struct client {
     SOCKET socket;
     sockaddr_in addr;
     socklen_t addr_len = sizeof(addr);
+    vector<uint8_t> collector_buffer;
+    vector_collector collector = vector_collector(collector_buffer.begin(), collector_buffer.end());
 };
 
 SOCKET listener = INVALID_SOCKET;
@@ -138,8 +141,75 @@ bool clients_init() {
     return true;
 }
 
+void read_request(client& client) {
+    if (client.collector.state() != collector_states::WAITING_SIZE && client.collector.state() != collector_states::WAITING_DATA) {
+        return;
+    }
+
+    while (true) {
+        char data;
+        int received = recv(client.socket, &data, 1, 0);
+
+        if (received <= 0) {
+            if (platform_sockets_last_error() != socket_errors::S_EWOULDBLOCK) {
+                console_log(SCS_LOG_TYPE_error, IDENT_SECONDARY_BADGE(read_request) + " socket error (" + to_string(platform_sockets_last_error()) + ") on client " + to_string(client.addr));
+            }
+
+            if (closesocket(client.socket) == SOCKET_ERROR) {
+                console_log(SCS_LOG_TYPE_error, IDENT_SECONDARY_BADGE(read_request) + " socket error (" + to_string(platform_sockets_last_error()) + ") on closing socket client " + to_string(client.addr));
+            }
+
+            client.socket = INVALID_SOCKET;
+            break;
+        }
+
+        switch (client.collector.collect(data)) {
+        case collector_states::COLLECTED:
+            return;   
+        case collector_states::BUFFER_FULL:
+            if (!resize_to_collect(client.collector_buffer, client.collector, data)) {
+                return;
+            }
+            continue;
+        default:
+            break;
+        }
+    }
+}
+
 void process_client(client& client) {
-    
+    read_request(client);
+
+    if (client.socket == INVALID_SOCKET) {
+        return;
+    }
+
+    switch (client.collector.state())
+    {
+    case collector_states::MISSING_SIZE:
+    case collector_states::MISSING_DATA:
+        console_log(SCS_LOG_TYPE_warning, IDENT_SECONDARY_BADGE(process_client) + " bad data from client " + to_string(client.addr));
+        break;
+    default:
+        break;
+    }
+    client.collector.reset();
+
+    if (client.collector.state() != collector_states::COLLECTED) {
+        return;
+    }
+
+    request request = static_cast<::request>(client.collector_buffer[0]);
+
+    switch (request) {
+        case requests::none:
+            break;
+        case requests::game_data:
+            break;
+        default:
+            console_log(SCS_LOG_TYPE_error, IDENT_SECONDARY_BADGE(process_client) + "Unknown request (" + to_string((int)request) + ") from client " + to_string(client.addr));
+            break;
+    }
 }
 
 void dispatch_clients() {

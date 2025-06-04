@@ -74,6 +74,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <TargetName>truckconnectextension</TargetName>
+    <IncludePath>$(SolutionDir)NStreamCom\include;$(IncludePath)</IncludePath>
+    <SourcePath>$(SolutionDir)NStreamCom\src;$(SourcePath)</SourcePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <TargetName>truckconnectextension</TargetName>
@@ -83,6 +85,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <TargetName>truckconnectextension</TargetName>
+    <IncludePath>$(SolutionDir)NStreamCom\include;$(IncludePath)</IncludePath>
+    <SourcePath>$(SolutionDir)NStreamCom\src;$(SourcePath)</SourcePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

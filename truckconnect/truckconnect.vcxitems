@@ -39,4 +39,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)scssdk\scssdk_value.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)truckconnect.h" />
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)communication.cpp" />
+  </ItemGroup>
 </Project>

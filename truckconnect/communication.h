@@ -11,6 +11,10 @@
 #error "Unsupported platform"
 #endif
 
+#include <nstreamcom.h>
+#include <stdint.h>
+#include <vector>
+
 #define PROTO_TRUCKCONNECT_PORT (52878) //TRUCK | KCURT
 
 namespace truckconnect {
@@ -35,7 +39,24 @@ namespace truckconnect {
 
         namespace socket_errors {
             constexpr const platform_socket_errno S_EWOULDBLOCK = WSAEWOULDBLOCK;
+
+            constexpr const platform_socket_errno S_ECONNRESET = WSAECONNRESET;
         }
 #endif
+
+        namespace requests {
+            enum request : uint8_t {
+                none,
+                game_data
+            };
+        }
+
+        using requests::request;
+
+        using vector_decoder = nstreamcom::buffered_decoder<std::vector<uint8_t>::iterator>;
+
+        using vector_collector = nstreamcom::collector<vector_decoder>;
+
+        bool resize_to_collect(std::vector<uint8_t>& buffer, vector_collector& collector, uint8_t collecting);
     }
 }
