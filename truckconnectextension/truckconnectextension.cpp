@@ -1,6 +1,7 @@
 #include "truckconnectextension.h"
 #include <scssdk/scssdk_telemetry.h>
 #include "registrations.h"
+#include "clients.h"
 
 using std::to_string;
 
@@ -12,12 +13,16 @@ void console_log(scs_log_type_t type, const std::string& message) {
 }
 
 void frame_end(scs_event_t event, const void* const event_indo, scs_context_t context) {
-
+	clients_frame_end();
 }
 
 SCSAPI_RESULT scs_telemetry_init(const scs_u32_t version, const scs_telemetry_init_params_t* const params) {
 	init = *reinterpret_cast<const scs_telemetry_init_params_v101_t*>(params);
 	scs_result_t result = SCS_RESULT_ok;
+
+	if (!clients_init()) {
+		return SCS_RESULT_generic_error;
+	}
 
 	result = init.register_for_event(SCS_TELEMETRY_EVENT_frame_end, frame_end, NULL);
 
@@ -35,5 +40,6 @@ SCSAPI_RESULT scs_telemetry_init(const scs_u32_t version, const scs_telemetry_in
 }
 
 SCSAPI_VOID scs_telemetry_shutdown() {
+	clients_deinit();
 	console_log(SCS_LOG_TYPE_message, "Deinitialized!");
 }

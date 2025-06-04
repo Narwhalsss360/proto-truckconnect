@@ -27,12 +27,18 @@
     <ClInclude Include="registrations.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="clients.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="truckconnectextension.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="registrations.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="clients.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

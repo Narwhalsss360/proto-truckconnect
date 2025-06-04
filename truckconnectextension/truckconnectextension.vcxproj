@@ -160,10 +160,12 @@
     <None Include="module.def" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="clients.h" />
     <ClInclude Include="registrations.h" />
     <ClInclude Include="truckconnectextension.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="clients.cpp" />
     <ClCompile Include="registrations.cpp" />
     <ClCompile Include="truckconnectextension.cpp" />
   </ItemGroup>
