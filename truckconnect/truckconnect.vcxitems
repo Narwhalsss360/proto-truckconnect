@@ -16,6 +16,7 @@
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)channels.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)communication.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)connection.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)game_data.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)scssdk\amtrucks\scssdk_ats.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)scssdk\amtrucks\scssdk_input_ats.h" />
@@ -41,5 +42,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)communication.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)connection.cpp" />
   </ItemGroup>
 </Project>

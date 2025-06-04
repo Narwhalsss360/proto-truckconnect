@@ -16,6 +16,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "truckconnectextension", "tr
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "nstreamcom", "NStreamCom\nstreamcom.vcxitems", "{F6AABF94-ED61-41AC-AAAD-E75510AF8CFF}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestClient", "TestClient\TestClient.vcxproj", "{DB9F83B0-B7B7-4537-9FEE-796B6A397E97}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -32,6 +34,14 @@ Global
 		{F16A6C45-6505-4EE8-AB52-5F73ED5B57A4}.Release|x64.Build.0 = Release|x64
 		{F16A6C45-6505-4EE8-AB52-5F73ED5B57A4}.Release|x86.ActiveCfg = Release|Win32
 		{F16A6C45-6505-4EE8-AB52-5F73ED5B57A4}.Release|x86.Build.0 = Release|Win32
+		{DB9F83B0-B7B7-4537-9FEE-796B6A397E97}.Debug|x64.ActiveCfg = Debug|x64
+		{DB9F83B0-B7B7-4537-9FEE-796B6A397E97}.Debug|x64.Build.0 = Debug|x64
+		{DB9F83B0-B7B7-4537-9FEE-796B6A397E97}.Debug|x86.ActiveCfg = Debug|Win32
+		{DB9F83B0-B7B7-4537-9FEE-796B6A397E97}.Debug|x86.Build.0 = Debug|Win32
+		{DB9F83B0-B7B7-4537-9FEE-796B6A397E97}.Release|x64.ActiveCfg = Release|x64
+		{DB9F83B0-B7B7-4537-9FEE-796B6A397E97}.Release|x64.Build.0 = Release|x64
+		{DB9F83B0-B7B7-4537-9FEE-796B6A397E97}.Release|x86.ActiveCfg = Release|Win32
+		{DB9F83B0-B7B7-4537-9FEE-796B6A397E97}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -41,6 +51,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		truckconnect\truckconnect.vcxitems*{3ef9a03c-5290-4a42-9a02-80006a8be3d4}*SharedItemsImports = 9
+		NStreamCom\nstreamcom.vcxitems*{db9f83b0-b7b7-4537-9fee-796b6a397e97}*SharedItemsImports = 4
+		truckconnect\truckconnect.vcxitems*{db9f83b0-b7b7-4537-9fee-796b6a397e97}*SharedItemsImports = 4
 		NStreamCom\nstreamcom.vcxitems*{f16a6c45-6505-4ee8-ab52-5f73ed5b57a4}*SharedItemsImports = 4
 		truckconnect\truckconnect.vcxitems*{f16a6c45-6505-4ee8-ab52-5f73ed5b57a4}*SharedItemsImports = 4
 		NStreamCom\nstreamcom.vcxitems*{f6aabf94-ed61-41ac-aaad-e75510af8cff}*SharedItemsImports = 9

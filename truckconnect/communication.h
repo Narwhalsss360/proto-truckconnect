@@ -40,6 +40,10 @@ namespace truckconnect {
         namespace socket_errors {
             constexpr const platform_socket_errno S_EWOULDBLOCK = WSAEWOULDBLOCK;
 
+            constexpr const platform_socket_errno S_EISCONN = WSAEISCONN;
+
+            constexpr const platform_socket_errno S_EALREADY = WSAEALREADY;
+
             constexpr const platform_socket_errno S_ECONNRESET = WSAECONNRESET;
         }
 #endif

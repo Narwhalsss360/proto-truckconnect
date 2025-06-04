@@ -2,3 +2,4 @@
 #include "channels.h"
 #include "communication.h"
 #include "game_data.h"
+#include "connection.h"

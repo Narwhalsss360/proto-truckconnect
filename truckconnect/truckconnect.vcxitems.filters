@@ -79,8 +79,10 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)channels.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)game_data.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)communication.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)connection.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)communication.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)connection.cpp" />
   </ItemGroup>
 </Project>

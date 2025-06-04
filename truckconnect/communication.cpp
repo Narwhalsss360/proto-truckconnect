@@ -9,8 +9,8 @@ namespace truckconnect {
                 return collector.collect(collecting) == collector_states::COLLECTED;
             }
 
-            int position_index = collector.decoder().position() - buffer.begin();
-            int previous_index = position_index == 0 ? 0 : (position_index - 1);
+            int64_t position_index = collector.decoder().position() - collector.decoder().begin();
+            int64_t previous_index = position_index == 0 ? 0 : (position_index - 1);
             buffer.resize(buffer.size() + 1);
 
             collector.decoder().use(

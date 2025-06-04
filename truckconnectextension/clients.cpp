@@ -22,7 +22,7 @@ constexpr const int64_t SIGNAL_WAIT_FOREVER = INFINITE;
 static platform_signal_handle create_singal(bool default_state) { return CreateEvent(NULL, TRUE, default_state, TEXT("")); };
 
 static signal_state wait_for_signal(platform_signal_handle signal, int64_t milliseconds) {
-    switch (WaitForSingleObject(signal, milliseconds))
+    switch (WaitForSingleObject(signal, static_cast<DWORD>(milliseconds)))
     {
     case WAIT_TIMEOUT: return not_signaled;
     case WAIT_OBJECT_0: return signaled;
@@ -151,10 +151,13 @@ void read_request(client& client) {
         int received = recv(client.socket, &data, 1, 0);
 
         if (received <= 0) {
-            if (platform_sockets_last_error() != socket_errors::S_EWOULDBLOCK) {
-                console_log(SCS_LOG_TYPE_error, IDENT_SECONDARY_BADGE(read_request) + " socket error (" + to_string(platform_sockets_last_error()) + ") on client " + to_string(client.addr));
+            if (platform_sockets_last_error() == socket_errors::S_EWOULDBLOCK) {
+                break;
             }
 
+            if (platform_sockets_last_error() != 0) {
+                console_log(SCS_LOG_TYPE_error, IDENT_SECONDARY_BADGE(read_request) + " socket error (" + to_string(platform_sockets_last_error()) + ") on client " + to_string(client.addr));
+            }
             if (closesocket(client.socket) == SOCKET_ERROR) {
                 console_log(SCS_LOG_TYPE_error, IDENT_SECONDARY_BADGE(read_request) + " socket error (" + to_string(platform_sockets_last_error()) + ") on closing socket client " + to_string(client.addr));
             }
@@ -186,16 +189,13 @@ void process_client(client& client) {
 
     switch (client.collector.state())
     {
+    case collector_states::COLLECTED:
+        break;
     case collector_states::MISSING_SIZE:
     case collector_states::MISSING_DATA:
         console_log(SCS_LOG_TYPE_warning, IDENT_SECONDARY_BADGE(process_client) + " bad data from client " + to_string(client.addr));
-        break;
+        client.collector.reset();
     default:
-        break;
-    }
-    client.collector.reset();
-
-    if (client.collector.state() != collector_states::COLLECTED) {
         return;
     }
 
@@ -210,6 +210,8 @@ void process_client(client& client) {
             console_log(SCS_LOG_TYPE_error, IDENT_SECONDARY_BADGE(process_client) + "Unknown request (" + to_string((int)request) + ") from client " + to_string(client.addr));
             break;
     }
+
+    client.collector.reset();
 }
 
 void dispatch_clients() {
@@ -228,10 +230,12 @@ void dispatch_clients() {
         if (new_client.socket == INVALID_SOCKET) {
             if (platform_sockets_last_error() != socket_errors::S_EWOULDBLOCK) {
                 console_log(SCS_LOG_TYPE_error, IDENT_SECONDARY_BADGE(dispatch_clients) + "accept(...) error");
-            } else {
-                clients.push_back(new_client);
-                console_log(SCS_LOG_TYPE_message, to_string(new_client.addr) + " connected");
             }
+        } else {
+            clients.push_back(new_client);
+            clients.back().collector_buffer = { 0 };
+            clients.back().collector = vector_collector(clients.back().collector_buffer.begin(), clients.back().collector_buffer.end());
+            console_log(SCS_LOG_TYPE_message, to_string(new_client.addr) + " connected");
         }
 
         for (int i = 0; i < clients.size(); i++) {
