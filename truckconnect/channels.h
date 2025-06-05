@@ -2,6 +2,12 @@
 #include <stdint.h>
 #include <scssdk/scssdk_value.h>
 #include "game_data.h"
+#include "alignment.h"
+
+#define TRUCKCONNECT_DATA IDENT_ALIGNMENT(SCS_CONCAT(__TRUCKCONNECT_DATA_ALIGNMENT_AT_, __LINE__)); static_assert(SCS_CONCAT(__TRUCKCONNECT_DATA_ALIGNMENT_AT_, __LINE__) == 1, "truckconnect data structs must be aligned to 1.");
+#define DEFINE_DATA_ID(id) static constexpr const truckconnect::channels::data_definition_id __DATA_DEFINITION_ID__ = id
+#define DATA_DEFINITION_MEMBER static const truckconnect::channels::data_definition_member __DATA_DEFINITION__[]
+#define DATA_DEFINITION_FOR(struct_name) const truckconnect::channels::data_definition_member struct_name::__DATA_DEFINITION__[]
 
 namespace truckconnect {
     namespace channels {
@@ -124,6 +130,17 @@ namespace truckconnect {
         }
 
         using telemetry_ids::telemetry_id;
+
+		struct data_definition_member {
+			telemetry_id id;
+			size_t offset;
+			int8_t trailer_count;
+
+			constexpr data_definition_member(const telemetry_id id = static_cast<telemetry_id>(-1), const size_t offset = 0, const int trailer_count = -1)
+				: id(id), offset(offset), trailer_count(trailer_count) {}
+		};
+
+		using data_definition_id = uint8_t;
 
         constexpr const uint32_t max_count(telemetry_id id) {
             return
