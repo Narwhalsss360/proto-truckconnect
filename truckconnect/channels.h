@@ -1,6 +1,7 @@
 #pragma once
 #include <stdint.h>
 #include <scssdk/scssdk_value.h>
+#include "game_data.h"
 
 namespace truckconnect {
     namespace channels {
@@ -532,6 +533,7 @@ namespace truckconnect {
 			static constexpr const telemetry_id id = telemetry_id::channel_local_scale;
 			static constexpr const char* const macro = "local.scale";
 			using type = scs_value_float_t;
+			using storage_type = value_storage<scs_value_float_t>;
 			static constexpr const scs_value_type_t value_type_id = 5;
 			static constexpr const bool is_event = false;
 			static constexpr const bool indexed = false;
@@ -543,6 +545,7 @@ namespace truckconnect {
 			static constexpr const telemetry_id id = telemetry_id::channel_game_time;
 			static constexpr const char* const macro = "game.time";
 			using type = scs_value_u32_t;
+			using storage_type = value_storage<scs_value_u32_t>;
 			static constexpr const scs_value_type_t value_type_id = 3;
 			static constexpr const bool is_event = false;
 			static constexpr const bool indexed = false;
@@ -554,6 +557,7 @@ namespace truckconnect {
 			static constexpr const telemetry_id id = telemetry_id::channel_multiplayer_time_offset;
 			static constexpr const char* const macro = "multiplayer.time.offset";
 			using type = scs_value_s32_t;
+			using storage_type = value_storage<scs_value_s32_t>;
 			static constexpr const scs_value_type_t value_type_id = 2;
 			static constexpr const bool is_event = false;
 			static constexpr const bool indexed = false;
@@ -565,6 +569,7 @@ namespace truckconnect {
 			static constexpr const telemetry_id id = telemetry_id::channel_next_rest_stop;
 			static constexpr const char* const macro = "rest.stop";
 			using type = scs_value_s32_t;
+			using storage_type = value_storage<scs_value_s32_t>;
 			static constexpr const scs_value_type_t value_type_id = 2;
 			static constexpr const bool is_event = false;
 			static constexpr const bool indexed = false;
@@ -576,6 +581,7 @@ namespace truckconnect {
 			static constexpr const telemetry_id id = telemetry_id::gameplay_event_job_cancelled;
 			static constexpr const char* const macro = "job.cancelled";
 			using type = scs_invalid_t;
+			using storage_type = value_storage<scs_invalid_t>;
 			static constexpr const scs_value_type_t value_type_id = 0;
 			static constexpr const bool is_event = true;
 			static constexpr const bool indexed = false;
@@ -587,6 +593,7 @@ namespace truckconnect {
 			static constexpr const telemetry_id id = telemetry_id::gameplay_event_job_delivered;
 			static constexpr const char* const macro = "job.delivered";
 			using type = scs_invalid_t;
+			using storage_type = value_storage<scs_invalid_t>;
 			static constexpr const scs_value_type_t value_type_id = 0;
 			static constexpr const bool is_event = true;
 			static constexpr const bool indexed = false;
@@ -598,6 +605,7 @@ namespace truckconnect {
 			static constexpr const telemetry_id id = telemetry_id::gameplay_event_player_fined;
 			static constexpr const char* const macro = "player.fined";
 			using type = scs_invalid_t;
+			using storage_type = value_storage<scs_invalid_t>;
 			static constexpr const scs_value_type_t value_type_id = 0;
 			static constexpr const bool is_event = true;
 			static constexpr const bool indexed = false;
@@ -609,6 +617,7 @@ namespace truckconnect {
 			static constexpr const telemetry_id id = telemetry_id::gameplay_event_player_tollgate_paid;
 			static constexpr const char* const macro = "player.tollgate.paid";
 			using type = scs_invalid_t;
+			using storage_type = value_storage<scs_invalid_t>;
 			static constexpr const scs_value_type_t value_type_id = 0;
 			static constexpr const bool is_event = true;
 			static constexpr const bool indexed = false;
@@ -620,6 +629,7 @@ namespace truckconnect {
 			static constexpr const telemetry_id id = telemetry_id::gameplay_event_player_use_ferry;
 			static constexpr const char* const macro = "player.use.ferry";
 			using type = scs_invalid_t;
+			using storage_type = value_storage<scs_invalid_t>;
 			static constexpr const scs_value_type_t value_type_id = 0;
 			static constexpr const bool is_event = true;
 			static constexpr const bool indexed = false;
@@ -631,6 +641,7 @@ namespace truckconnect {
 			static constexpr const telemetry_id id = telemetry_id::gameplay_event_player_use_train;
 			static constexpr const char* const macro = "player.use.train";
 			using type = scs_invalid_t;
+			using storage_type = value_storage<scs_invalid_t>;
 			static constexpr const scs_value_type_t value_type_id = 0;
 			static constexpr const bool is_event = true;
 			static constexpr const bool indexed = false;
@@ -642,6 +653,7 @@ namespace truckconnect {
 			static constexpr const telemetry_id id = telemetry_id::job_channel_cargo_damage;
 			static constexpr const char* const macro = "job.cargo.damage";
 			using type = scs_value_float_t;
+			using storage_type = value_storage<scs_value_float_t>;
 			static constexpr const scs_value_type_t value_type_id = 5;
 			static constexpr const bool is_event = false;
 			static constexpr const bool indexed = false;
@@ -653,6 +665,7 @@ namespace truckconnect {
 			static constexpr const telemetry_id id = telemetry_id::trailer_channel_connected;
 			static constexpr const char* const macro = "trailer.connected";
 			using type = scs_value_bool_t;
+			using storage_type = value_storage<scs_value_bool_t>;
 			static constexpr const scs_value_type_t value_type_id = 1;
 			static constexpr const bool is_event = false;
 			static constexpr const bool indexed = false;
@@ -664,6 +677,7 @@ namespace truckconnect {
 			static constexpr const telemetry_id id = telemetry_id::trailer_channel_cargo_damage;
 			static constexpr const char* const macro = "trailer.cargo.damage";
 			using type = scs_value_float_t;
+			using storage_type = value_storage<scs_value_float_t>;
 			static constexpr const scs_value_type_t value_type_id = 5;
 			static constexpr const bool is_event = false;
 			static constexpr const bool indexed = false;
@@ -675,6 +689,7 @@ namespace truckconnect {
 			static constexpr const telemetry_id id = telemetry_id::trailer_channel_world_placement;
 			static constexpr const char* const macro = "trailer.world.placement";
 			using type = scs_value_dplacement_t;
+			using storage_type = value_storage<scs_value_dplacement_t>;
 			static constexpr const scs_value_type_t value_type_id = 11;
 			static constexpr const bool is_event = false;
 			static constexpr const bool indexed = false;
@@ -686,6 +701,7 @@ namespace truckconnect {
 			static constexpr const telemetry_id id = telemetry_id::trailer_channel_local_linear_velocity;
 			static constexpr const char* const macro = "trailer.velocity.linear";
 			using type = scs_value_fvector_t;
+			using storage_type = value_storage<scs_value_fvector_t>;
 			static constexpr const scs_value_type_t value_type_id = 7;
 			static constexpr const bool is_event = false;
 			static constexpr const bool indexed = false;
@@ -697,6 +713,7 @@ namespace truckconnect {
 			static constexpr const telemetry_id id = telemetry_id::trailer_channel_local_angular_velocity;
 			static constexpr const char* const macro = "trailer.velocity.angular";
 			using type = scs_value_fvector_t;
+			using storage_type = value_storage<scs_value_fvector_t>;
 			static constexpr const scs_value_type_t value_type_id = 7;
 			static constexpr const bool is_event = false;
 			static constexpr const bool indexed = false;
@@ -708,6 +725,7 @@ namespace truckconnect {
 			static constexpr const telemetry_id id = telemetry_id::trailer_channel_local_linear_acceleration;
 			static constexpr const char* const macro = "trailer.acceleration.linear";
 			using type = scs_value_fvector_t;
+			using storage_type = value_storage<scs_value_fvector_t>;
 			static constexpr const scs_value_type_t value_type_id = 7;
 			static constexpr const bool is_event = false;
 			static constexpr const bool indexed = false;
@@ -719,6 +737,7 @@ namespace truckconnect {
 			static constexpr const telemetry_id id = telemetry_id::trailer_channel_local_angular_acceleration;
 			static constexpr const char* const macro = "trailer.acceleration.angular";
 			using type = scs_value_fvector_t;
+			using storage_type = value_storage<scs_value_fvector_t>;
 			static constexpr const scs_value_type_t value_type_id = 7;
 			static constexpr const bool is_event = false;
 			static constexpr const bool indexed = false;
@@ -730,6 +749,7 @@ namespace truckconnect {
 			static constexpr const telemetry_id id = telemetry_id::trailer_channel_wear_body;
 			static constexpr const char* const macro = "trailer.wear.body";
 			using type = scs_value_float_t;
+			using storage_type = value_storage<scs_value_float_t>;
 			static constexpr const scs_value_type_t value_type_id = 5;
 			static constexpr const bool is_event = false;
 			static constexpr const bool indexed = false;
@@ -741,6 +761,7 @@ namespace truckconnect {
 			static constexpr const telemetry_id id = telemetry_id::trailer_channel_wear_chassis;
 			static constexpr const char* const macro = "trailer.wear.chassis";
 			using type = scs_value_float_t;
+			using storage_type = value_storage<scs_value_float_t>;
 			static constexpr const scs_value_type_t value_type_id = 5;
 			static constexpr const bool is_event = false;
 			static constexpr const bool indexed = false;
@@ -752,6 +773,7 @@ namespace truckconnect {
 			static constexpr const telemetry_id id = telemetry_id::trailer_channel_wear_wheels;
 			static constexpr const char* const macro = "trailer.wear.wheels";
 			using type = scs_value_float_t;
+			using storage_type = value_storage<scs_value_float_t>;
 			static constexpr const scs_value_type_t value_type_id = 5;
 			static constexpr const bool is_event = false;
 			static constexpr const bool indexed = false;
@@ -763,6 +785,7 @@ namespace truckconnect {
 			static constexpr const telemetry_id id = telemetry_id::trailer_channel_wheel_susp_deflection;
 			static constexpr const char* const macro = "trailer.wheel.suspension.deflection";
 			using type = scs_value_float_t;
+			using storage_type = value_array_storage<scs_value_float_t, 19>;
 			static constexpr const scs_value_type_t value_type_id = 5;
 			static constexpr const bool is_event = false;
 			static constexpr const bool indexed = true;
@@ -774,6 +797,7 @@ namespace truckconnect {
 			static constexpr const telemetry_id id = telemetry_id::trailer_channel_wheel_on_ground;
 			static constexpr const char* const macro = "trailer.wheel.on_ground";
 			using type = scs_value_bool_t;
+			using storage_type = value_array_storage<scs_value_bool_t, 19>;
 			static constexpr const scs_value_type_t value_type_id = 1;
 			static constexpr const bool is_event = false;
 			static constexpr const bool indexed = true;
@@ -785,6 +809,7 @@ namespace truckconnect {
 			static constexpr const telemetry_id id = telemetry_id::trailer_channel_wheel_substance;
 			static constexpr const char* const macro = "trailer.wheel.substance";
 			using type = scs_value_u32_t;
+			using storage_type = value_array_storage<scs_value_u32_t, 19>;
 			static constexpr const scs_value_type_t value_type_id = 3;
 			static constexpr const bool is_event = false;
 			static constexpr const bool indexed = true;
@@ -796,6 +821,7 @@ namespace truckconnect {
 			static constexpr const telemetry_id id = telemetry_id::trailer_channel_wheel_velocity;
 			static constexpr const char* const macro = "trailer.wheel.angular_velocity";
 			using type = scs_value_float_t;
+			using storage_type = value_array_storage<scs_value_float_t, 19>;
 			static constexpr const scs_value_type_t value_type_id = 5;
 			static constexpr const bool is_event = false;
 			static constexpr const bool indexed = true;
@@ -807,6 +833,7 @@ namespace truckconnect {
 			static constexpr const telemetry_id id = telemetry_id::trailer_channel_wheel_steering;
 			static constexpr const char* const macro = "trailer.wheel.steering";
 			using type = scs_value_float_t;
+			using storage_type = value_array_storage<scs_value_float_t, 19>;
 			static constexpr const scs_value_type_t value_type_id = 5;
 			static constexpr const bool is_event = false;
 			static constexpr const bool indexed = true;
@@ -818,6 +845,7 @@ namespace truckconnect {
 			static constexpr const telemetry_id id = telemetry_id::trailer_channel_wheel_rotation;
 			static constexpr const char* const macro = "trailer.wheel.rotation";
 			using type = scs_value_float_t;
+			using storage_type = value_array_storage<scs_value_float_t, 19>;
 			static constexpr const scs_value_type_t value_type_id = 5;
 			static constexpr const bool is_event = false;
 			static constexpr const bool indexed = true;
@@ -829,6 +857,7 @@ namespace truckconnect {
 			static constexpr const telemetry_id id = telemetry_id::trailer_channel_wheel_lift;
 			static constexpr const char* const macro = "trailer.wheel.lift";
 			using type = scs_value_float_t;
+			using storage_type = value_array_storage<scs_value_float_t, 19>;
 			static constexpr const scs_value_type_t value_type_id = 5;
 			static constexpr const bool is_event = false;
 			static constexpr const bool indexed = true;
@@ -840,6 +869,7 @@ namespace truckconnect {
 			static constexpr const telemetry_id id = telemetry_id::trailer_channel_wheel_lift_offset;
 			static constexpr const char* const macro = "trailer.wheel.lift.offset";
 			using type = scs_value_float_t;
+			using storage_type = value_array_storage<scs_value_float_t, 19>;
 			static constexpr const scs_value_type_t value_type_id = 5;
 			static constexpr const bool is_event = false;
 			static constexpr const bool indexed = true;
@@ -851,6 +881,7 @@ namespace truckconnect {
 			static constexpr const telemetry_id id = telemetry_id::truck_channel_world_placement;
 			static constexpr const char* const macro = "truck.world.placement";
 			using type = scs_value_dplacement_t;
+			using storage_type = value_storage<scs_value_dplacement_t>;
 			static constexpr const scs_value_type_t value_type_id = 11;
 			static constexpr const bool is_event = false;
 			static constexpr const bool indexed = false;
@@ -862,6 +893,7 @@ namespace truckconnect {
 			static constexpr const telemetry_id id = telemetry_id::truck_channel_local_linear_velocity;
 			static constexpr const char* const macro = "truck.local.velocity.linear";
 			using type = scs_value_fvector_t;
+			using storage_type = value_storage<scs_value_fvector_t>;
 			static constexpr const scs_value_type_t value_type_id = 7;
 			static constexpr const bool is_event = false;
 			static constexpr const bool indexed = false;
@@ -873,6 +905,7 @@ namespace truckconnect {
 			static constexpr const telemetry_id id = telemetry_id::truck_channel_local_angular_velocity;
 			static constexpr const char* const macro = "truck.local.velocity.angular";
 			using type = scs_value_fvector_t;
+			using storage_type = value_storage<scs_value_fvector_t>;
 			static constexpr const scs_value_type_t value_type_id = 7;
 			static constexpr const bool is_event = false;
 			static constexpr const bool indexed = false;
@@ -884,6 +917,7 @@ namespace truckconnect {
 			static constexpr const telemetry_id id = telemetry_id::truck_channel_local_linear_acceleration;
 			static constexpr const char* const macro = "truck.local.acceleration.linear";
 			using type = scs_value_fvector_t;
+			using storage_type = value_storage<scs_value_fvector_t>;
 			static constexpr const scs_value_type_t value_type_id = 7;
 			static constexpr const bool is_event = false;
 			static constexpr const bool indexed = false;
@@ -895,6 +929,7 @@ namespace truckconnect {
 			static constexpr const telemetry_id id = telemetry_id::truck_channel_local_angular_acceleration;
 			static constexpr const char* const macro = "truck.local.acceleration.angular";
 			using type = scs_value_fvector_t;
+			using storage_type = value_storage<scs_value_fvector_t>;
 			static constexpr const scs_value_type_t value_type_id = 7;
 			static constexpr const bool is_event = false;
 			static constexpr const bool indexed = false;
@@ -906,6 +941,7 @@ namespace truckconnect {
 			static constexpr const telemetry_id id = telemetry_id::truck_channel_cabin_offset;
 			static constexpr const char* const macro = "truck.cabin.offset";
 			using type = scs_value_fplacement_t;
+			using storage_type = value_storage<scs_value_fplacement_t>;
 			static constexpr const scs_value_type_t value_type_id = 10;
 			static constexpr const bool is_event = false;
 			static constexpr const bool indexed = false;
@@ -917,6 +953,7 @@ namespace truckconnect {
 			static constexpr const telemetry_id id = telemetry_id::truck_channel_cabin_angular_velocity;
 			static constexpr const char* const macro = "truck.cabin.velocity.angular";
 			using type = scs_value_fvector_t;
+			using storage_type = value_storage<scs_value_fvector_t>;
 			static constexpr const scs_value_type_t value_type_id = 7;
 			static constexpr const bool is_event = false;
 			static constexpr const bool indexed = false;
@@ -928,6 +965,7 @@ namespace truckconnect {
 			static constexpr const telemetry_id id = telemetry_id::truck_channel_cabin_angular_acceleration;
 			static constexpr const char* const macro = "truck.cabin.acceleration.angular";
 			using type = scs_value_fvector_t;
+			using storage_type = value_storage<scs_value_fvector_t>;
 			static constexpr const scs_value_type_t value_type_id = 7;
 			static constexpr const bool is_event = false;
 			static constexpr const bool indexed = false;
@@ -939,6 +977,7 @@ namespace truckconnect {
 			static constexpr const telemetry_id id = telemetry_id::truck_channel_head_offset;
 			static constexpr const char* const macro = "truck.head.offset";
 			using type = scs_value_fplacement_t;
+			using storage_type = value_storage<scs_value_fplacement_t>;
 			static constexpr const scs_value_type_t value_type_id = 10;
 			static constexpr const bool is_event = false;
 			static constexpr const bool indexed = false;
@@ -950,6 +989,7 @@ namespace truckconnect {
 			static constexpr const telemetry_id id = telemetry_id::truck_channel_speed;
 			static constexpr const char* const macro = "truck.speed";
 			using type = scs_value_float_t;
+			using storage_type = value_storage<scs_value_float_t>;
 			static constexpr const scs_value_type_t value_type_id = 5;
 			static constexpr const bool is_event = false;
 			static constexpr const bool indexed = false;
@@ -961,6 +1001,7 @@ namespace truckconnect {
 			static constexpr const telemetry_id id = telemetry_id::truck_channel_engine_rpm;
 			static constexpr const char* const macro = "truck.engine.rpm";
 			using type = scs_value_float_t;
+			using storage_type = value_storage<scs_value_float_t>;
 			static constexpr const scs_value_type_t value_type_id = 5;
 			static constexpr const bool is_event = false;
 			static constexpr const bool indexed = false;
@@ -972,6 +1013,7 @@ namespace truckconnect {
 			static constexpr const telemetry_id id = telemetry_id::truck_channel_engine_gear;
 			static constexpr const char* const macro = "truck.engine.gear";
 			using type = scs_value_s32_t;
+			using storage_type = value_storage<scs_value_s32_t>;
 			static constexpr const scs_value_type_t value_type_id = 2;
 			static constexpr const bool is_event = false;
 			static constexpr const bool indexed = false;
@@ -983,6 +1025,7 @@ namespace truckconnect {
 			static constexpr const telemetry_id id = telemetry_id::truck_channel_displayed_gear;
 			static constexpr const char* const macro = "truck.displayed.gear";
 			using type = scs_value_s32_t;
+			using storage_type = value_storage<scs_value_s32_t>;
 			static constexpr const scs_value_type_t value_type_id = 2;
 			static constexpr const bool is_event = false;
 			static constexpr const bool indexed = false;
@@ -994,6 +1037,7 @@ namespace truckconnect {
 			static constexpr const telemetry_id id = telemetry_id::truck_channel_input_steering;
 			static constexpr const char* const macro = "truck.input.steering";
 			using type = scs_value_float_t;
+			using storage_type = value_storage<scs_value_float_t>;
 			static constexpr const scs_value_type_t value_type_id = 5;
 			static constexpr const bool is_event = false;
 			static constexpr const bool indexed = false;
@@ -1005,6 +1049,7 @@ namespace truckconnect {
 			static constexpr const telemetry_id id = telemetry_id::truck_channel_input_throttle;
 			static constexpr const char* const macro = "truck.input.throttle";
 			using type = scs_value_float_t;
+			using storage_type = value_storage<scs_value_float_t>;
 			static constexpr const scs_value_type_t value_type_id = 5;
 			static constexpr const bool is_event = false;
 			static constexpr const bool indexed = false;
@@ -1016,6 +1061,7 @@ namespace truckconnect {
 			static constexpr const telemetry_id id = telemetry_id::truck_channel_input_brake;
 			static constexpr const char* const macro = "truck.input.brake";
 			using type = scs_value_float_t;
+			using storage_type = value_storage<scs_value_float_t>;
 			static constexpr const scs_value_type_t value_type_id = 5;
 			static constexpr const bool is_event = false;
 			static constexpr const bool indexed = false;
@@ -1027,6 +1073,7 @@ namespace truckconnect {
 			static constexpr const telemetry_id id = telemetry_id::truck_channel_input_clutch;
 			static constexpr const char* const macro = "truck.input.clutch";
 			using type = scs_value_float_t;
+			using storage_type = value_storage<scs_value_float_t>;
 			static constexpr const scs_value_type_t value_type_id = 5;
 			static constexpr const bool is_event = false;
 			static constexpr const bool indexed = false;
@@ -1038,6 +1085,7 @@ namespace truckconnect {
 			static constexpr const telemetry_id id = telemetry_id::truck_channel_effective_steering;
 			static constexpr const char* const macro = "truck.effective.steering";
 			using type = scs_value_float_t;
+			using storage_type = value_storage<scs_value_float_t>;
 			static constexpr const scs_value_type_t value_type_id = 5;
 			static constexpr const bool is_event = false;
 			static constexpr const bool indexed = false;
@@ -1049,6 +1097,7 @@ namespace truckconnect {
 			static constexpr const telemetry_id id = telemetry_id::truck_channel_effective_throttle;
 			static constexpr const char* const macro = "truck.effective.throttle";
 			using type = scs_value_float_t;
+			using storage_type = value_storage<scs_value_float_t>;
 			static constexpr const scs_value_type_t value_type_id = 5;
 			static constexpr const bool is_event = false;
 			static constexpr const bool indexed = false;
@@ -1060,6 +1109,7 @@ namespace truckconnect {
 			static constexpr const telemetry_id id = telemetry_id::truck_channel_effective_brake;
 			static constexpr const char* const macro = "truck.effective.brake";
 			using type = scs_value_float_t;
+			using storage_type = value_storage<scs_value_float_t>;
 			static constexpr const scs_value_type_t value_type_id = 5;
 			static constexpr const bool is_event = false;
 			static constexpr const bool indexed = false;
@@ -1071,6 +1121,7 @@ namespace truckconnect {
 			static constexpr const telemetry_id id = telemetry_id::truck_channel_effective_clutch;
 			static constexpr const char* const macro = "truck.effective.clutch";
 			using type = scs_value_float_t;
+			using storage_type = value_storage<scs_value_float_t>;
 			static constexpr const scs_value_type_t value_type_id = 5;
 			static constexpr const bool is_event = false;
 			static constexpr const bool indexed = false;
@@ -1082,6 +1133,7 @@ namespace truckconnect {
 			static constexpr const telemetry_id id = telemetry_id::truck_channel_cruise_control;
 			static constexpr const char* const macro = "truck.cruise_control";
 			using type = scs_value_float_t;
+			using storage_type = value_storage<scs_value_float_t>;
 			static constexpr const scs_value_type_t value_type_id = 5;
 			static constexpr const bool is_event = false;
 			static constexpr const bool indexed = false;
@@ -1093,6 +1145,7 @@ namespace truckconnect {
 			static constexpr const telemetry_id id = telemetry_id::truck_channel_hshifter_slot;
 			static constexpr const char* const macro = "truck.hshifter.slot";
 			using type = scs_value_u32_t;
+			using storage_type = value_storage<scs_value_u32_t>;
 			static constexpr const scs_value_type_t value_type_id = 3;
 			static constexpr const bool is_event = false;
 			static constexpr const bool indexed = false;
@@ -1104,6 +1157,7 @@ namespace truckconnect {
 			static constexpr const telemetry_id id = telemetry_id::truck_channel_hshifter_selector;
 			static constexpr const char* const macro = "truck.hshifter.select";
 			using type = scs_value_bool_t;
+			using storage_type = value_array_storage<scs_value_bool_t, 2>;
 			static constexpr const scs_value_type_t value_type_id = 1;
 			static constexpr const bool is_event = false;
 			static constexpr const bool indexed = true;
@@ -1115,6 +1169,7 @@ namespace truckconnect {
 			static constexpr const telemetry_id id = telemetry_id::truck_channel_parking_brake;
 			static constexpr const char* const macro = "truck.brake.parking";
 			using type = scs_value_bool_t;
+			using storage_type = value_storage<scs_value_bool_t>;
 			static constexpr const scs_value_type_t value_type_id = 1;
 			static constexpr const bool is_event = false;
 			static constexpr const bool indexed = false;
@@ -1126,6 +1181,7 @@ namespace truckconnect {
 			static constexpr const telemetry_id id = telemetry_id::truck_channel_motor_brake;
 			static constexpr const char* const macro = "truck.brake.motor";
 			using type = scs_value_bool_t;
+			using storage_type = value_storage<scs_value_bool_t>;
 			static constexpr const scs_value_type_t value_type_id = 1;
 			static constexpr const bool is_event = false;
 			static constexpr const bool indexed = false;
@@ -1137,6 +1193,7 @@ namespace truckconnect {
 			static constexpr const telemetry_id id = telemetry_id::truck_channel_retarder_level;
 			static constexpr const char* const macro = "truck.brake.retarder";
 			using type = scs_value_u32_t;
+			using storage_type = value_storage<scs_value_u32_t>;
 			static constexpr const scs_value_type_t value_type_id = 3;
 			static constexpr const bool is_event = false;
 			static constexpr const bool indexed = false;
@@ -1148,6 +1205,7 @@ namespace truckconnect {
 			static constexpr const telemetry_id id = telemetry_id::truck_channel_brake_air_pressure;
 			static constexpr const char* const macro = "truck.brake.air.pressure";
 			using type = scs_value_float_t;
+			using storage_type = value_storage<scs_value_float_t>;
 			static constexpr const scs_value_type_t value_type_id = 5;
 			static constexpr const bool is_event = false;
 			static constexpr const bool indexed = false;
@@ -1159,6 +1217,7 @@ namespace truckconnect {
 			static constexpr const telemetry_id id = telemetry_id::truck_channel_brake_air_pressure_warning;
 			static constexpr const char* const macro = "truck.brake.air.pressure.warning";
 			using type = scs_value_bool_t;
+			using storage_type = value_storage<scs_value_bool_t>;
 			static constexpr const scs_value_type_t value_type_id = 1;
 			static constexpr const bool is_event = false;
 			static constexpr const bool indexed = false;
@@ -1170,6 +1229,7 @@ namespace truckconnect {
 			static constexpr const telemetry_id id = telemetry_id::truck_channel_brake_air_pressure_emergency;
 			static constexpr const char* const macro = "truck.brake.air.pressure.emergency";
 			using type = scs_value_bool_t;
+			using storage_type = value_storage<scs_value_bool_t>;
 			static constexpr const scs_value_type_t value_type_id = 1;
 			static constexpr const bool is_event = false;
 			static constexpr const bool indexed = false;
@@ -1181,6 +1241,7 @@ namespace truckconnect {
 			static constexpr const telemetry_id id = telemetry_id::truck_channel_brake_temperature;
 			static constexpr const char* const macro = "truck.brake.temperature";
 			using type = scs_value_float_t;
+			using storage_type = value_storage<scs_value_float_t>;
 			static constexpr const scs_value_type_t value_type_id = 5;
 			static constexpr const bool is_event = false;
 			static constexpr const bool indexed = false;
@@ -1192,6 +1253,7 @@ namespace truckconnect {
 			static constexpr const telemetry_id id = telemetry_id::truck_channel_fuel;
 			static constexpr const char* const macro = "truck.fuel.amount";
 			using type = scs_value_float_t;
+			using storage_type = value_storage<scs_value_float_t>;
 			static constexpr const scs_value_type_t value_type_id = 5;
 			static constexpr const bool is_event = false;
 			static constexpr const bool indexed = false;
@@ -1203,6 +1265,7 @@ namespace truckconnect {
 			static constexpr const telemetry_id id = telemetry_id::truck_channel_fuel_warning;
 			static constexpr const char* const macro = "truck.fuel.warning";
 			using type = scs_value_bool_t;
+			using storage_type = value_storage<scs_value_bool_t>;
 			static constexpr const scs_value_type_t value_type_id = 1;
 			static constexpr const bool is_event = false;
 			static constexpr const bool indexed = false;
@@ -1214,6 +1277,7 @@ namespace truckconnect {
 			static constexpr const telemetry_id id = telemetry_id::truck_channel_fuel_average_consumption;
 			static constexpr const char* const macro = "truck.fuel.consumption.average";
 			using type = scs_value_float_t;
+			using storage_type = value_storage<scs_value_float_t>;
 			static constexpr const scs_value_type_t value_type_id = 5;
 			static constexpr const bool is_event = false;
 			static constexpr const bool indexed = false;
@@ -1225,6 +1289,7 @@ namespace truckconnect {
 			static constexpr const telemetry_id id = telemetry_id::truck_channel_fuel_range;
 			static constexpr const char* const macro = "truck.fuel.range";
 			using type = scs_value_float_t;
+			using storage_type = value_storage<scs_value_float_t>;
 			static constexpr const scs_value_type_t value_type_id = 5;
 			static constexpr const bool is_event = false;
 			static constexpr const bool indexed = false;
@@ -1236,6 +1301,7 @@ namespace truckconnect {
 			static constexpr const telemetry_id id = telemetry_id::truck_channel_adblue;
 			static constexpr const char* const macro = "truck.adblue";
 			using type = scs_value_float_t;
+			using storage_type = value_storage<scs_value_float_t>;
 			static constexpr const scs_value_type_t value_type_id = 5;
 			static constexpr const bool is_event = false;
 			static constexpr const bool indexed = false;
@@ -1247,6 +1313,7 @@ namespace truckconnect {
 			static constexpr const telemetry_id id = telemetry_id::truck_channel_adblue_warning;
 			static constexpr const char* const macro = "truck.adblue.warning";
 			using type = scs_value_bool_t;
+			using storage_type = value_storage<scs_value_bool_t>;
 			static constexpr const scs_value_type_t value_type_id = 1;
 			static constexpr const bool is_event = false;
 			static constexpr const bool indexed = false;
@@ -1258,6 +1325,7 @@ namespace truckconnect {
 			static constexpr const telemetry_id id = telemetry_id::truck_channel_adblue_average_consumption;
 			static constexpr const char* const macro = "truck.adblue.consumption.average";
 			using type = scs_value_float_t;
+			using storage_type = value_storage<scs_value_float_t>;
 			static constexpr const scs_value_type_t value_type_id = 5;
 			static constexpr const bool is_event = false;
 			static constexpr const bool indexed = false;
@@ -1269,6 +1337,7 @@ namespace truckconnect {
 			static constexpr const telemetry_id id = telemetry_id::truck_channel_oil_pressure;
 			static constexpr const char* const macro = "truck.oil.pressure";
 			using type = scs_value_float_t;
+			using storage_type = value_storage<scs_value_float_t>;
 			static constexpr const scs_value_type_t value_type_id = 5;
 			static constexpr const bool is_event = false;
 			static constexpr const bool indexed = false;
@@ -1280,6 +1349,7 @@ namespace truckconnect {
 			static constexpr const telemetry_id id = telemetry_id::truck_channel_oil_pressure_warning;
 			static constexpr const char* const macro = "truck.oil.pressure.warning";
 			using type = scs_value_bool_t;
+			using storage_type = value_storage<scs_value_bool_t>;
 			static constexpr const scs_value_type_t value_type_id = 1;
 			static constexpr const bool is_event = false;
 			static constexpr const bool indexed = false;
@@ -1291,6 +1361,7 @@ namespace truckconnect {
 			static constexpr const telemetry_id id = telemetry_id::truck_channel_oil_temperature;
 			static constexpr const char* const macro = "truck.oil.temperature";
 			using type = scs_value_float_t;
+			using storage_type = value_storage<scs_value_float_t>;
 			static constexpr const scs_value_type_t value_type_id = 5;
 			static constexpr const bool is_event = false;
 			static constexpr const bool indexed = false;
@@ -1302,6 +1373,7 @@ namespace truckconnect {
 			static constexpr const telemetry_id id = telemetry_id::truck_channel_water_temperature;
 			static constexpr const char* const macro = "truck.water.temperature";
 			using type = scs_value_float_t;
+			using storage_type = value_storage<scs_value_float_t>;
 			static constexpr const scs_value_type_t value_type_id = 5;
 			static constexpr const bool is_event = false;
 			static constexpr const bool indexed = false;
@@ -1313,6 +1385,7 @@ namespace truckconnect {
 			static constexpr const telemetry_id id = telemetry_id::truck_channel_water_temperature_warning;
 			static constexpr const char* const macro = "truck.water.temperature.warning";
 			using type = scs_value_bool_t;
+			using storage_type = value_storage<scs_value_bool_t>;
 			static constexpr const scs_value_type_t value_type_id = 1;
 			static constexpr const bool is_event = false;
 			static constexpr const bool indexed = false;
@@ -1324,6 +1397,7 @@ namespace truckconnect {
 			static constexpr const telemetry_id id = telemetry_id::truck_channel_battery_voltage;
 			static constexpr const char* const macro = "truck.battery.voltage";
 			using type = scs_value_float_t;
+			using storage_type = value_storage<scs_value_float_t>;
 			static constexpr const scs_value_type_t value_type_id = 5;
 			static constexpr const bool is_event = false;
 			static constexpr const bool indexed = false;
@@ -1335,6 +1409,7 @@ namespace truckconnect {
 			static constexpr const telemetry_id id = telemetry_id::truck_channel_battery_voltage_warning;
 			static constexpr const char* const macro = "truck.battery.voltage.warning";
 			using type = scs_value_bool_t;
+			using storage_type = value_storage<scs_value_bool_t>;
 			static constexpr const scs_value_type_t value_type_id = 1;
 			static constexpr const bool is_event = false;
 			static constexpr const bool indexed = false;
@@ -1346,6 +1421,7 @@ namespace truckconnect {
 			static constexpr const telemetry_id id = telemetry_id::truck_channel_electric_enabled;
 			static constexpr const char* const macro = "truck.electric.enabled";
 			using type = scs_value_bool_t;
+			using storage_type = value_storage<scs_value_bool_t>;
 			static constexpr const scs_value_type_t value_type_id = 1;
 			static constexpr const bool is_event = false;
 			static constexpr const bool indexed = false;
@@ -1357,6 +1433,7 @@ namespace truckconnect {
 			static constexpr const telemetry_id id = telemetry_id::truck_channel_engine_enabled;
 			static constexpr const char* const macro = "truck.engine.enabled";
 			using type = scs_value_bool_t;
+			using storage_type = value_storage<scs_value_bool_t>;
 			static constexpr const scs_value_type_t value_type_id = 1;
 			static constexpr const bool is_event = false;
 			static constexpr const bool indexed = false;
@@ -1368,6 +1445,7 @@ namespace truckconnect {
 			static constexpr const telemetry_id id = telemetry_id::truck_channel_lblinker;
 			static constexpr const char* const macro = "truck.lblinker";
 			using type = scs_value_bool_t;
+			using storage_type = value_storage<scs_value_bool_t>;
 			static constexpr const scs_value_type_t value_type_id = 1;
 			static constexpr const bool is_event = false;
 			static constexpr const bool indexed = false;
@@ -1379,6 +1457,7 @@ namespace truckconnect {
 			static constexpr const telemetry_id id = telemetry_id::truck_channel_rblinker;
 			static constexpr const char* const macro = "truck.rblinker";
 			using type = scs_value_bool_t;
+			using storage_type = value_storage<scs_value_bool_t>;
 			static constexpr const scs_value_type_t value_type_id = 1;
 			static constexpr const bool is_event = false;
 			static constexpr const bool indexed = false;
@@ -1390,6 +1469,7 @@ namespace truckconnect {
 			static constexpr const telemetry_id id = telemetry_id::truck_channel_hazard_warning;
 			static constexpr const char* const macro = "truck.hazard.warning";
 			using type = scs_value_bool_t;
+			using storage_type = value_storage<scs_value_bool_t>;
 			static constexpr const scs_value_type_t value_type_id = 1;
 			static constexpr const bool is_event = false;
 			static constexpr const bool indexed = false;
@@ -1401,6 +1481,7 @@ namespace truckconnect {
 			static constexpr const telemetry_id id = telemetry_id::truck_channel_light_lblinker;
 			static constexpr const char* const macro = "truck.light.lblinker";
 			using type = scs_value_bool_t;
+			using storage_type = value_storage<scs_value_bool_t>;
 			static constexpr const scs_value_type_t value_type_id = 1;
 			static constexpr const bool is_event = false;
 			static constexpr const bool indexed = false;
@@ -1412,6 +1493,7 @@ namespace truckconnect {
 			static constexpr const telemetry_id id = telemetry_id::truck_channel_light_rblinker;
 			static constexpr const char* const macro = "truck.light.rblinker";
 			using type = scs_value_bool_t;
+			using storage_type = value_storage<scs_value_bool_t>;
 			static constexpr const scs_value_type_t value_type_id = 1;
 			static constexpr const bool is_event = false;
 			static constexpr const bool indexed = false;
@@ -1423,6 +1505,7 @@ namespace truckconnect {
 			static constexpr const telemetry_id id = telemetry_id::truck_channel_light_parking;
 			static constexpr const char* const macro = "truck.light.parking";
 			using type = scs_value_bool_t;
+			using storage_type = value_storage<scs_value_bool_t>;
 			static constexpr const scs_value_type_t value_type_id = 1;
 			static constexpr const bool is_event = false;
 			static constexpr const bool indexed = false;
@@ -1434,6 +1517,7 @@ namespace truckconnect {
 			static constexpr const telemetry_id id = telemetry_id::truck_channel_light_low_beam;
 			static constexpr const char* const macro = "truck.light.beam.low";
 			using type = scs_value_bool_t;
+			using storage_type = value_storage<scs_value_bool_t>;
 			static constexpr const scs_value_type_t value_type_id = 1;
 			static constexpr const bool is_event = false;
 			static constexpr const bool indexed = false;
@@ -1445,6 +1529,7 @@ namespace truckconnect {
 			static constexpr const telemetry_id id = telemetry_id::truck_channel_light_high_beam;
 			static constexpr const char* const macro = "truck.light.beam.high";
 			using type = scs_value_bool_t;
+			using storage_type = value_storage<scs_value_bool_t>;
 			static constexpr const scs_value_type_t value_type_id = 1;
 			static constexpr const bool is_event = false;
 			static constexpr const bool indexed = false;
@@ -1456,6 +1541,7 @@ namespace truckconnect {
 			static constexpr const telemetry_id id = telemetry_id::truck_channel_light_aux_front;
 			static constexpr const char* const macro = "truck.light.aux.front";
 			using type = scs_value_u32_t;
+			using storage_type = value_storage<scs_value_u32_t>;
 			static constexpr const scs_value_type_t value_type_id = 3;
 			static constexpr const bool is_event = false;
 			static constexpr const bool indexed = false;
@@ -1467,6 +1553,7 @@ namespace truckconnect {
 			static constexpr const telemetry_id id = telemetry_id::truck_channel_light_aux_roof;
 			static constexpr const char* const macro = "truck.light.aux.roof";
 			using type = scs_value_u32_t;
+			using storage_type = value_storage<scs_value_u32_t>;
 			static constexpr const scs_value_type_t value_type_id = 3;
 			static constexpr const bool is_event = false;
 			static constexpr const bool indexed = false;
@@ -1478,6 +1565,7 @@ namespace truckconnect {
 			static constexpr const telemetry_id id = telemetry_id::truck_channel_light_beacon;
 			static constexpr const char* const macro = "truck.light.beacon";
 			using type = scs_value_bool_t;
+			using storage_type = value_storage<scs_value_bool_t>;
 			static constexpr const scs_value_type_t value_type_id = 1;
 			static constexpr const bool is_event = false;
 			static constexpr const bool indexed = false;
@@ -1489,6 +1577,7 @@ namespace truckconnect {
 			static constexpr const telemetry_id id = telemetry_id::truck_channel_light_brake;
 			static constexpr const char* const macro = "truck.light.brake";
 			using type = scs_value_bool_t;
+			using storage_type = value_storage<scs_value_bool_t>;
 			static constexpr const scs_value_type_t value_type_id = 1;
 			static constexpr const bool is_event = false;
 			static constexpr const bool indexed = false;
@@ -1500,6 +1589,7 @@ namespace truckconnect {
 			static constexpr const telemetry_id id = telemetry_id::truck_channel_light_reverse;
 			static constexpr const char* const macro = "truck.light.reverse";
 			using type = scs_value_bool_t;
+			using storage_type = value_storage<scs_value_bool_t>;
 			static constexpr const scs_value_type_t value_type_id = 1;
 			static constexpr const bool is_event = false;
 			static constexpr const bool indexed = false;
@@ -1511,6 +1601,7 @@ namespace truckconnect {
 			static constexpr const telemetry_id id = telemetry_id::truck_channel_wipers;
 			static constexpr const char* const macro = "truck.wipers";
 			using type = scs_value_bool_t;
+			using storage_type = value_storage<scs_value_bool_t>;
 			static constexpr const scs_value_type_t value_type_id = 1;
 			static constexpr const bool is_event = false;
 			static constexpr const bool indexed = false;
@@ -1522,6 +1613,7 @@ namespace truckconnect {
 			static constexpr const telemetry_id id = telemetry_id::truck_channel_dashboard_backlight;
 			static constexpr const char* const macro = "truck.dashboard.backlight";
 			using type = scs_value_float_t;
+			using storage_type = value_storage<scs_value_float_t>;
 			static constexpr const scs_value_type_t value_type_id = 5;
 			static constexpr const bool is_event = false;
 			static constexpr const bool indexed = false;
@@ -1533,6 +1625,7 @@ namespace truckconnect {
 			static constexpr const telemetry_id id = telemetry_id::truck_channel_differential_lock;
 			static constexpr const char* const macro = "truck.differential_lock";
 			using type = scs_value_bool_t;
+			using storage_type = value_storage<scs_value_bool_t>;
 			static constexpr const scs_value_type_t value_type_id = 1;
 			static constexpr const bool is_event = false;
 			static constexpr const bool indexed = false;
@@ -1544,6 +1637,7 @@ namespace truckconnect {
 			static constexpr const telemetry_id id = telemetry_id::truck_channel_lift_axle;
 			static constexpr const char* const macro = "truck.lift_axle";
 			using type = scs_value_bool_t;
+			using storage_type = value_storage<scs_value_bool_t>;
 			static constexpr const scs_value_type_t value_type_id = 1;
 			static constexpr const bool is_event = false;
 			static constexpr const bool indexed = false;
@@ -1555,6 +1649,7 @@ namespace truckconnect {
 			static constexpr const telemetry_id id = telemetry_id::truck_channel_lift_axle_indicator;
 			static constexpr const char* const macro = "truck.lift_axle.indicator";
 			using type = scs_value_bool_t;
+			using storage_type = value_storage<scs_value_bool_t>;
 			static constexpr const scs_value_type_t value_type_id = 1;
 			static constexpr const bool is_event = false;
 			static constexpr const bool indexed = false;
@@ -1566,6 +1661,7 @@ namespace truckconnect {
 			static constexpr const telemetry_id id = telemetry_id::truck_channel_trailer_lift_axle;
 			static constexpr const char* const macro = "truck.trailer.lift_axle";
 			using type = scs_value_bool_t;
+			using storage_type = value_storage<scs_value_bool_t>;
 			static constexpr const scs_value_type_t value_type_id = 1;
 			static constexpr const bool is_event = false;
 			static constexpr const bool indexed = false;
@@ -1577,6 +1673,7 @@ namespace truckconnect {
 			static constexpr const telemetry_id id = telemetry_id::truck_channel_trailer_lift_axle_indicator;
 			static constexpr const char* const macro = "truck.trailer.lift_axle.indicator";
 			using type = scs_value_bool_t;
+			using storage_type = value_storage<scs_value_bool_t>;
 			static constexpr const scs_value_type_t value_type_id = 1;
 			static constexpr const bool is_event = false;
 			static constexpr const bool indexed = false;
@@ -1588,6 +1685,7 @@ namespace truckconnect {
 			static constexpr const telemetry_id id = telemetry_id::truck_channel_wear_engine;
 			static constexpr const char* const macro = "truck.wear.engine";
 			using type = scs_value_float_t;
+			using storage_type = value_storage<scs_value_float_t>;
 			static constexpr const scs_value_type_t value_type_id = 5;
 			static constexpr const bool is_event = false;
 			static constexpr const bool indexed = false;
@@ -1599,6 +1697,7 @@ namespace truckconnect {
 			static constexpr const telemetry_id id = telemetry_id::truck_channel_wear_transmission;
 			static constexpr const char* const macro = "truck.wear.transmission";
 			using type = scs_value_float_t;
+			using storage_type = value_storage<scs_value_float_t>;
 			static constexpr const scs_value_type_t value_type_id = 5;
 			static constexpr const bool is_event = false;
 			static constexpr const bool indexed = false;
@@ -1610,6 +1709,7 @@ namespace truckconnect {
 			static constexpr const telemetry_id id = telemetry_id::truck_channel_wear_cabin;
 			static constexpr const char* const macro = "truck.wear.cabin";
 			using type = scs_value_float_t;
+			using storage_type = value_storage<scs_value_float_t>;
 			static constexpr const scs_value_type_t value_type_id = 5;
 			static constexpr const bool is_event = false;
 			static constexpr const bool indexed = false;
@@ -1621,6 +1721,7 @@ namespace truckconnect {
 			static constexpr const telemetry_id id = telemetry_id::truck_channel_wear_chassis;
 			static constexpr const char* const macro = "truck.wear.chassis";
 			using type = scs_value_float_t;
+			using storage_type = value_storage<scs_value_float_t>;
 			static constexpr const scs_value_type_t value_type_id = 5;
 			static constexpr const bool is_event = false;
 			static constexpr const bool indexed = false;
@@ -1632,6 +1733,7 @@ namespace truckconnect {
 			static constexpr const telemetry_id id = telemetry_id::truck_channel_wear_wheels;
 			static constexpr const char* const macro = "truck.wear.wheels";
 			using type = scs_value_float_t;
+			using storage_type = value_storage<scs_value_float_t>;
 			static constexpr const scs_value_type_t value_type_id = 5;
 			static constexpr const bool is_event = false;
 			static constexpr const bool indexed = false;
@@ -1643,6 +1745,7 @@ namespace truckconnect {
 			static constexpr const telemetry_id id = telemetry_id::truck_channel_odometer;
 			static constexpr const char* const macro = "truck.odometer";
 			using type = scs_value_float_t;
+			using storage_type = value_storage<scs_value_float_t>;
 			static constexpr const scs_value_type_t value_type_id = 5;
 			static constexpr const bool is_event = false;
 			static constexpr const bool indexed = false;
@@ -1654,6 +1757,7 @@ namespace truckconnect {
 			static constexpr const telemetry_id id = telemetry_id::truck_channel_navigation_distance;
 			static constexpr const char* const macro = "truck.navigation.distance";
 			using type = scs_value_float_t;
+			using storage_type = value_storage<scs_value_float_t>;
 			static constexpr const scs_value_type_t value_type_id = 5;
 			static constexpr const bool is_event = false;
 			static constexpr const bool indexed = false;
@@ -1665,6 +1769,7 @@ namespace truckconnect {
 			static constexpr const telemetry_id id = telemetry_id::truck_channel_navigation_time;
 			static constexpr const char* const macro = "truck.navigation.time";
 			using type = scs_value_float_t;
+			using storage_type = value_storage<scs_value_float_t>;
 			static constexpr const scs_value_type_t value_type_id = 5;
 			static constexpr const bool is_event = false;
 			static constexpr const bool indexed = false;
@@ -1676,6 +1781,7 @@ namespace truckconnect {
 			static constexpr const telemetry_id id = telemetry_id::truck_channel_navigation_speed_limit;
 			static constexpr const char* const macro = "truck.navigation.speed.limit";
 			using type = scs_value_float_t;
+			using storage_type = value_storage<scs_value_float_t>;
 			static constexpr const scs_value_type_t value_type_id = 5;
 			static constexpr const bool is_event = false;
 			static constexpr const bool indexed = false;
@@ -1687,6 +1793,7 @@ namespace truckconnect {
 			static constexpr const telemetry_id id = telemetry_id::truck_channel_wheel_susp_deflection;
 			static constexpr const char* const macro = "truck.wheel.suspension.deflection";
 			using type = scs_value_float_t;
+			using storage_type = value_array_storage<scs_value_float_t, 14>;
 			static constexpr const scs_value_type_t value_type_id = 5;
 			static constexpr const bool is_event = false;
 			static constexpr const bool indexed = true;
@@ -1698,6 +1805,7 @@ namespace truckconnect {
 			static constexpr const telemetry_id id = telemetry_id::truck_channel_wheel_on_ground;
 			static constexpr const char* const macro = "truck.wheel.on_ground";
 			using type = scs_value_bool_t;
+			using storage_type = value_array_storage<scs_value_bool_t, 14>;
 			static constexpr const scs_value_type_t value_type_id = 1;
 			static constexpr const bool is_event = false;
 			static constexpr const bool indexed = true;
@@ -1709,6 +1817,7 @@ namespace truckconnect {
 			static constexpr const telemetry_id id = telemetry_id::truck_channel_wheel_substance;
 			static constexpr const char* const macro = "truck.wheel.substance";
 			using type = scs_value_u32_t;
+			using storage_type = value_array_storage<scs_value_u32_t, 14>;
 			static constexpr const scs_value_type_t value_type_id = 3;
 			static constexpr const bool is_event = false;
 			static constexpr const bool indexed = true;
@@ -1720,6 +1829,7 @@ namespace truckconnect {
 			static constexpr const telemetry_id id = telemetry_id::truck_channel_wheel_velocity;
 			static constexpr const char* const macro = "truck.wheel.angular_velocity";
 			using type = scs_value_float_t;
+			using storage_type = value_array_storage<scs_value_float_t, 14>;
 			static constexpr const scs_value_type_t value_type_id = 5;
 			static constexpr const bool is_event = false;
 			static constexpr const bool indexed = true;
@@ -1731,6 +1841,7 @@ namespace truckconnect {
 			static constexpr const telemetry_id id = telemetry_id::truck_channel_wheel_steering;
 			static constexpr const char* const macro = "truck.wheel.steering";
 			using type = scs_value_float_t;
+			using storage_type = value_array_storage<scs_value_float_t, 14>;
 			static constexpr const scs_value_type_t value_type_id = 5;
 			static constexpr const bool is_event = false;
 			static constexpr const bool indexed = true;
@@ -1742,6 +1853,7 @@ namespace truckconnect {
 			static constexpr const telemetry_id id = telemetry_id::truck_channel_wheel_rotation;
 			static constexpr const char* const macro = "truck.wheel.rotation";
 			using type = scs_value_float_t;
+			using storage_type = value_array_storage<scs_value_float_t, 14>;
 			static constexpr const scs_value_type_t value_type_id = 5;
 			static constexpr const bool is_event = false;
 			static constexpr const bool indexed = true;
@@ -1753,6 +1865,7 @@ namespace truckconnect {
 			static constexpr const telemetry_id id = telemetry_id::truck_channel_wheel_lift;
 			static constexpr const char* const macro = "truck.wheel.lift";
 			using type = scs_value_float_t;
+			using storage_type = value_array_storage<scs_value_float_t, 14>;
 			static constexpr const scs_value_type_t value_type_id = 5;
 			static constexpr const bool is_event = false;
 			static constexpr const bool indexed = true;
@@ -1764,6 +1877,7 @@ namespace truckconnect {
 			static constexpr const telemetry_id id = telemetry_id::truck_channel_wheel_lift_offset;
 			static constexpr const char* const macro = "truck.wheel.lift.offset";
 			using type = scs_value_float_t;
+			using storage_type = value_array_storage<scs_value_float_t, 14>;
 			static constexpr const scs_value_type_t value_type_id = 5;
 			static constexpr const bool is_event = false;
 			static constexpr const bool indexed = true;
