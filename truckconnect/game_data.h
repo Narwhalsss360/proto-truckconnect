@@ -1,30 +1,31 @@
 #pragma once
+#include "alignment.h"
 #include "scssdk/scssdk_value.h"
 #include <stdint.h>
 #include <vector>
 #include <array>
 
-#define __IDENT_ALIGNMENT_AT__(ident, line) struct SCS_CONCAT(__alignment_at_, line) { char a; int b;}; static constexpr const size_t ident = sizeof(SCS_CONCAT(__alignment_at_, line)) - sizeof(int)
-#define IDENT_ALIGNMENT(ident) __IDENT_ALIGNMENT_AT__(ident, __LINE__)
 
+#pragma pack(push, 1)
 namespace truckconnect {
+    IDENT_ALIGNMENT(GAME_DATA_ALIGNMENT);
+
+    static_assert(GAME_DATA_ALIGNMENT == 1, "struct alignment of game data must be 1");
+
     template <typename T>
     struct value_storage {
-        IDENT_ALIGNMENT(ALIGNMENT);
         T value = T();
         bool initialized = false;
     };
 
     template <typename T, size_t max_count>
     struct value_array_storage {
-        IDENT_ALIGNMENT(ALIGNMENT);
         std::array<T, max_count> values = std::array<T, max_count>();
         bool initialized = false;
         uint32_t size = 0;
     };
 
     struct trailer_data {
-        IDENT_ALIGNMENT(ALIGNMENT);
         value_storage<scs_value_bool_t> trailer_channel_connected;
         value_storage<scs_value_float_t> trailer_channel_cargo_damage;
         value_storage<scs_value_dplacement_t> trailer_channel_world_placement;
@@ -46,7 +47,6 @@ namespace truckconnect {
     };
 
     struct game_data_store {
-        IDENT_ALIGNMENT(ALIGNMENT);
         value_storage<scs_value_float_t> channel_local_scale;
         value_storage<scs_value_u32_t> channel_game_time;
         value_storage<scs_value_s32_t> channel_multiplayer_time_offset;
@@ -139,3 +139,4 @@ namespace truckconnect {
         std::array<trailer_data, 10> trailers;
     };
 }
+#pragma pack(pop)

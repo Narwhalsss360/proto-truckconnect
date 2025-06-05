@@ -80,6 +80,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)game_data.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)communication.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)connection.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)alignment.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)communication.cpp" />
