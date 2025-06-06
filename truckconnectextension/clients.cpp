@@ -70,6 +70,8 @@ using std::unordered_map;
 using namespace truckconnect::communication;
 using truckconnect::request_result;
 using truckconnect::game_data_store;
+using truckconnect::trailer_data;
+using truckconnect::TRAILER_DATA_OFFSET;
 using truckconnect::channels::data_definition_id;
 using truckconnect::channels::data_definition_member;
 using truckconnect::channels::storage_size;
@@ -264,12 +266,15 @@ void process_client(client& client) {
                 for (data_definition_member& member : client.data_definitions[id]) {
                     size_t size = storage_size(member.id);
                     if (is_trailer_channel(member.id)) {
-                        __debugbreak();
-                        size *= member.trailer_count;
+                        size_t first_offset = offset_of(member.id, 0);
+                        for (int i = 0; i < member.trailer_count; i++) {
+                            memcpy(data_buffer + total_size, reinterpret_cast<const uint8_t*>(&current_game_data()) + i * sizeof(trailer_data) + first_offset, size);
+                            total_size += static_cast<nsize_int>(size);
+                        }
                     } else {
                         memcpy(data_buffer + total_size, reinterpret_cast<const uint8_t*>(&current_game_data()) + offset_of(member.id), size);
+                        total_size += static_cast<nsize_int>(size);
                     }
-                    total_size += static_cast<nsize_int>(size);
                 }
             }
 

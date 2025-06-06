@@ -100,15 +100,18 @@ namespace custom_structs_main {
 
 	TRUCKCONNECT_DATA struct trailer_status {
 		DEFINE_DATA_ID(1);
+		DATA_DEFINITION_MEMBER;
 		static constexpr const size_t MAX_TRAILERS = 3;
 
 		array<trailer_channel_connected::storage_type, MAX_TRAILERS> connected;
-		array<trailer_channel_cargo_damage, MAX_TRAILERS> cargo_damage;
+		array<trailer_channel_wear_body::storage_type, MAX_TRAILERS> wear_body;
+		array<trailer_channel_cargo_damage::storage_type, MAX_TRAILERS> cargo_damage;
 	};
 
-	constexpr const data_definition_member trailer_status_data_definition[] {
+	DATA_DEFINITION_FOR(trailer_status) {
 		data_definition_member(trailer_channel_connected::id, 		offsetof(trailer_status, connected), trailer_status::MAX_TRAILERS),
-		data_definition_member(trailer_channel_cargo_damage::id, 	offsetof(trailer_status, cargo_damage), trailer_status::MAX_TRAILERS),
+		data_definition_member(trailer_channel_wear_body::id, 		offsetof(trailer_status, wear_body), trailer_status::MAX_TRAILERS),
+		data_definition_member(trailer_channel_cargo_damage::id,	offsetof(trailer_status, cargo_damage), trailer_status::MAX_TRAILERS)
 	};
 	#pragma pack(pop)
 
@@ -130,13 +133,17 @@ namespace custom_structs_main {
 			return 1;
 		}
 
-		sizeof(gauge_cluster);
+		if (register_data_definition<trailer_status>(game) != success) {
+			__debugbreak();
+			return 1;
+		}
+
 		clock_t start;
 		clock_t interval_totals = 0;
 		uint64_t interval_count = 0;
 		while (true) {
 			start = std::clock();
-			request_result result = request_data<gauge_cluster>(game, collector, [start, &interval_totals, &interval_count](const gauge_cluster& data) {
+			if (request_data<gauge_cluster>(game, collector, [start, &interval_totals, &interval_count](const gauge_cluster& data) {
 				clock_t elapsed = clock() - start;
 				interval_totals += elapsed;
 				interval_count++;
@@ -145,22 +152,25 @@ namespace custom_structs_main {
 				string speed_str = data.speed.initialized ? to_string(data.speed.value.value) : "---";
 				string rpm_str = data.engine_rpm.initialized ? to_string(data.engine_rpm.value.value) : "---";
 				cout << elapsed << " | " << average_elapsed << " | " << speed_str << " m/s | " << rpm_str << " rpm\n";
-			});
-
-			switch (result)
-			{
-			case truckconnect::request_results::success:
-				continue;
-			case truckconnect::request_results::generic_socket_error:
-			case truckconnect::request_results::collector_error:
-			case truckconnect::request_results::not_connected_error:
-			case truckconnect::request_results::already_registered:
-			case truckconnect::request_results::not_registered:
-			default:
+			}) != success) {
 				__debugbreak();
 				break;
 			}
-			break;
+
+			if (request_data<trailer_status>(game, collector, [start, &interval_totals, &interval_count](const trailer_status& data) {
+				clock_t elapsed = clock() - start;
+				interval_totals += elapsed;
+				interval_count++;
+				double average_elapsed = static_cast<double>(interval_totals) / interval_count;
+
+				for (int i = 0; i < trailer_status::MAX_TRAILERS; i++) {
+					cout << "\tTRAILER " << i << " " << (data.connected[i].initialized ? (data.connected[i].value.value ? "Connected" : "N/A") : "---") << " | " << (data.wear_body[i].initialized ? to_string(data.wear_body[i].value.value * 100) : "---") << "% | " << (data.cargo_damage[i].initialized ? to_string(data.cargo_damage[i].value.value * 100) : "---") << "%\n";
+				}
+				cout << elapsed << " | " << average_elapsed << '\n';
+				}) != success) {
+				__debugbreak();
+				break;
+			}
 		}
 
 		if (unregister_data_definition<gauge_cluster>(game) != success) {

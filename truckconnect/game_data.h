@@ -138,5 +138,7 @@ namespace truckconnect {
         value_array_storage<scs_value_float_t, 14> truck_channel_wheel_lift_offset;
         std::array<trailer_data, 10> trailers;
     };
+
+    constexpr const size_t TRAILER_DATA_OFFSET = offsetof(game_data_store, trailers);
 }
 #pragma pack(pop)
