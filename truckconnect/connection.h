@@ -1,13 +1,17 @@
 #pragma once
 #include "communication.h"
+#include "channels.h"
 #include "game_data.h"
+#include <unordered_map>
 #include <string>
+#include <functional>
 
 namespace truckconnect {
     struct connection {
         SOCKET socket;
         sockaddr_in addr;
         socklen_t addr_len;
+        std::unordered_map<channels::data_definition_id, std::vector<channels::data_definition_member>> data_definitions;
 
         connection(const std::string& ip);
     };
@@ -32,7 +36,10 @@ namespace truckconnect {
         enum request_result : uint8_t {
             success,
             generic_socket_error,
-            collector_error
+            collector_error,
+            not_connected_error,
+            already_registered,
+            not_registered
         };
     }
 
@@ -89,5 +96,36 @@ namespace truckconnect {
         }
 
         return continue_request_collection(connection, collector);
+    }
+
+    request_result register_data_definition(connection& connection, const channels::data_definition_id definition_id, const channels::data_definition_member* members, const size_t count);
+
+    template <size_t count>
+    request_result register_data_definition(connection& connection, channels::data_definition_id definition_id, const channels::data_definition_member (&members)[count]) {
+        return register_data_definition(connection, definition_id, members, count);
+    }
+
+    template <typename data_struct>
+    request_result register_data_definition(connection& connection) {
+        constexpr const size_t count = sizeof(data_struct::__DATA_DEFINITION__) / sizeof(channels::data_definition_member);
+        return register_data_definition<count>(connection, data_struct::__DATA_DEFINITION_ID__, data_struct::__DATA_DEFINITION__);
+    }
+
+    request_result request_data(connection& connection, communication::vector_collector& collector, channels::data_definition_id definition_id, std::function<void(const channels::data_definition_id, const void* const, const size_t)> callback);
+
+    template <typename data_struct>
+    request_result request_data(connection& connection, communication::vector_collector& collector, std::function<void(const data_struct&)> callback) {
+        using channels::data_definition_id;
+        using channels::data_definition_id;
+        return request_data(connection, collector, data_struct::__DATA_DEFINITION_ID__, [&callback](const data_definition_id id, const void* const data, const size_t) {
+            callback(*reinterpret_cast<const data_struct*>(data));
+        });
+    }
+
+    request_result unregister_data_definition(connection& connection, channels::data_definition_id definition_id);
+
+    template <typename data_struct>
+    request_result unregister_data_definition(connection& connection) {
+        return unregister_data_definition(connection, data_struct::__DATA_DEFINITION_ID__);
     }
 }

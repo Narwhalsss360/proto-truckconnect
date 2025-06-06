@@ -58,8 +58,13 @@ namespace game_data_main {
 
 namespace custom_structs_main {
 	using std::array;
+	using std::string;
+	using std::cout;
+	using std::vector;
+	using std::to_string;
 	using namespace truckconnect;
 	using namespace truckconnect::channels;
+	using communication::vector_collector;
 
 	#pragma pack(push, 1)
 	TRUCKCONNECT_DATA struct gauge_cluster {
@@ -110,8 +115,55 @@ namespace custom_structs_main {
 	int main() {
 		using namespace truckconnect::connection_results;
 
+		vector<uint8_t> buffer;
+		buffer.resize(sizeof(gauge_cluster));
+		vector_collector collector = vector_collector(buffer.begin(), buffer.end());
+
 		connection game = connection("127.0.0.1");
 		if (connect(game) != success) {
+			__debugbreak();
+			return 1;
+		}
+
+		if (register_data_definition<gauge_cluster>(game) != success) {
+			__debugbreak();
+			return 1;
+		}
+
+		sizeof(gauge_cluster);
+		clock_t start;
+		clock_t interval_totals = 0;
+		uint64_t interval_count = 0;
+		while (true) {
+			start = std::clock();
+			request_result result = request_data<gauge_cluster>(game, collector, [start, &interval_totals, &interval_count](const gauge_cluster& data) {
+				clock_t elapsed = clock() - start;
+				interval_totals += elapsed;
+				interval_count++;
+				double average_elapsed = static_cast<double>(interval_totals) / interval_count;
+
+				string speed_str = data.speed.initialized ? to_string(data.speed.value.value) : "---";
+				string rpm_str = data.engine_rpm.initialized ? to_string(data.engine_rpm.value.value) : "---";
+				cout << elapsed << " | " << average_elapsed << " | " << speed_str << " m/s | " << rpm_str << " rpm\n";
+			});
+
+			switch (result)
+			{
+			case truckconnect::request_results::success:
+				continue;
+			case truckconnect::request_results::generic_socket_error:
+			case truckconnect::request_results::collector_error:
+			case truckconnect::request_results::not_connected_error:
+			case truckconnect::request_results::already_registered:
+			case truckconnect::request_results::not_registered:
+			default:
+				__debugbreak();
+				break;
+			}
+			break;
+		}
+
+		if (unregister_data_definition<gauge_cluster>(game) != success) {
 			__debugbreak();
 			return 1;
 		}
@@ -130,7 +182,7 @@ int main() {
 		return 1;
 	}
 
-	int retval = game_data_main::main();
+	int retval = custom_structs_main::main();
 
 	if (!truckconnect::communication::platform_sockets_deinit()) {
 		__debugbreak();

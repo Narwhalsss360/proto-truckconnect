@@ -51,7 +51,10 @@ namespace truckconnect {
         namespace requests {
             enum request : uint8_t {
                 none,
-                game_data
+                game_data,
+                register_data_definition,
+                defined_data,
+                unregister_data_definition
             };
         }
 
