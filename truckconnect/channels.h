@@ -173,6 +173,117 @@ namespace truckconnect {
                 id == 9 ? true : false;
         }
 
+		constexpr const scs_value_type_t type_id_of(telemetry_id id) {
+			return
+				id == 0 ? 5 :
+				id == 1 ? 3 :
+				id == 2 ? 2 :
+				id == 3 ? 2 :
+				id == 10 ? 5 :
+				id == 11 ? 1 :
+				id == 12 ? 5 :
+				id == 13 ? 11 :
+				id == 14 ? 7 :
+				id == 15 ? 7 :
+				id == 16 ? 7 :
+				id == 17 ? 7 :
+				id == 18 ? 5 :
+				id == 19 ? 5 :
+				id == 20 ? 5 :
+				id == 21 ? 5 :
+				id == 22 ? 1 :
+				id == 23 ? 3 :
+				id == 24 ? 5 :
+				id == 25 ? 5 :
+				id == 26 ? 5 :
+				id == 27 ? 5 :
+				id == 28 ? 5 :
+				id == 29 ? 11 :
+				id == 30 ? 7 :
+				id == 31 ? 7 :
+				id == 32 ? 7 :
+				id == 33 ? 7 :
+				id == 34 ? 10 :
+				id == 35 ? 7 :
+				id == 36 ? 7 :
+				id == 37 ? 10 :
+				id == 38 ? 5 :
+				id == 39 ? 5 :
+				id == 40 ? 2 :
+				id == 41 ? 2 :
+				id == 42 ? 5 :
+				id == 43 ? 5 :
+				id == 44 ? 5 :
+				id == 45 ? 5 :
+				id == 46 ? 5 :
+				id == 47 ? 5 :
+				id == 48 ? 5 :
+				id == 49 ? 5 :
+				id == 50 ? 5 :
+				id == 51 ? 3 :
+				id == 52 ? 1 :
+				id == 53 ? 1 :
+				id == 54 ? 1 :
+				id == 55 ? 3 :
+				id == 56 ? 5 :
+				id == 57 ? 1 :
+				id == 58 ? 1 :
+				id == 59 ? 5 :
+				id == 60 ? 5 :
+				id == 61 ? 1 :
+				id == 62 ? 5 :
+				id == 63 ? 5 :
+				id == 64 ? 5 :
+				id == 65 ? 1 :
+				id == 66 ? 5 :
+				id == 67 ? 5 :
+				id == 68 ? 1 :
+				id == 69 ? 5 :
+				id == 70 ? 5 :
+				id == 71 ? 1 :
+				id == 72 ? 5 :
+				id == 73 ? 1 :
+				id == 74 ? 1 :
+				id == 75 ? 1 :
+				id == 76 ? 1 :
+				id == 77 ? 1 :
+				id == 78 ? 1 :
+				id == 79 ? 1 :
+				id == 80 ? 1 :
+				id == 81 ? 1 :
+				id == 82 ? 1 :
+				id == 83 ? 1 :
+				id == 84 ? 3 :
+				id == 85 ? 3 :
+				id == 86 ? 1 :
+				id == 87 ? 1 :
+				id == 88 ? 1 :
+				id == 89 ? 1 :
+				id == 90 ? 5 :
+				id == 91 ? 1 :
+				id == 92 ? 1 :
+				id == 93 ? 1 :
+				id == 94 ? 1 :
+				id == 95 ? 1 :
+				id == 96 ? 5 :
+				id == 97 ? 5 :
+				id == 98 ? 5 :
+				id == 99 ? 5 :
+				id == 100 ? 5 :
+				id == 101 ? 5 :
+				id == 102 ? 5 :
+				id == 103 ? 5 :
+				id == 104 ? 5 :
+				id == 105 ? 5 :
+				id == 106 ? 1 :
+				id == 107 ? 3 :
+				id == 108 ? 5 :
+				id == 109 ? 5 :
+				id == 110 ? 5 :
+				id == 111 ? 5 :
+				id == 112 ? 5 : 0;
+		}
+
 		constexpr const size_t sizeof_scs_type(scs_value_type_t type) {
 			return
 				type == 0 ? 0 :
@@ -189,6 +300,19 @@ namespace truckconnect {
 				type == 11 ? 40 :
 				type == 12 ? 0 :
 				type == 13 ? 8 : static_cast<size_t>(-1);
+		}
+
+
+		constexpr const size_t value_storage_size(telemetry_id id) {
+			return sizeof_scs_type(type_id_of(id)) + 1;
+		}
+
+		constexpr const size_t value_storage_array_size(telemetry_id id) {
+			return sizeof_scs_type(type_id_of(id)) * max_count(id) + 4 + 1;
+		}
+
+		constexpr const size_t storage_size(telemetry_id id) {
+			return max_count(id) == 0 ? value_storage_size(id) : value_storage_array_size(id);
 		}
 
         constexpr const bool is_trailer_channel(telemetry_id id) {
