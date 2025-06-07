@@ -138,6 +138,13 @@
       <EnableUAC>false</EnableUAC>
       <ModuleDefinitionFile>module.def</ModuleDefinitionFile>
     </Link>
+    <PostBuildEvent>
+      <Command>if exist "$(OutputPath)cp_ats.py" (
+python "$(OutputPath)cp_ats.py" $(OutputPath)
+) else (
+echo "not exists"
+)</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -159,6 +166,13 @@
       <EnableUAC>false</EnableUAC>
       <ModuleDefinitionFile>module.def</ModuleDefinitionFile>
     </Link>
+    <PostBuildEvent>
+      <Command>if exist "$(OutputPath)cp_ats.py" (
+python "$(OutputPath)cp_ats.py" $(OutputPath)
+) else (
+echo "not exists"
+)</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <None Include="cpp.hint" />
