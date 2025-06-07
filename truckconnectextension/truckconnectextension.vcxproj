@@ -181,10 +181,12 @@ echo "not exists"
   <ItemGroup>
     <ClInclude Include="clients.h" />
     <ClInclude Include="registrations.h" />
+    <ClInclude Include="signals.h" />
     <ClInclude Include="truckconnectextension.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="clients.cpp" />
+    <ClCompile Include="process_client.cpp" />
     <ClCompile Include="registrations.cpp" />
     <ClCompile Include="truckconnectextension.cpp" />
   </ItemGroup>
