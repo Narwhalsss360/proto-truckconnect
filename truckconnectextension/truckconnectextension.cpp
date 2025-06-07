@@ -12,7 +12,7 @@ void console_log(scs_log_type_t type, const std::string& message) {
 		init.common.log(type, ("[proto-truckconnect] " + message).c_str());
 }
 
-void frame_end(scs_event_t event, const void* const event_indo, scs_context_t context) {
+void frame_end(scs_event_t event, const void* const event_info, scs_context_t context) {
 	clients_frame_end();
 }
 
