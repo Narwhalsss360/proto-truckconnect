@@ -16,6 +16,7 @@ namespace game_data_main {
 	int main() {
 		using truckconnect::connection;
 		using namespace truckconnect::connection_results;
+		using truckconnect::GAME_DATA_REQUEST_DATA_INDEX;
 		using truckconnect::game_data_store;
 		using truckconnect::request_game_data;
 		using truckconnect::request_result;
@@ -41,7 +42,7 @@ namespace game_data_main {
 			}
 			elapsed = clock() - start;
 
-			const game_data_store& game_data = *reinterpret_cast<const game_data_store*>(game_data_collector.decoder().array() + 1);
+			const game_data_store& game_data = *reinterpret_cast<const game_data_store*>(game_data_collector.decoder().array() + GAME_DATA_REQUEST_DATA_INDEX);
 			string speed_str = game_data.truck_channel_speed.initialized ? to_string(game_data.truck_channel_speed.value.value) : "---";
 			string rpm_str = game_data.truck_channel_engine_rpm.initialized ? to_string(game_data.truck_channel_engine_rpm.value.value) : "---";
 			cout << elapsed << " | " << speed_str << " m/s | " << rpm_str << " rpm\n";
