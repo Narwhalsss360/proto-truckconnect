@@ -1,4 +1,4 @@
-#include "truckconnectextension.h"
+ #include "truckconnectextension.h"
 #include <scssdk/scssdk_telemetry.h>
 #include "registrations.h"
 #include "clients.h"
@@ -16,6 +16,9 @@ void frame_end(scs_event_t event, const void* const event_info, scs_context_t co
 	clients_frame_end();
 }
 
+void test_configuration_event_callback(scs_event_t, const void* const info, scs_context_t);
+void test_config_init();
+void test_config_deinit();
 SCSAPI_RESULT scs_telemetry_init(const scs_u32_t version, const scs_telemetry_init_params_t* const params) {
 	init = *reinterpret_cast<const scs_telemetry_init_params_v101_t*>(params);
 	scs_result_t result = SCS_RESULT_ok;
@@ -24,6 +27,7 @@ SCSAPI_RESULT scs_telemetry_init(const scs_u32_t version, const scs_telemetry_in
 		return SCS_RESULT_generic_error;
 	}
 
+	test_config_init();
 	result = init.register_for_event(SCS_TELEMETRY_EVENT_frame_end, frame_end, NULL);
 
 	if (result != SCS_RESULT_ok) {
@@ -41,5 +45,6 @@ SCSAPI_RESULT scs_telemetry_init(const scs_u32_t version, const scs_telemetry_in
 
 SCSAPI_VOID scs_telemetry_shutdown() {
 	clients_deinit();
+	test_config_deinit();
 	console_log(SCS_LOG_TYPE_message, "Deinitialized!");
 }

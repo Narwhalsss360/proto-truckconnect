@@ -27,7 +27,7 @@ namespace game_data_main {
 		using truckconnect::connect;
 		using truckconnect::disconnect;
 
-		connection game = connection("127.0.0.1");
+		connection game = connection("192.168.1.7");
 		if (connect(game) != success) {
 			__debugbreak();
 			return 1;

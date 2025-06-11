@@ -57,6 +57,9 @@ void store(const scs_string_t, const scs_u32_t index, const scs_value_t* value, 
 }
 
 void register_all(scs_telemetry_register_for_channel_t register_for_channel) {
+	contexts.clear();
+	contexts.reserve(58048);
+
 	contexts.push_back({ 0, &game_data.channel_local_scale, 4, SCS_U32_NIL });
 	register_for_channel(SCS_TELEMETRY_CHANNEL_local_scale, SCS_U32_NIL, SCS_VALUE_TYPE_float, SCS_TELEMETRY_CHANNEL_FLAG_none, store<scs_value_float_t>, reinterpret_cast<void*>(contexts.size() - 1));
 

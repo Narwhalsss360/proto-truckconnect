@@ -188,6 +188,7 @@ echo "not exists"
     <ClCompile Include="clients.cpp" />
     <ClCompile Include="process_client.cpp" />
     <ClCompile Include="registrations.cpp" />
+    <ClCompile Include="test_config.cpp" />
     <ClCompile Include="truckconnectextension.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
